@@ -1,26 +1,45 @@
 package ebay;
 
 public class SystemAdmin {
-    String adminPassword;
-    String username;
-    String password;
+    private String username;
+    private String password;
 
-    public SystemAdmin(String adminPassword, String username, String password){
-        //Password to be able to create an admin user.
-        if(adminPassword.equals("Password")){
+    private UserManager userManager;
+
+    public SystemAdmin(String adminPassword, String username, String password, UserManager userManager) {
+        // Password to be able to create an admin user.
+        if (adminPassword.equals("Password")) {
             this.username = username;
             this.password = password;
+            this.userManager = userManager;
         }
     }
-    public String getUsername(){
+
+    public String getUsername() {
         return username;
     }
 
-    public String getPassword(){
+    public String getPassword() {
         return password;
     }
 
-    public void setPassword(String password){
+    public void setPassword(String password) {
         this.password = password;
     }
+
+    // Admin specific functionalities
+    public void deleteUser(String username) {
+        userManager.deleteUser(username);
+    }
+
+    public void viewAllUsers() {
+        userManager.viewAllUsers();
+    }
+
+    public void approveItem(ItemManager itemManager, Item item) {
+        itemManager.addItem(item);
+        System.out.println("Item approved and added: " + item.getItemName());
+    }
 }
+
+
