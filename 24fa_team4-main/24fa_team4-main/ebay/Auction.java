@@ -46,7 +46,7 @@ public class Auction {
     }
 
     // Method to end the auction
-    private void endAuction() {
+    public void endAuction() {
         isAuctionActive = false;
         if (highestBid != null) {
             System.out.println("Auction ended for item: " + item.getItemName());
@@ -55,6 +55,7 @@ public class Auction {
             System.out.println("Auction ended for item: " + item.getItemName() + " with no bids.");
         }
     }
+
 
     // Getter for the highest bid
     public Bid getHighestBid() {
