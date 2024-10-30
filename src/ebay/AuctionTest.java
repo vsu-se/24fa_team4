@@ -5,7 +5,9 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 
-public class AuctionTest {
+
+
+class AuctionTest {
     private Item item;
     private Auction auction;
     private User bidder1;
@@ -18,6 +20,8 @@ public class AuctionTest {
         bidder1 = new User("john_doe", "password123", false, true);
         bidder2 = new User("jane_doe", "password456", false, true);
     }
+
+
 
     @Test
     public void testAuctionStartsSuccessfully() {
