@@ -248,7 +248,14 @@ public class AuctionApp {
         // Add a new item to the auction
         String itemName = itemNameField.getText(); // Get item name input
         String description = descriptionField.getText(); // Get item description input
-        double buyItNowPrice = Double.parseDouble(priceField.getText()); // Get buy it now price input
+        double buyItNowPrice;
+        try {
+            buyItNowPrice = Double.parseDouble(priceField.getText()); // Get buy it now price input
+        } catch (NumberFormatException e) {
+            // Handle the error, e.g., show an error message to the user
+            System.err.println("Invalid price: " + priceField.getText());
+            return; // Exit the method if the price is invalid
+        }
         String imageUrl = imageUrlField.getText(); // Get image URL input
         boolean isAuction = isAuctionCheckBox.isSelected(); // Check if it's an auction item
         String itemType = itemTypeField.getText(); // Get item type input
