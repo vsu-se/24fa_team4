@@ -12,13 +12,14 @@ public class SystemAdmin {
             this.username = username;
             this.password = password;
             this.userManager = userManager;
+        } else {
+            throw new IllegalArgumentException("Invalid admin password provided.");
         }
     }
 
     public SystemAdmin(String username, String password) {
         this.username = username;
         this.password = password;
-
     }
 
     public String getUsername() {
@@ -35,17 +36,32 @@ public class SystemAdmin {
 
     // Admin specific functionalities
     public void deleteUser(String username) {
-        userManager.deleteUser(username);
+        User user = userManager.findUserByUsername(username);
+        if (user != null) {
+            userManager.deleteUser(username);
+            System.out.println("User deleted: " + username);
+        } else {
+            System.out.println("User not found: " + username);
+        }
     }
 
     public void viewAllUsers() {
-        userManager.viewAllUsers();
+        if (userManager.getUsers().isEmpty()) {
+            System.out.println("No users to display.");
+        } else {
+            userManager.viewAllUsers();
+        }
     }
 
     public void approveItem(ItemManager itemManager, Item item) {
-        itemManager.addItem(item);
-        System.out.println("Item approved and added: " + item.getItemName());
+        if (itemManager.getItemByUUID(item.getItemId()) == null) {
+            itemManager.addItem(item);
+            System.out.println("Item approved and added: " + item.getItemName());
+        } else {
+            System.out.println("Item is already approved: " + item.getItemName());
+        }
     }
 }
+
 
 
