@@ -1,5 +1,7 @@
 package ebay;
 
+import java.util.UUID;
+
 public class Item {
     private String itemName;
     private String description;
@@ -7,6 +9,7 @@ public class Item {
     private String imageUrl;
     private boolean isAuction;
     private String itemType;
+    private final UUID itemId;
 
     // Constructor
     public Item(String itemName, String description, double buyItNowPrice, String imageUrl, boolean isAuction, String itemType) {
@@ -16,6 +19,8 @@ public class Item {
         this.imageUrl = imageUrl;
         this.isAuction = isAuction;
         this.itemType = itemType;
+        this.itemId = UUID.randomUUID();
+
     }
 
     // Getters
@@ -66,6 +71,10 @@ public class Item {
 
     public void setItemType(String itemType) {
         this.itemType = itemType;
+    }
+
+    public UUID getItemId() {
+        return itemId;
     }
 }
 
