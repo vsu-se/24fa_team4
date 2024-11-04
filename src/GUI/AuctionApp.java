@@ -29,6 +29,8 @@ public class AuctionApp {
     private User loggedInUser; // Currently logged in user
     private SystemAdmin loggedInAdmin; // Currently logged in admin
     private LoginScreen loginScreen; // Login screen instance
+    private String currentUser; // Current user
+    private JTabbedPane tabbedPane;
 
     public static void main(String[] args) {
         // Run the application on the Event Dispatch Thread
@@ -49,17 +51,15 @@ public class AuctionApp {
             String password = loginScreen.getPassword();
             String adminPassword = loginScreen.getAdminPassword();
 
-            // Sample login logic for admin and regular user
-            if (username.equals("admin") && password.equals("admin")) {
+            if (adminPassword.equals("admin")) {
                 loggedInAdmin = new SystemAdmin(username, password);
+                currentUser = "admin";
                 loginScreen.close();
                 initialize();
-            } else if (username.equals("admin") && adminPassword.equals("admin")) {
-                loggedInAdmin = new SystemAdmin(username, adminPassword);
-                loginScreen.close();
-                initialize();
-            } else {
+            }
+            else { //not admin
                 loggedInUser = new User(username, password);
+                currentUser = "user";
                 loginScreen.close();
                 initialize();
             }
@@ -82,45 +82,73 @@ public class AuctionApp {
 
         // Add mascot image
         JLabel mascotLabel = new JLabel(new ImageIcon("GUI/bidsy_mascot.png")); // Change the path accordingly
-        mascotLabel.setBounds(800, 5, 100, 300); // Adjust bounds as necessary
+        mascotLabel.setBounds(300, 5, 100, 300); // Adjust bounds as necessary
         frame.add(mascotLabel);
-
+//Check for admin access:
         // Below is the Tabs section at the top. (Active Auctions, Categories)
         // Create tabbed pane
-        JTabbedPane tabbedPane = new JTabbedPane();
-        tabbedPane.setBounds(50, 100, 200, 200); // Set position and size
+        tabbedPane = new JTabbedPane();
+        tabbedPane.setBounds(50, 90, 200, 200); // Set position and size
         frame.add(tabbedPane); // Add tabbed pane to the frame
 
         // Create "Active Auctions" panel
         JPanel activeAuctionsPanel = new JPanel();
         activeAuctionsPanel.setLayout(new BorderLayout());
-
         // Create a list for active auctions
         auctionList = new JList<>(auctionListModel);
         activeAuctionsPanel.add(new JScrollPane(auctionList), BorderLayout.CENTER); // Add list to the panel
-
         // Add active auctions panel to the tabbed pane
         tabbedPane.addTab("Active Auctions", activeAuctionsPanel);
 
-        // Create "Categories" panel
-        JPanel categoriesPanel = new JPanel();
-        categoriesPanel.setLayout(new BorderLayout());
+        if(currentUser.equals("admin")) {
+            // Create "Categories" panel
+            JPanel categoriesPanel = new JPanel();
+            categoriesPanel.setLayout(new BorderLayout());
+            // Create a list for categories
+            categoryList = new JList<>(categoryListModel);
+            categoriesPanel.add(new JScrollPane(categoryList), BorderLayout.CENTER); // Add list to the panel
+            // Input field for new category
+            categoryField = new JTextField();
+            categoriesPanel.add(categoryField, BorderLayout.SOUTH); // Add input field to the bottom
+            // Button to add category
+            JButton addCategoryButton = new JButton("Add Category");
+            categoriesPanel.add(addCategoryButton, BorderLayout.EAST); // Add button to the right
+            // Add categories panel to the tabbed pane
+            tabbedPane.addTab("Categories", categoriesPanel);
 
-        // Create a list for categories
-        categoryList = new JList<>(categoryListModel);
-        categoriesPanel.add(new JScrollPane(categoryList), BorderLayout.CENTER); // Add list to the panel
 
-        // Input field for new category
-        categoryField = new JTextField();
-        categoriesPanel.add(categoryField, BorderLayout.SOUTH); // Add input field to the bottom
+            // Seller's Commission and Buyer's Premium
+            JLabel commissionLabel = new JLabel("Seller's Commission:");
+            commissionLabel.setBounds(500, 385, 150, 25);
+            frame.add(commissionLabel);
 
-        // Button to add category
-        JButton addCategoryButton = new JButton("Add Category");
-        categoriesPanel.add(addCategoryButton, BorderLayout.EAST); // Add button to the right
+            // Input field for seller's commission
+            sellerCommissionField = new JTextField();
+            sellerCommissionField.setBounds(500, 420, 150, 25);
+            frame.add(sellerCommissionField);
 
-        // Add categories panel to the tabbed pane
-        tabbedPane.addTab("Categories", categoriesPanel);
+            // Button to set seller's commission
+            JButton setCommissionButton = new JButton("Set Commission");
+            setCommissionButton.setBounds(500, 455, 150, 25);
+            frame.add(setCommissionButton);
 
+            JLabel buyerPremiumLabel = new JLabel("Buyer's Premium:");
+            buyerPremiumLabel.setBounds(500, 490, 150, 25);
+            frame.add(buyerPremiumLabel);
+
+            // Input field for buyer's premium
+            buyerPremiumField = new JTextField();
+            buyerPremiumField.setBounds(500, 520, 150, 25);
+            frame.add(buyerPremiumField);
+
+            // Button to set buyer's premium
+            JButton setPremiumButton = new JButton("Set Premium");
+            setPremiumButton.setBounds(500, 555, 150, 25);
+            frame.add(setPremiumButton);
+            addCategoryButton.addActionListener(e -> addCategory()); // Add category when the button is clicked
+            setCommissionButton.addActionListener(e -> setSellersCommission()); // Set seller's commission
+            setPremiumButton.addActionListener(e -> setBuyerPremium()); // Set buyer's premium
+        }
         // Item Details Area
         itemDetailsTextArea = new JTextArea();
         itemDetailsTextArea.setBounds(340, 130, 400, 150);
@@ -186,43 +214,12 @@ public class AuctionApp {
         addButton.setBounds(180, 570, 150, 25);
         frame.add(addButton);
 
-        // Seller's Commission and Buyer's Premium
-        JLabel commissionLabel = new JLabel("Seller's Commission:");
-        commissionLabel.setBounds(500, 385, 150, 25);
-        frame.add(commissionLabel);
-
-        // Input field for seller's commission
-        sellerCommissionField = new JTextField();
-        sellerCommissionField.setBounds(500, 420, 150, 25);
-        frame.add(sellerCommissionField);
-
-        // Button to set seller's commission
-        JButton setCommissionButton = new JButton("Set Commission");
-        setCommissionButton.setBounds(500, 455, 150, 25);
-        frame.add(setCommissionButton);
-
-        JLabel buyerPremiumLabel = new JLabel("Buyer's Premium:");
-        buyerPremiumLabel.setBounds(500, 490, 150, 25);
-        frame.add(buyerPremiumLabel);
-
-        // Input field for buyer's premium
-        buyerPremiumField = new JTextField();
-        buyerPremiumField.setBounds(500, 520, 150, 25);
-        frame.add(buyerPremiumField);
-
-        // Button to set buyer's premium
-        JButton setPremiumButton = new JButton("Set Premium");
-        setPremiumButton.setBounds(500, 555, 150, 25);
-        frame.add(setPremiumButton);
 
         // Add action listeners to buttons
         addButton.addActionListener(e -> addItem()); // Add item when the button is clicked
-        addCategoryButton.addActionListener(e -> addCategory()); // Add category when the button is clicked
-        setCommissionButton.addActionListener(e -> setSellersCommission()); // Set seller's commission
-        setPremiumButton.addActionListener(e -> setBuyerPremium()); // Set buyer's premium
 
         // Initialize UI components for admin features to be hidden initially
-        toggleAdminFeatures(false); // Hide admin features initially
+       // toggleAdminFeatures(false); // Hide admin features initially
 
         // Make the frame visible
         frame.setVisible(true);
@@ -267,6 +264,17 @@ public class AuctionApp {
         clearItemFields(); // Clear the input fields
     }
 
+//    private void toggleAdminFeatures(boolean isAdmin) {
+//        if (isAdmin) {
+//            this.setupCategoriesTab();
+//        } else {
+//            int index = this.tabbedPane.indexOfTab("Categories");
+//            if (index != -1) {
+//                this.tabbedPane.removeTabAt(index);
+//            }
+//
+//        }
+//    }
     private void addCategory() {
         // Add a new category to the category list
         String category = categoryField.getText(); // Get category input
@@ -284,12 +292,23 @@ public class AuctionApp {
         // Logic to set buyer's premium
     }
 
-    private void toggleAdminFeatures(boolean isEnabled) {
-        // Enable or disable admin-specific features
-        sellerCommissionField.setEnabled(isEnabled); // Enable seller's commission field
-        buyerPremiumField.setEnabled(isEnabled); // Enable buyer's premium field
-        // Enable/disable other admin-specific features as necessary
-    }
+//    private void setupCategoriesTab() {
+//        if (this.tabbedPane.indexOfTab("Categories") == -1) {
+//            JPanel categoriesPanel = new JPanel(new BorderLayout());
+//            this.categoryList = new JList(this.categoryListModel);
+//            categoriesPanel.add(new JScrollPane(this.categoryList), "Center");
+//            this.categoryField = new JTextField();
+//            categoriesPanel.add(this.categoryField, "South");
+//            this.addCategoryButton = new JButton("Add Category");
+//            this.addCategoryButton.addActionListener((e) -> {
+//                this.addCategory();
+//            });
+//            categoriesPanel.add(this.addCategoryButton, "East");
+//            this.tabbedPane.addTab("Categories", categoriesPanel);
+//        }
+//
+//
+//    }
 
     private void clearItemFields() {
         // Clear all item input fields
