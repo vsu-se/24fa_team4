@@ -1,24 +1,21 @@
 package ebay;
 
-public class SystemAdmin {
+public class SystemAdmin extends User {
     private String username;
     private String password;
 
     private UserManager userManager;
 
     public SystemAdmin(String adminPassword, String username, String password, UserManager userManager) {
+        this(username, password);
         // Password to be able to create an admin user.
-        if (adminPassword.equals("Password")) {
-            this.username = username;
-            this.password = password;
+        if (adminPassword.equals("admin")) {
             this.userManager = userManager;
         }
     }
 
     public SystemAdmin(String username, String password) {
-        this.username = username;
-        this.password = password;
-
+        super(username, password);
     }
 
     public String getUsername() {
