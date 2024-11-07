@@ -82,15 +82,29 @@ public class Controller {
 
     public void setSellersCommission(String commission) {
         // Logic to set seller's commission
+        JOptionPane.showMessageDialog(null, "Seller's commission set");
     }
 
     public void setBuyerPremium(String premium) {
         // Logic to set buyer's premium
+        JOptionPane.showMessageDialog(null, "Buyer's premium set");
     }
+
     public void addCategory(String category, DefaultListModel<String> categoryListModel) {
-//        if (!category.isEmpty()) {
-//            categoryListModel.addElement(category);
-//        }
+        if (!category.isEmpty()) {
+            categoryListModel.addElement(category);
+        }
     }
-    // Placeholder for other business logic like placeBid, addCategory, etc.
+    public void placeBid(String itemName, double bidAmount) {
+        Item item = itemManager.getItemByName(itemName);
+        if (item != null) {
+           // if (item.getBuyItNowPrice(bidAmount)) {
+                JOptionPane.showMessageDialog(null, "Bid of " + bidAmount + " placed successfully on item: " + itemName);
+          //  } else {
+             //   JOptionPane.showMessageDialog(null, "Bid amount is too low for item: " + itemName);
+            }
+       // } else {
+         //   JOptionPane.showMessageDialog(null, "Item not found: " + itemName);
+        //}
+    }
 }
