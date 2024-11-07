@@ -74,6 +74,7 @@ public class Controller {
         Item newItem = new Item(itemName, description, price, imageUrl, isAuction, itemType);
         itemManager.addItem(newItem); // Add item to ItemManager
         auctionListModel.addElement(itemName); // Update UI with new item
+
     }
 
     public Item getItemByName(String name) {

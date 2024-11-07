@@ -230,8 +230,17 @@ public class AuctionApp {
         boolean isAuction = isAuctionCheckBox.isSelected();
         String itemType = itemTypeField.getText();
 
+        // Add the item to the system
         controller.addItem(itemName, description, price, imageUrl, isAuction, itemType, auctionListModel);
         JOptionPane.showMessageDialog(frame, "Item added successfully: " + itemName);
+
+        // Clear the text fields after adding the item
+        itemNameField.setText("");
+        descriptionField.setText("");
+        priceField.setText("");
+        imageUrlField.setText("");
+        itemTypeField.setText("");
+        isAuctionCheckBox.setSelected(false);
     }
 
     private void displayItemDetails() {
