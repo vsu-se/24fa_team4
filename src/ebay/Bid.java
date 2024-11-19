@@ -16,6 +16,6 @@ public class Bid {
     public double getBidAmount() {
         return bidAmount;
     }
-}
 
 
+    }

@@ -99,13 +99,30 @@ public class Controller {
     public void placeBid(String itemName, double bidAmount) {
         Item item = itemManager.getItemByName(itemName);
         if (item != null) {
-           // if (item.getBuyItNowPrice(bidAmount)) {
-                JOptionPane.showMessageDialog(null, "Bid of " + bidAmount + " placed successfully on item: " + itemName);
-          //  } else {
-             //   JOptionPane.showMessageDialog(null, "Bid amount is too low for item: " + itemName);
+            Bid bid = new Bid(loggedInUser, bidAmount);
+            if (ItemManager.placeBid(itemName,bid)) {
+                JOptionPane.showMessageDialog(null,"Bid of" + bidAmount + "placed on item: " + itemName);
+            } else {
+                JOptionPane.showMessageDialog(null,"Bid of" + bidAmount + "is too low for item: " + itemName);
             }
-       // } else {
-         //   JOptionPane.showMessageDialog(null, "Item not found: " + itemName);
-        //}
+        } else {
+            JOptionPane.showMessageDialog(null,"Item not found: " + itemName);
+        }
+    }
+    public void showBid(String itemName, double myBidAmount) {
+    Item item = itemManager.getItemByName(itemName);
+    if (item != null) {
+        StringBuilder message = new StringBuilder();
+        message.append("Current high bid: ").append(item.getHighestBid().getBidAmount()).append("\n");
+        message.append("Time Remaining: ").append(item.getTimeRemaining()).append("\n");
+        message.append("Your bid: ").append(myBidAmount).append("\n");
+        if (item.getBuyItNowPrice() > 0) {
+            message.append("Buy it now price: ").append(item.getBuyItNowPrice()).append("\n");
+        }
+        JOptionPane.showMessageDialog(null, "The current bid for item: " + message.toString());
+    } else {
+        JOptionPane.showMessageDialog(null, "Item not found: " + itemName);
+        }
     }
 }
+

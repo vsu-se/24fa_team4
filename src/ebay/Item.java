@@ -10,6 +10,8 @@ public class Item {
     private boolean isAuction;
     private String itemType;
     private final UUID itemId;
+    private Bid highestBid;
+    private String timeRemaining;
 
     // Constructor
     public Item(String itemName, String description, double buyItNowPrice, String imageUrl, boolean isAuction, String itemType) {
@@ -47,6 +49,13 @@ public class Item {
     public String getItemType() {
         return itemType;
     }
+
+    public Bid getHighestBid() {return highestBid;}
+
+    public String getTimeRemaining() {return timeRemaining;}
+
+    public void placeBid(Bid bid) {this.highestBid = bid;}
+
 
     // Setters for fields the seller can update
     public void setItemName(String itemName) {
