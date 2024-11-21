@@ -26,6 +26,20 @@ public class ItemManager {
         return instance;
     }
 
+    public static boolean placeBid(String itemName, Bid bid) {
+        ItemManager itemManager = ItemManager.getInstance();
+        Item item = itemManager.getItemByName(itemName);
+        if (item != null) {
+            if (bid.getBidAmount() > item.getHighestBid().getBidAmount()) {
+                item.placeBid(bid);
+                return true;
+            } else {
+                return false;
+            }
+        }
+        return false;
+    }
+
     // Add item to the list
     public void addItem(Item item) {
         items.add(item);

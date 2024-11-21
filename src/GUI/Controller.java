@@ -96,7 +96,7 @@ public class Controller {
             categoryListModel.addElement(category);
         }
     }
-    public void placeBid(String itemName, double bidAmount) {
+   public void placeBid(String itemName, double bidAmount) {
         Item item = itemManager.getItemByName(itemName);
         if (item != null) {
             Bid bid = new Bid(loggedInUser, bidAmount);
