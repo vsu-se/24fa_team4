@@ -3,6 +3,7 @@ package GUI;
 import ebay.*;
 
 import javax.swing.*;
+import java.util.List;
 
 public class Controller {
     private User loggedInUser;
@@ -10,7 +11,9 @@ public class Controller {
     private String currentUser;
     private ItemManager itemManager;
     private LoginScreen loginScreen;
-    private AuctionApp auctionApp; // Reference to the main application view
+    private AuctionApp auctionApp;// Reference to the main application view
+
+    private Thread auctionMonitorThread;
 
     public static void main(String[] args) {
         new Controller(); // Starts the application by initializing the Controller
@@ -96,33 +99,41 @@ public class Controller {
             categoryListModel.addElement(category);
         }
     }
-   public void placeBid(String itemName, double bidAmount) {
+
+    public void placeBid(String itemName, double bidAmount) {
         Item item = itemManager.getItemByName(itemName);
         if (item != null) {
-            Bid bid = new Bid(loggedInUser, bidAmount);
-            if (ItemManager.placeBid(itemName,bid)) {
-                JOptionPane.showMessageDialog(null,"Bid of" + bidAmount + "placed on item: " + itemName);
+            Bid highestBid = item.getHighestBid();
+            if(highestBid != null && bidAmount <= highestBid.getBidAmount()) {
+                Bid bid = new Bid(loggedInUser, bidAmount);
+                item.placeBid(bid);
+                JOptionPane.showMessageDialog(null, "Bid of" + bidAmount + "placed on item: " + itemName);
             } else {
-                JOptionPane.showMessageDialog(null,"Bid of" + bidAmount + "is too low for item: " + itemName);
+                JOptionPane.showMessageDialog(null, "Bid of" + bidAmount + "is too low for item: " + itemName);
             }
         } else {
-            JOptionPane.showMessageDialog(null,"Item not found: " + itemName);
+            JOptionPane.showMessageDialog(null, "Item not found: " + itemName);
         }
     }
-    public void showBid(String itemName, double myBidAmount) {
-    Item item = itemManager.getItemByName(itemName);
-    if (item != null) {
-        StringBuilder message = new StringBuilder();
-        message.append("Current high bid: ").append(item.getHighestBid().getBidAmount()).append("\n");
-        message.append("Time Remaining: ").append(item.getTimeRemaining()).append("\n");
-        message.append("Your bid: ").append(myBidAmount).append("\n");
-        if (item.getBuyItNowPrice() > 0) {
-            message.append("Buy it now price: ").append(item.getBuyItNowPrice()).append("\n");
+    public void showConcludedAuctions(DefaultListModel<String> concludedAuctionsModel) {
+        List<Item> concludedAuctions = itemManager.getConcludedAuctions();
+        concludedAuctionsModel.clear();
+        for (Item item : concludedAuctions) {
+            concludedAuctionsModel.addElement(item.getItemName());
         }
-        JOptionPane.showMessageDialog(null, "The current bid for item: " + message.toString());
-    } else {
-        JOptionPane.showMessageDialog(null, "Item not found: " + itemName);
+    }
+
+    public void showBid(String selectedItemName, double myBidAmount) {
+        Item item = itemManager.getItemByName(selectedItemName);
+        if (item != null) {
+            Bid highestBid = item.getHighestBid();
+            if (highestBid != null) {
+                JOptionPane.showMessageDialog(null, "Highest bid for item: " + selectedItemName + " is: " + highestBid.getBidAmount());
+            } else {
+                JOptionPane.showMessageDialog(null, "No bids placed on item: " + selectedItemName);
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Item not found: " + selectedItemName);
         }
     }
 }
-
