@@ -215,7 +215,13 @@ public class AuctionApp {
             controller.addCategory(category, categoryListModel);
         });
     }
-
+    private void initializeConcludedAuctionsButton() {
+        JButton concludedAuctionsButton = new JButton("Concluded Auctions");
+        DefaultListModel<String> concludedAuctionsModel = new DefaultListModel<>();
+        concludedAuctionsButton.setBounds(735, 650, 150, 30);
+        concludedAuctionsButton.addActionListener(e -> controller.showConcludedAuctions(concludedAuctionsModel));
+        frame.add(concludedAuctionsButton);
+    }
 
     private void addItem() {
         String itemName = itemNameField.getText();

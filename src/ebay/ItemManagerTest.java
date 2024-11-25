@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.List;
 import java.util.UUID;
 
 class ItemManagerTest {
@@ -12,6 +13,8 @@ class ItemManagerTest {
     private ItemManager itemManager;
     private Item item1;
     private Item item2;
+    private Bidder bidder1;
+    private Bidder bidder2;
 
     @BeforeEach
     void setUp() {
@@ -120,5 +123,7 @@ class ItemManagerTest {
         Item notFoundItem = itemManager.getItemByUUID(randomUUID);
         assertNull(notFoundItem);
     }
+
+
 }
 

@@ -26,19 +26,6 @@ public class ItemManager {
         return instance;
     }
 
-    public static boolean placeBid(String itemName, Bid bid) {
-        ItemManager itemManager = ItemManager.getInstance();
-        Item item = itemManager.getItemByName(itemName);
-        if (item != null) {
-            if (bid.getBidAmount() > item.getHighestBid().getBidAmount()) {
-                item.placeBid(bid);
-                return true;
-            } else {
-                return false;
-            }
-        }
-        return false;
-    }
 
     // Add item to the list
     public void addItem(Item item) {
@@ -50,7 +37,7 @@ public class ItemManager {
     }
 
 
-    public List<Item> getAllItems(){
+    public List<Item> getAllItems() {
         return items;
     }
 
@@ -102,19 +89,7 @@ public class ItemManager {
             System.out.println("Item is either unavailable or is being auctioned.");
         }
     }
-   /* public static boolean placeBid(String itemName, Bid bid) {
-        ItemManager itemManger = ItemManger.getInstance();
-        Item item = getItemByName(itemName);
-        if (item != null) {
-            if (bid.getBidAmount() > item.getHighestBid().getBidAmount()) {
-                item.placeBid(bid);
-                return true;
-            } else {
-                return false;
-            }
-        }
-        return false;
-    } */
+
     public List<Auction> getActiveAuctions() {
         return activeAuctions;
     }
@@ -135,4 +110,15 @@ public class ItemManager {
     }
 
 
+
+
+    public List<Item> getConcludedAuctions() {
+        List<Item> concludedAuctions = new ArrayList<>();
+        for (Item item : items) {
+            if (item.isAuction() && item.getEndTime() < System.currentTimeMillis()) {
+                concludedAuctions.add(item);
+            }
+        }
+        return concludedAuctions;
+    }
 }
