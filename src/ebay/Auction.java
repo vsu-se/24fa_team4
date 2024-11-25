@@ -59,12 +59,12 @@ public class Auction {
     }
     // Method to notify bidders
     private void notifyBidders() {
-        List<Bid> bids = item.getBids();
-        for (Bid bid : bids) {
-            Bidder bidder = bid.getBidder();
-            // Notify the bidder (e.g., send an email or a message)
-            System.out.println("Notifying bidder: " + bidder.getName() + " for item: " + item.getItemName());
-        }
+//        List<Bid> bids = item.getBids();
+//        for (Bid bid : bids) {
+//            Bidder bidder = bid.getBidder();
+//            // Notify the bidder (e.g., send an email or a message)
+//            System.out.println("Notifying bidder: " + bidder.getName() + " for item: " + item.getItemName());
+//        }
     }
 
     // Getter for the highest bid
