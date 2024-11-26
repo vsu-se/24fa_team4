@@ -110,8 +110,6 @@ public class ItemManager {
     }
 
 
-
-
     public List<Item> getConcludedAuctions() {
         List<Item> concludedAuctions = new ArrayList<>();
         for (Item item : items) {

@@ -9,6 +9,7 @@ public class Auction {
     private Item item;
     private Bid highestBid;
     private boolean isAuctionActive;
+    private long endTime;
 
     public Auction(Item item) {
         this.item = item;
@@ -59,12 +60,12 @@ public class Auction {
     }
     // Method to notify bidders
     private void notifyBidders() {
-//        List<Bid> bids = item.getBids();
-//        for (Bid bid : bids) {
-//            Bidder bidder = bid.getBidder();
-//            // Notify the bidder (e.g., send an email or a message)
-//            System.out.println("Notifying bidder: " + bidder.getName() + " for item: " + item.getItemName());
-//        }
+        List<Bid> bids = item.getBids();
+        for (Bid bid : bids) {
+            Bidder bidder = bid.getBidder();
+            // Notify the bidder (e.g., send an email or a message)
+            System.out.println("Notifying bidder: " + bidder.getUsername() + " for item: " + item.getItemName());
+        }
     }
 
     // Getter for the highest bid
@@ -75,6 +76,9 @@ public class Auction {
     // Method to check if the auction is still active
     public boolean isAuctionActive() {
         return isAuctionActive;
+    }
+    public long getEndTime() {
+        return endTime;
     }
 }
 

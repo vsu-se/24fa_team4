@@ -1,5 +1,6 @@
 package ebay;
 
+import java.util.List;
 import java.util.UUID;
 
 public class Item {
@@ -12,6 +13,8 @@ public class Item {
     private final UUID itemId;
     private Bid highestBid;
     private String timeRemaining;
+    private long endTime;
+    private List<Bid> bids;
 
     // Constructor
     public Item(String itemName, String description, double buyItNowPrice, String imageUrl, boolean isAuction, String itemType) {
@@ -56,6 +59,8 @@ public class Item {
 
     public void placeBid(Bid bid) {this.highestBid = bid;}
 
+    public List<Bid> getBids() {return bids;}
+
 
     // Setters for fields the seller can update
     public void setItemName(String itemName) {
@@ -84,6 +89,22 @@ public class Item {
 
     public UUID getItemId() {
         return itemId;
+    }
+
+    public long getEndTime() {
+   return endTime;
+    }
+
+    public void setEndTime(long endTime) {
+        this.endTime = endTime;
+    }
+
+    public void setTimeRemaining(String timeRemaining) {
+        this.timeRemaining = timeRemaining;
+    }
+
+    public void setBids(List<Bid> bids) {
+        this.bids = bids;
     }
 }
 
