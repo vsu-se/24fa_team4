@@ -4,7 +4,6 @@ import javax.swing.*;
 
 public class UserHomePage extends JFrame {
 
-    // Fields referenced in the Designer
     private JPanel mainPanel;
     private JPanel topPanel;
     private JPanel bottomPanel;
@@ -15,7 +14,6 @@ public class UserHomePage extends JFrame {
     private JPanel categoriesTab;
     private JPanel myAuctionsTab;
     private JTextField searchTextField;
-    private JButton logoutButton;
     private JLabel bidsyTitle;
     private JPanel tabsPanel;
     private JScrollPane activeAuctions;
@@ -23,8 +21,28 @@ public class UserHomePage extends JFrame {
     private JButton bidButton;
     private JLabel txtWelcome;
     private JLabel txtAuction;
-    private JLabel txtItemCategory;
+    private JLabel lblItemCategory;
     private JScrollPane listOfCategories;
+    private JButton logoutButton;
+    private JTextArea txaItemInfo;
+    private JLabel lblBidAmount;
+    private JLabel lblItemName;
+    private JTextField txtItemName;
+    private JLabel lblItemDescription;
+    private JTextField txtItemDescription;
+    private JLabel lblStartPrice;
+    private JTextField txtStartPrice;
+    private JPanel addItemPanel;
+    private JButton addItemBtn;
+    private JButton searchBtn;
+    private JLabel lblCustomerService;
+    private JLabel lblCategories;
+    private JScrollPane scrollPaneCategories;
+    private JLabel lblMyAuctions;
+    private JPanel myBidsTab;
+    private JLabel lblMyBids;
+    private JPanel profilePanel;
+    private JTextArea txtProfile;
 
     public static void main(String[] args) {
         try {
@@ -43,6 +61,7 @@ public class UserHomePage extends JFrame {
 
     public UserHomePage() {
         setTitle("Bidsy");
+        setIconImage(new ImageIcon("src/GUI/bidsy_mascot2.png").getImage());
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(800, 600);
         setLocationRelativeTo(null);
@@ -67,5 +86,6 @@ public class UserHomePage extends JFrame {
         tabbedPane.addTab("Sell", sellTab);
         tabbedPane.addTab("Categories", categoriesTab);
         tabbedPane.addTab("My Auctions", myAuctionsTab);
+        tabbedPane.addTab("My Bids", myBidsTab);
     }
 }
