@@ -70,10 +70,6 @@ public class User implements Seller, Bidder {
         System.out.println(username + " has placed a bid of $" + bidAmount + " on item: " + item.getItemName());
     }
 
-    @Override
-    public String getName() {
-        return "";
-    }
 
     @Override
     public void startAuction(Item item) {
