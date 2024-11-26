@@ -1,5 +1,6 @@
 package ebay;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -25,7 +26,7 @@ public class Item {
         this.isAuction = isAuction;
         this.itemType = itemType;
         this.itemId = UUID.randomUUID();
-
+        this.bids = new ArrayList<>();
     }
 
     // Getters
