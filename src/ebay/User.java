@@ -1,12 +1,16 @@
 package ebay;
 
 
+import java.util.ArrayList;
+import java.util.List;
 
 public class User implements Seller, Bidder {
     private String username;
     private String password;
     private boolean isSeller;
     private boolean isBidder;
+    private List<Item> soldItems;
+    private List<Item> boughtItems;
 
 
     public User(String username, String password, boolean isSeller, boolean isBidder) {
@@ -14,6 +18,8 @@ public class User implements Seller, Bidder {
         this.password = password;
         this.isSeller = isSeller;
         this.isBidder = isBidder;
+        this.soldItems = new ArrayList<>();
+        this.boughtItems = new ArrayList<>();
     }
 
     public User(String username, String password) {
@@ -90,6 +96,84 @@ public class User implements Seller, Bidder {
         }
     }
 
+    public void buyItNow(Item item, User user) {
+        if (!isSeller) {  // Any non-seller can buy an item
+            ItemManager.getInstance().buyItNow(item, user);
+        } else {
+            System.out.println(username + " cannot buy their own item.");
+        }
+    }
 
-}
+    public void addSoldItem(Item item) {
+        if (item != null) {
+            soldItems.add(item);
+        }
+    }
+
+    public void addBoughtItem(Item item) {
+        if (item != null) {
+            boughtItems.add(item);
+        }
+    }
+
+    public void showSellerReport() {
+        double totalWinningBids = 0;
+        double totalShippingCosts = 0;
+        double totalSellerCommission = 0;
+
+        System.out.println("Seller's Report for " + username);
+        System.out.println("--------------------------------------------------");
+        System.out.println("Item Name | Price | Seller's Commission | Shipping");
+        System.out.println("--------------------------------------------------");
+
+        for (Item item : soldItems) {
+            if (item != null) {
+                double price = item.getBuyItNowPrice();
+                double sellersComission = price * 0.20;
+                double shippingCost = 10.0;
+
+                totalWinningBids += price;
+                totalSellerCommission += sellersComission;
+                totalShippingCosts += shippingCost;
+
+                System.out.printf("%s | %.2f | %.2f | %.2f%n", item.getItemName(), price, sellersComission, shippingCost);
+            }
+        }
+
+        double totalProfits = totalWinningBids - totalSellerCommission - totalShippingCosts;
+
+        System.out.println("--------------------------------------------------");
+        System.out.printf("Total Winning Bids: %.2f%n", totalWinningBids);
+        System.out.printf("Total Shipping Costs: %.2f%n", totalShippingCosts);
+        System.out.printf("Total Seller's Commissions: %.2f%n", totalSellerCommission);
+        System.out.printf("Total Profits: %.2f%n", totalProfits);
+    }
+
+    public void showBuyerReport() {
+        double totalSpent = 0;
+        double totalShippingCosts = 0;
+
+        System.out.println("Buyer's Report for " + username);
+        System.out.println("--------------------------------------------------");
+        System.out.println("Item Name | Price | Shipping");
+        System.out.println("--------------------------------------------------");
+
+        for (Item item : boughtItems) {
+            if (item != null) {
+                double price = item.getBuyItNowPrice();
+                double shippingCost = 10.0;
+
+                totalSpent += price;
+                totalShippingCosts += shippingCost;
+
+                System.out.printf("%s | %.2f | %.2f%n", item.getItemName(), price, shippingCost);
+            }
+        }
+
+        System.out.println("--------------------------------------------------");
+        System.out.printf("Total Spent: %.2f%n", totalSpent);
+        System.out.printf("Total Shipping Costs: %.2f%n", totalShippingCosts);
+    }
+        }
+
 

@@ -1,7 +1,8 @@
 package GUI;
 
 import javax.swing.*;
-
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 public class UserHomePage extends JFrame {
 
     private JPanel mainPanel;
@@ -43,6 +44,8 @@ public class UserHomePage extends JFrame {
     private JLabel lblMyBids;
     private JPanel profilePanel;
     private JTextArea txtProfile;
+
+    private UserHomePageController controller;
 
     public static void main(String[] args) {
         try {
@@ -88,4 +91,35 @@ public class UserHomePage extends JFrame {
         tabbedPane.addTab("My Auctions", myAuctionsTab);
         tabbedPane.addTab("My Bids", myBidsTab);
     }
+
+   /* private void setUpEventListeners() {
+        searchBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String searchQuery = searchTextField.getText();
+                controller.handleSearch(searchQuery);
+                // Search for items based on the search query
+            }
+        });
+
+        bidButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                double bid = Double.parseDouble(bidAmount.getText());
+                controller.handleBid(bid);
+                // Place a bid on the selected item
+            }
+        });
+
+        addItemBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String itemName = txtItemName.getText();
+                String itemDescription = txtItemDescription.getText();
+                double startPrice = Double.parseDouble(txtStartPrice.getText());
+                controller.handleAddItem(itemName, itemDescription, startPrice);
+                // Add a new item to the system
+            }
+        });
+    } */
 }
