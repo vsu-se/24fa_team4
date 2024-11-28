@@ -30,9 +30,6 @@ public class ItemManager {
     // Add item to the list
     public void addItem(Item item) {
         items.add(item);
-        if (item.isAuction()) {
-            startAuction(item);
-        }
     }
 
     public synchronized void removeItem(String itemName) {
@@ -79,11 +76,10 @@ public class ItemManager {
         return null;
     }
 
-   public void addAuction(Auction auction) {
+    public void addAuction(Auction auction) {
         activeAuctions.add(auction);
         System.out.println("Auction added for item: " + auction.getItem().getItemName());
     }
-
 
     public void buyItNow(Item item, User buyer) {
         if (items.contains(item) && !item.isAuction()) {
