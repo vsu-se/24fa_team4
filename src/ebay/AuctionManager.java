@@ -1,10 +1,11 @@
-/* package ebay;
+ package ebay;
 
 import java.util.ArrayList;
 import java.util.List;
 
     public class AuctionManager {
         private List<Auction> auctions;
+        private ItemManager itemManager;
 
         public AuctionManager() {
             this.auctions = new ArrayList<>();
@@ -23,6 +24,9 @@ import java.util.List;
             }
             return activeAuctions;
         }
+        public void handleAddItem(Item item) {
+            Auction auction = new Auction(item);
+            itemManager.addItem(item);
+            addAuction(auction);
+        }
     }
-}
-*/
