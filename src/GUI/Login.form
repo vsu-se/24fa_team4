@@ -1,0 +1,387 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="GUI.Login">
+  <grid id="27dc6" binding="ParentPanel" layout-manager="CardLayout" hgap="0" vgap="0">
+    <constraints>
+      <xy x="20" y="20" width="685" height="425"/>
+    </constraints>
+    <properties/>
+    <border type="none"/>
+    <children>
+      <grid id="177e3" binding="WelcomePanel" layout-manager="GridLayoutManager" row-count="10" column-count="7" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+        <margin top="0" left="0" bottom="0" right="0"/>
+        <constraints>
+          <card name="Card1"/>
+        </constraints>
+        <properties>
+          <background color="-14342875"/>
+        </properties>
+        <border type="none"/>
+        <children>
+          <component id="4389" class="javax.swing.JLabel">
+            <constraints>
+              <grid row="2" column="1" row-span="1" col-span="5" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <font name="Arial Narrow" style="1"/>
+              <foreground color="-1"/>
+              <text value="Hello! Please enter in your username and password."/>
+            </properties>
+          </component>
+          <component id="3cb19" class="javax.swing.JLabel">
+            <constraints>
+              <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <foreground color="-1"/>
+              <text value="Username:"/>
+            </properties>
+          </component>
+          <component id="84073" class="javax.swing.JLabel">
+            <constraints>
+              <grid row="4" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <foreground color="-1"/>
+              <text value="Password:"/>
+            </properties>
+          </component>
+          <component id="d3563" class="javax.swing.JTextField" binding="textField1" default-binding="true">
+            <constraints>
+              <grid row="3" column="3" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                <preferred-size width="150" height="-1"/>
+              </grid>
+            </constraints>
+            <properties/>
+          </component>
+          <component id="cfcd8" class="javax.swing.JPasswordField" binding="passwordField1" default-binding="true">
+            <constraints>
+              <grid row="4" column="3" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                <preferred-size width="150" height="-1"/>
+              </grid>
+            </constraints>
+            <properties/>
+          </component>
+          <component id="a3a6b" class="javax.swing.JButton" binding="signInButton" default-binding="true">
+            <constraints>
+              <grid row="6" column="1" row-span="1" col-span="5" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <background color="-13948043"/>
+              <font size="10" style="1"/>
+              <foreground color="-1"/>
+              <icon value="GUI/UserIcon.png"/>
+              <text value="Sign In"/>
+            </properties>
+          </component>
+          <component id="1a436" class="javax.swing.JButton" binding="adminLoginClickHereButton" default-binding="true">
+            <constraints>
+              <grid row="8" column="5" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <background color="-14342875"/>
+              <font size="10" style="1"/>
+              <foreground color="-662597"/>
+              <text value="Admin Login? Click here."/>
+            </properties>
+          </component>
+          <component id="f181e" class="javax.swing.JLabel">
+            <constraints>
+              <grid row="1" column="0" row-span="1" col-span="7" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <horizontalAlignment value="0"/>
+              <icon value="GUI/BLogo.png"/>
+              <text value=""/>
+            </properties>
+          </component>
+          <grid id="8f323" layout-manager="CardLayout" hgap="0" vgap="0">
+            <constraints>
+              <grid row="3" column="5" row-span="2" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <background color="-14342875"/>
+            </properties>
+            <border type="none"/>
+            <children/>
+          </grid>
+          <grid id="5cc0e" layout-manager="CardLayout" hgap="0" vgap="0">
+            <constraints>
+              <grid row="3" column="2" row-span="2" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <background color="-14342875"/>
+            </properties>
+            <border type="none"/>
+            <children/>
+          </grid>
+          <grid id="217c" layout-manager="CardLayout" hgap="0" vgap="0">
+            <constraints>
+              <grid row="3" column="0" row-span="2" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <background color="-14342875"/>
+            </properties>
+            <border type="none"/>
+            <children/>
+          </grid>
+          <grid id="85a7" layout-manager="CardLayout" hgap="0" vgap="0">
+            <constraints>
+              <grid row="7" column="0" row-span="1" col-span="6" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <background color="-14342875"/>
+            </properties>
+            <border type="none"/>
+            <children/>
+          </grid>
+          <grid id="f3dd6" layout-manager="CardLayout" hgap="0" vgap="0">
+            <constraints>
+              <grid row="2" column="6" row-span="7" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <background color="-14342875"/>
+            </properties>
+            <border type="none"/>
+            <children/>
+          </grid>
+          <grid id="40c27" layout-manager="CardLayout" hgap="0" vgap="0">
+            <constraints>
+              <grid row="9" column="0" row-span="1" col-span="7" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <background color="-14342875"/>
+            </properties>
+            <border type="none"/>
+            <children/>
+          </grid>
+          <grid id="b5490" layout-manager="CardLayout" hgap="0" vgap="0">
+            <constraints>
+              <grid row="0" column="0" row-span="1" col-span="7" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <background color="-14342875"/>
+            </properties>
+            <border type="none"/>
+            <children/>
+          </grid>
+          <grid id="b77f6" layout-manager="CardLayout" hgap="0" vgap="0">
+            <constraints>
+              <grid row="5" column="0" row-span="1" col-span="6" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <background color="-14342875"/>
+            </properties>
+            <border type="none"/>
+            <children/>
+          </grid>
+        </children>
+      </grid>
+      <grid id="f8985" binding="AdminLogin" layout-manager="GridLayoutManager" row-count="15" column-count="6" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+        <margin top="0" left="0" bottom="0" right="0"/>
+        <constraints>
+          <card name="Card2"/>
+        </constraints>
+        <properties>
+          <background color="-14803426"/>
+        </properties>
+        <border type="none"/>
+        <children>
+          <component id="b1553" class="javax.swing.JLabel">
+            <constraints>
+              <grid row="9" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <foreground color="-1"/>
+              <text value="Password"/>
+            </properties>
+          </component>
+          <component id="68a6e" class="javax.swing.JPasswordField" binding="passwordField2" default-binding="true">
+            <constraints>
+              <grid row="10" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                <preferred-size width="150" height="-1"/>
+              </grid>
+            </constraints>
+            <properties/>
+          </component>
+          <component id="bb024" class="javax.swing.JButton" binding="signInButton1" default-binding="true">
+            <constraints>
+              <grid row="12" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <background color="-13948043"/>
+              <foreground color="-1"/>
+              <horizontalAlignment value="0"/>
+              <text value="Sign In"/>
+            </properties>
+          </component>
+          <grid id="e0bed" layout-manager="CardLayout" hgap="0" vgap="0">
+            <constraints>
+              <grid row="1" column="0" row-span="13" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <background color="-14803426"/>
+            </properties>
+            <border type="none"/>
+            <children/>
+          </grid>
+          <grid id="ce0b3" layout-manager="CardLayout" hgap="0" vgap="0">
+            <constraints>
+              <grid row="1" column="2" row-span="13" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <background color="-14803426"/>
+            </properties>
+            <border type="none"/>
+            <children/>
+          </grid>
+          <grid id="90b66" layout-manager="CardLayout" hgap="0" vgap="0">
+            <constraints>
+              <grid row="11" column="3" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <background color="-14803426"/>
+            </properties>
+            <border type="none"/>
+            <children/>
+          </grid>
+          <grid id="1dc" layout-manager="CardLayout" hgap="0" vgap="0">
+            <constraints>
+              <grid row="1" column="3" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <background color="-14803426"/>
+            </properties>
+            <border type="none"/>
+            <children/>
+          </grid>
+          <grid id="9cbbc" layout-manager="CardLayout" hgap="0" vgap="0">
+            <constraints>
+              <grid row="13" column="3" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <background color="-14803426"/>
+            </properties>
+            <border type="none"/>
+            <children/>
+          </grid>
+          <grid id="bd8c9" layout-manager="CardLayout" hgap="0" vgap="0">
+            <constraints>
+              <grid row="1" column="5" row-span="13" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <background color="-14803426"/>
+            </properties>
+            <border type="none"/>
+            <children/>
+          </grid>
+          <grid id="1c04d" layout-manager="CardLayout" hgap="0" vgap="0">
+            <constraints>
+              <grid row="1" column="4" row-span="13" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <background color="-14803426"/>
+            </properties>
+            <border type="none"/>
+            <children/>
+          </grid>
+          <grid id="90e62" layout-manager="CardLayout" hgap="0" vgap="0">
+            <constraints>
+              <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <background color="-14803426"/>
+            </properties>
+            <border type="none"/>
+            <children/>
+          </grid>
+          <grid id="be1f8" layout-manager="CardLayout" hgap="0" vgap="0">
+            <constraints>
+              <grid row="14" column="3" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <background color="-14803426"/>
+            </properties>
+            <border type="none"/>
+            <children/>
+          </grid>
+          <component id="4fe69" class="javax.swing.JLabel">
+            <constraints>
+              <grid row="8" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <font size="18"/>
+              <foreground color="-662597"/>
+              <text value="ADMIN"/>
+            </properties>
+          </component>
+          <component id="e0cff" class="javax.swing.JLabel">
+            <constraints>
+              <grid row="9" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <font size="18"/>
+              <foreground color="-1"/>
+              <text value="LOGIN"/>
+            </properties>
+          </component>
+          <component id="9b722" class="javax.swing.JLabel">
+            <constraints>
+              <grid row="7" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <font size="18"/>
+              <foreground color="-1"/>
+              <text value="BIDSY"/>
+            </properties>
+          </component>
+          <component id="f3546" class="javax.swing.JTextField" binding="textField2" default-binding="true">
+            <constraints>
+              <grid row="8" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                <preferred-size width="150" height="-1"/>
+              </grid>
+            </constraints>
+            <properties/>
+          </component>
+          <component id="25273" class="javax.swing.JLabel">
+            <constraints>
+              <grid row="7" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <foreground color="-1"/>
+              <text value="Username"/>
+            </properties>
+          </component>
+          <component id="d8a40" class="javax.swing.JLabel">
+            <constraints>
+              <grid row="6" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <font size="11" style="1"/>
+              <foreground color="-1"/>
+              <text value="Please enter in your username and password to acess the admin dashboard."/>
+            </properties>
+          </component>
+          <component id="528d3" class="javax.swing.JLabel">
+            <constraints>
+              <grid row="4" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <icon value="GUI/AdminIcon.png"/>
+              <text value=""/>
+            </properties>
+          </component>
+          <component id="d6904" class="javax.swing.JLabel">
+            <constraints>
+              <grid row="3" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <font size="16"/>
+              <foreground color="-1"/>
+              <text value="WELCOME!"/>
+            </properties>
+          </component>
+        </children>
+      </grid>
+    </children>
+  </grid>
+</form>
