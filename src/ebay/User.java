@@ -2,7 +2,7 @@ package ebay;
 
 
 
-public class User implements Seller,Bidder {
+public class User implements Seller, Bidder {
     private String username;
     private String password;
     private boolean isSeller;
@@ -69,6 +69,7 @@ public class User implements Seller,Bidder {
     public void placeBid(Item item, double bidAmount) {
         System.out.println(username + " has placed a bid of $" + bidAmount + " on item: " + item.getItemName());
     }
+
 
     @Override
     public void startAuction(Item item) {

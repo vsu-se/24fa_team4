@@ -109,7 +109,7 @@ public class AuctionApp {
         addItemInputFields(addItemPanel);
         tabbedPane.addTab("Add Item", addItemPanel);
 
-
+    setupBidComponents();
     }
 
     private void setupBidComponents() {
@@ -202,6 +202,7 @@ public class AuctionApp {
         JButton setPremiumButton = new JButton("Set Premium");
         holdersPanel.add(setPremiumButton);
 
+
         // Place the holdersPanel in the bottom right corner of the frame
         holdersPanel.setBounds(100, 600, 500, 100);
         frame.add(holdersPanel);
@@ -214,7 +215,13 @@ public class AuctionApp {
             controller.addCategory(category, categoryListModel);
         });
     }
-
+    private void initializeConcludedAuctionsButton() {
+        JButton concludedAuctionsButton = new JButton("Concluded Auctions");
+        DefaultListModel<String> concludedAuctionsModel = new DefaultListModel<>();
+        concludedAuctionsButton.setBounds(735, 650, 150, 30);
+        concludedAuctionsButton.addActionListener(e -> controller.showConcludedAuctions(concludedAuctionsModel));
+        frame.add(concludedAuctionsButton);
+    }
 
     private void addItem() {
         String itemName = itemNameField.getText();
@@ -262,9 +269,6 @@ public class AuctionApp {
 
     private void placeBid() {
         String bidAmountText = bidAmountField.getText();
-//        String selectedItemName = auctionList.getSelectedValue();
-//        Item selectedItem = controller.getItemByName(selectedItemName); // Controller provides the item
-
         double bidAmount;
         try {
             bidAmount = Double.parseDouble(bidAmountText);
@@ -274,5 +278,16 @@ public class AuctionApp {
         }
         String selectedItemName = auctionList.getSelectedValue();
         controller.placeBid(selectedItemName, bidAmount);
+    }
+    private void showBid() {
+        String selectedItemName = auctionList.getSelectedValue();
+        double myBidAmount;
+        try {
+            myBidAmount = Double.parseDouble(bidAmountField.getText());
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(frame, "Invalid bid amount.");
+            return;
+        }
+        controller.showBid(selectedItemName, myBidAmount);
     }
 }

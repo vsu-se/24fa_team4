@@ -26,6 +26,7 @@ public class ItemManager {
         return instance;
     }
 
+
     // Add item to the list
     public void addItem(Item item) {
         items.add(item);
@@ -36,7 +37,7 @@ public class ItemManager {
     }
 
 
-    public List<Item> getAllItems(){
+    public List<Item> getAllItems() {
         return items;
     }
 
@@ -109,4 +110,13 @@ public class ItemManager {
     }
 
 
+    public List<Item> getConcludedAuctions() {
+        List<Item> concludedAuctions = new ArrayList<>();
+        for (Item item : items) {
+            if (item.isAuction() && item.getEndTime() < System.currentTimeMillis()) {
+                concludedAuctions.add(item);
+            }
+        }
+        return concludedAuctions;
+    }
 }

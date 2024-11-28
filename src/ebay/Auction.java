@@ -1,5 +1,6 @@
 package ebay;
 
+import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -8,6 +9,7 @@ public class Auction {
     private Item item;
     private Bid highestBid;
     private boolean isAuctionActive;
+    private long endTime;
 
     public Auction(Item item) {
         this.item = item;
@@ -54,8 +56,17 @@ public class Auction {
         } else {
             System.out.println("Auction ended for item: " + item.getItemName() + " with no bids.");
         }
+        notifyBidders();
     }
-
+    // Method to notify bidders
+    private void notifyBidders() {
+        List<Bid> bids = item.getBids();
+        for (Bid bid : bids) {
+            Bidder bidder = bid.getBidder();
+            // Notify the bidder (e.g., send an email or a message)
+            System.out.println("Notifying bidder: " + bidder.getUsername() + " for item: " + item.getItemName());
+        }
+    }
 
     // Getter for the highest bid
     public Bid getHighestBid() {
@@ -65,6 +76,9 @@ public class Auction {
     // Method to check if the auction is still active
     public boolean isAuctionActive() {
         return isAuctionActive;
+    }
+    public long getEndTime() {
+        return endTime;
     }
 }
 

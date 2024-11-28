@@ -2,6 +2,9 @@ package ebay;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 
@@ -68,6 +71,34 @@ class AuctionTest {
         assertEquals(300.00, auction.getHighestBid().getBidAmount(), 0.01, "Winning bid should be 300.00");
         assertEquals(bidder1, auction.getHighestBid().getBidder(), "Winning bidder should be john_doe");
     }
+    @Test
+    public void testPlaceInvalidBid() {
+        auction.placeBid(bidder1, 300.00);
+        auction.placeBid(bidder2, -200.00);
+        assertEquals(300.00, auction.getHighestBid().getBidAmount(), 0.01, "Highest bid should still be 300.00 as the second bid was invalid");
+        assertEquals(bidder1, auction.getHighestBid().getBidder(), "Highest bidder should still be john_doe");
+    }
+    @Test
+    public void testMultipleBidsFromSameUser() {
+        auction.placeBid(bidder1, 300.00);
+        auction.placeBid(bidder1, 400.00);
+        assertEquals(400.00, auction.getHighestBid().getBidAmount(), 0.01, "Highest bid should be updated to 400.00");
+        assertEquals(bidder1, auction.getHighestBid().getBidder(), "Highest bidder should be john_doe");
+    }
+    @Test
+    public void testBidderNotification() {
+        auction.placeBid(bidder1,300.00);
+        auction.endAuction();
 
+    }
+   /* @Test
+    public void testShowActiveAuctionsWithBids() {
+        auction.placeBid(bidder1, 300.00);
+        auction.placeBid(bidder2, 400.00);
+        List<Auction> activeAuctions = AuctionManager.getActiveAuctions();
+        assertFalse(activeAuctions.isEmpty(), "There should be active auctions with bids");
+        assertTrue(activeAuctions.contains(auction), "Auction 1 should be active");
+        assertTrue(activeAuctions.contains(auction), "Auction 2 should be active");
+    } */
 }
 
