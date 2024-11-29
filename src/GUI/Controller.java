@@ -73,8 +73,9 @@ public class Controller {
     }
 
     // Item management methods
-    public void addItem(String itemName, String description, double price, String imageUrl, boolean isAuction, String itemType, DefaultListModel<String> auctionListModel) {
-        Item newItem = new Item(itemName, description, price, imageUrl, isAuction, itemType);
+    public void addItem(String itemName, String description, double price, String imageUrl, boolean isAuction, String itemType, DefaultListModel<String> auctionListModel, double startPrice) {
+
+        Item newItem = new Item(itemName, description, price, imageUrl, isAuction, itemType, startPrice);
         itemManager.addItem(newItem); // Add item to ItemManager
         auctionListModel.addElement(itemName); // Update UI with new item
 

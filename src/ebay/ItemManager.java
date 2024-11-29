@@ -119,4 +119,14 @@ public class ItemManager {
         }
         return concludedAuctions;
     }
+
+    public List<Item> searchItems(String searchQuery) {
+        List<Item> searchResults = new ArrayList<>();
+        for (Item item : items) {
+            if (item.getItemName().toLowerCase().contains(searchQuery.toLowerCase())) {
+                searchResults.add(item);
+            }
+        }
+        return searchResults;
+    }
 }

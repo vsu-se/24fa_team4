@@ -17,8 +17,8 @@ class AuctionManagerTest {
     @BeforeEach
     void setUp() {
         auctionManager = new AuctionManager();
-        item1 = new Item("Vintage Camera", "A vintage camera from the 1950s", 250.00, "https://example.com/vintage-camera.jpg", true, "Electronics");
-        item2 = new Item("Antique Vase", "An antique vase from the 1800s", 150.00, "https://example.com/antique-vase.jpg", true, "Home Decor");
+        item1 = new Item("Vintage Camera", "A vintage camera from the 1950s", 250.00, "https://example.com/vintage-camera.jpg", true, "Electronics",250.);
+        item2 = new Item("Antique Vase", "An antique vase from the 1800s", 150.00, "https://example.com/antique-vase.jpg", true, "Home Decor",150.0);
         auction1 = new Auction(item1);
         auction2 = new Auction(item2);
     }

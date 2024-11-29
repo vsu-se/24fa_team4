@@ -1,8 +1,13 @@
 package GUI;
 
+import ebay.*;
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import java.awt.BorderLayout;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.util.List;
+
 public class UserHomePage extends JFrame {
 
     private JPanel mainPanel;
@@ -44,6 +49,8 @@ public class UserHomePage extends JFrame {
     private JLabel lblMyBids;
     private JPanel profilePanel;
     private JTextArea txtProfile;
+    private JTextField txtImageUrl;
+    private JTable myAuctionsTable;
 
     private UserHomePageController controller;
 
@@ -90,15 +97,21 @@ public class UserHomePage extends JFrame {
         tabbedPane.addTab("Categories", categoriesTab);
         tabbedPane.addTab("My Auctions", myAuctionsTab);
         tabbedPane.addTab("My Bids", myBidsTab);
+
+
+        myAuctionsTable = new JTable(new DefaultTableModel(new Object[]{"Item Name", "Description", "Price", "Image URL", "Is Auction", "Item Type"}, 0));
+        JScrollPane scrollPane = new JScrollPane(myAuctionsTable);
+        myAuctionsTab.setLayout(new BorderLayout());
+        myAuctionsTab.add(scrollPane, BorderLayout.CENTER);
     }
 
-   /* private void setUpEventListeners() {
+    private void setUpEventListeners() {
         searchBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String searchQuery = searchTextField.getText();
                 controller.handleSearch(searchQuery);
-                // Search for items based on the search query
+
             }
         });
 
@@ -107,7 +120,7 @@ public class UserHomePage extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 double bid = Double.parseDouble(bidAmount.getText());
                 controller.handleBid(bid);
-                // Place a bid on the selected item
+
             }
         });
 
@@ -117,9 +130,94 @@ public class UserHomePage extends JFrame {
                 String itemName = txtItemName.getText();
                 String itemDescription = txtItemDescription.getText();
                 double startPrice = Double.parseDouble(txtStartPrice.getText());
-                controller.handleAddItem(itemName, itemDescription, startPrice);
+                String imageUrl = txtImageUrl.getText();
+
+                controller.handleAddItem(itemName, itemDescription, startPrice, imageUrl);
                 // Add a new item to the system
             }
         });
-    } */
+    }
+    public JButton getSearchBtn() {
+        return searchBtn;
+    }
+    public JTextField getSearchTextField() {
+        return searchTextField;
+    }
+    public JButton getBidButton() {
+        return bidButton;
+    }
+    public JTextField getBidAmount() {
+        return bidAmount;
+    }
+    public JTextField getItemName() {
+        return txtItemName;
+    }
+    public JTextField getDescription() {
+        return txtItemDescription;
+    }
+
+    public JTextField getStartPrice() {
+        return txtStartPrice;
+    }
+    public JTextField getImageUrl() {
+        return txtImageUrl;
+    }
+
+    public JCheckBox getIsAuction() {
+        return new JCheckBox();
+    }
+
+
+    public JComboBox<String> getItemType() {
+        return null;
+    }
+
+    public Item getSelectedItem() {
+        // Get the selected item from the UI
+        return null;
+    }
+
+    public void showInfo(String message) {
+        JOptionPane.showMessageDialog(this, message);
+    }
+
+    public void showError(String message) {
+        JOptionPane.showMessageDialog(this, message, "Error", JOptionPane.ERROR_MESSAGE);
+    }
+
+    public AbstractButton getAddItemBtn() {
+        return addItemBtn;
+    }
+
+    public void showSearchResults(List<Item> searchResults) {
+        // Display the search results in the UI
+    }
+
+    public void showConcludedAuctions(List<Item> concludedAuctions) {
+
+    }
+    public void addItemToMyAuctions(Item item) {
+        // Add the item to the "My Auctions" tab
+        DefaultTableModel model = (DefaultTableModel) myAuctionsTable.getModel();
+        model.addRow(new Object[]{
+                item.getItemName(),
+                item.getDescription(),
+                item.getBuyItNowPrice(),
+                item.getImageUrl(),
+                item.isAuction(),
+                item.getItemType(),
+                item.getStartPrice()
+        });
+    }
+    public void switchToMyAuctionsTab() {
+        tabbedPane.setSelectedComponent(myAuctionsTab);
+    }
+    public void startAuction(Item item, long endTime) {
+        // Set auction details and start the auction
+        item.setAuction(true);
+        item.setEndTime(endTime);
+        controller.startAuction(item, endTime);
+        showInfo("Auction started successfully!");
+    }
+
 }

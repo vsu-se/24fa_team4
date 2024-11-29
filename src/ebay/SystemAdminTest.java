@@ -17,7 +17,7 @@ public class SystemAdminTest {
         itemManager = ItemManager.getInstance();
         systemAdmin = new SystemAdmin("Password", "admin", "admin123", userManager);
         user1 = new User("john_doe", "password123", true, false);
-        item1 = new Item("Vintage Camera", "A vintage camera from the 1950s", 250.00, "https://example.com/vintage-camera.jpg", true, "Electronics");
+        item1 = new Item("Vintage Camera", "A vintage camera from the 1950s", 250.00, "https://example.com/vintage-camera.jpg", true, "Electronics",250.00);
         userManager.addUser(user1);
     }
 
