@@ -80,8 +80,8 @@ public class User implements Seller, Bidder {
     @Override
     public void startAuction(Item item) {
         if (isSeller && item.isAuction()) {
-            Auction auction = new Auction(item);
-            ItemManager.getInstance().addAuction(auction);
+            item.setAuction(true);
+            ItemManager.getInstance().startAuction(item);
             System.out.println(username + " has started an auction for item: " + item.getItemName() + " (ID: " + item.getItemId() + ")");
         } else {
             System.out.println(username + " is not authorized to start an auction or the item is not available for auction.");

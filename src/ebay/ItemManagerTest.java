@@ -90,7 +90,7 @@ class ItemManagerTest {
         // Start an auction for item1
         itemManager.addItem(item1);
         Auction auction = new Auction(item1);
-        itemManager.addAuction(auction);
+        itemManager.startAuction(item1);
 
         assertEquals(1, itemManager.getActiveAuctions().size());
         assertEquals("Vintage Camera", itemManager.getActiveAuctions().get(0).getItem().getItemName());

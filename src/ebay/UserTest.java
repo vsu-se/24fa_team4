@@ -123,17 +123,16 @@ class UserTest {
 
     @Test
     void testStartAuction() {
-        // Seller lists an auction item
+        System.setOut(new PrintStream(outContent));
         sellerUser.listItem(testItem);
-
-        // Seller starts an auction for the item
         sellerUser.startAuction(testItem);
-
-        // Check if the auction is successfully started
         assertEquals(1, ItemManager.getInstance().getActiveAuctions().size());
         assertTrue(ItemManager.getInstance().getActiveAuctions().get(0).isAuctionActive());
-        // Check the output
-        assertEquals("sellerUser has started an auction for item: Vintage Camera (ID: 1)", outContent.toString().trim());
+
+        String expectedOutput = "sellerUser has started an auction for item: Vintage Camera (ID: " + testItem.getItemId() + ")";
+        System.setOut(originalOut);
+        assertEquals(expectedOutput, outContent.toString().trim());
+        
     }
 
     @Test
@@ -160,6 +159,24 @@ class UserTest {
     }
     @Test
     void testShowSellerReport() {
+            // Initialize bought items
+            soldItem1 = new Item(
+                    "Retro Radio",
+                    "A retro-style radio with modern features.",
+                    100.00,
+                    "https://example.com/retro-radio.jpg",
+                    false,
+                    "Electronics"
+            );
+
+            soldItem2 = new Item(
+                    "Modern Lamp",
+                    "A modern lamp with a sleek design.",
+                    75.00,
+                    "https://example.com/modern-lamp.jpg",
+                    false,
+                    "Home Decor"
+            );
         sellerUser.addSoldItem(soldItem1);
         sellerUser.addSoldItem(soldItem2);
 
