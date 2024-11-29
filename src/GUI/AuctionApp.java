@@ -238,7 +238,7 @@ public class AuctionApp {
         String itemType = itemTypeField.getText();
 
         // Add the item to the system
-        controller.addItem(itemName, description, price, imageUrl, isAuction, itemType, auctionListModel);
+        controller.addItem(itemName, description, price, imageUrl, isAuction, itemType, auctionListModel, price);
         JOptionPane.showMessageDialog(frame, "Item added successfully: " + itemName);
 
         // Clear the text fields after adding the item

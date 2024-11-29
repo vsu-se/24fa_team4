@@ -8,6 +8,7 @@ public class Item {
     private String itemName;
     private String description;
     private double buyItNowPrice;
+    private double startPrice;
     private String imageUrl;
     private boolean isAuction;
     private String itemType;
@@ -18,10 +19,11 @@ public class Item {
     private List<Bid> bids;
 
     // Constructor
-    public Item(String itemName, String description, double buyItNowPrice, String imageUrl, boolean isAuction, String itemType) {
+    public Item(String itemName, String description, double buyItNowPrice, String imageUrl, boolean isAuction, String itemType, double startPrice) {
         this.itemName = itemName;
         this.description = description;
         this.buyItNowPrice = buyItNowPrice;
+        this.startPrice = startPrice;
         this.imageUrl = imageUrl;
         this.isAuction = isAuction;
         this.itemType = itemType;
@@ -42,6 +44,9 @@ public class Item {
         return buyItNowPrice;
     }
 
+    public double getStartPrice() {
+        return startPrice; }
+
     public String getImageUrl() {
         return imageUrl;
     }
@@ -58,9 +63,12 @@ public class Item {
 
     public String getTimeRemaining() {return timeRemaining;}
 
-    public void placeBid(Bid bid) {this.highestBid = bid;}
+    public boolean placeBid(Bid bid) {this.highestBid = bid;
+        return false;
+    }
 
     public List<Bid> getBids() {return bids;}
+
 
 
     // Setters for fields the seller can update
@@ -72,9 +80,9 @@ public class Item {
         this.description = description;
     }
 
-    public void setBuyItNowPrice(double buyItNowPrice) {
-        this.buyItNowPrice = buyItNowPrice;
-    }
+    public void setBuyItNowPrice(double buyItNowPrice) {this.buyItNowPrice = buyItNowPrice; }
+
+    public void setStartPrice(double startPrice) { this.startPrice = startPrice;}
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
@@ -107,6 +115,8 @@ public class Item {
     public void setBids(List<Bid> bids) {
         this.bids = bids;
     }
+
+
 }
 
 

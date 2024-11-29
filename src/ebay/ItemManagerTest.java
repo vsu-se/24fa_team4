@@ -29,7 +29,8 @@ class ItemManagerTest {
                 250.00,
                 "https://example.com/vintage-camera.jpg",
                 true, // Auction item
-                "Electronics"
+                "Electronics",
+                250.00
         );
 
         item2 = new Item(
@@ -38,7 +39,8 @@ class ItemManagerTest {
                 150.00,
                 "https://example.com/retro-radio.jpg",
                 false, // Buy It Now item
-                "Electronics"
+                "Electronics",
+                150.00
         );
     }
 
@@ -90,7 +92,7 @@ class ItemManagerTest {
         // Start an auction for item1
         itemManager.addItem(item1);
         Auction auction = new Auction(item1);
-        itemManager.addAuction(auction);
+        itemManager.startAuction(item1);
 
         assertEquals(1, itemManager.getActiveAuctions().size());
         assertEquals("Vintage Camera", itemManager.getActiveAuctions().get(0).getItem().getItemName());

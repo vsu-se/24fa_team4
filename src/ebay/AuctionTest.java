@@ -18,7 +18,7 @@ class AuctionTest {
 
     @BeforeEach
     public void setUp() {
-        item = new Item("Vintage Camera", "A vintage camera from the 1950s", 250.00, "https://example.com/vintage-camera.jpg", true, "Electronics");
+        item = new Item("Vintage Camera", "A vintage camera from the 1950s", 250.00, "https://example.com/vintage-camera.jpg", true, "Electronics",250.0);
         auction = new Auction(item);
         bidder1 = new User("john_doe", "password123", false, true);
         bidder2 = new User("jane_doe", "password456", false, true);
