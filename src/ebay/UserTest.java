@@ -132,11 +132,14 @@ class UserTest {
         assertEquals(1, ItemManager.getInstance().getActiveAuctions().size());
         assertTrue(ItemManager.getInstance().getActiveAuctions().get(0).isAuctionActive());
 
-        String expectedOutput = "sellerUser has started an auction for item: Vintage Camera (ID: " + testItem.getItemId() + ")";
+        String expectedOutput = "sellerUser has listed an item: Vintage Camera\n" +
+                "sellerUser has started an auction for item: Vintage Camera (ID: " + testItem.getItemId() + ")";
         System.setOut(originalOut);
-        assertEquals(expectedOutput, outContent.toString().trim());
-        
+        String actualOutput = outContent.toString().trim();
+        System.out.println("Actual Output: " + actualOutput);
+        assertEquals(expectedOutput, actualOutput);
     }
+
 
     @Test
     void testBuyItNow() {

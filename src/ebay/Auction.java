@@ -22,10 +22,10 @@ public class Auction {
     }
 
     // Method to place a bid
-    public void placeBid(Bidder bidder, double bidAmount) {
+    public boolean placeBid(Bidder bidder, double bidAmount) {
         if (!isAuctionActive) {
             System.out.println("Auction for item " + item.getItemName() + " has ended. No more bids can be placed.");
-            return;
+            return false;
         }
 
         if (highestBid == null || bidAmount > highestBid.getBidAmount()) {
@@ -34,6 +34,7 @@ public class Auction {
         } else {
             System.out.println("Bid must be higher than the current highest bid.");
         }
+        return false;
     }
 
     // Method to start the auction timer

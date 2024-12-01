@@ -68,10 +68,7 @@ public class ItemManager {
         if (items.contains(item) && item.isAuction()) {
             Auction auction = new Auction(item);
             activeAuctions.add(auction);
-            System.out.println("Auction started for item: " + item.getItemName() + " (ID: " + item.getItemId() + ")");
             return auction;
-        } else {
-            System.out.println("Item is not available for auction or does not exist.");
         }
         return null;
     }
@@ -128,5 +125,14 @@ public class ItemManager {
             }
         }
         return searchResults;
+    }
+
+    public Auction getAuctionForItem(Item selectedItem) {
+        for (Auction auction : activeAuctions) {
+            if (auction.getItem().equals(selectedItem)) {
+                return auction;
+            }
+        }
+        return null;
     }
 }
