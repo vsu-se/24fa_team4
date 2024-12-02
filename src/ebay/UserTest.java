@@ -155,7 +155,7 @@ class UserTest {
         sellerUser.listItem(buyNowItem);
 
         // Buyer purchases the item using "Buy It Now"
-        users.buyItNow(buyNowItem, sellerUser);
+        users.buyItNow(buyNowItem);
 
         // Check if the item is successfully removed from ItemManager
         assertEquals(0, ItemManager.getInstance().getAllItems().size());

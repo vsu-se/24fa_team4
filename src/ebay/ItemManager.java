@@ -6,7 +6,7 @@ import java.util.UUID;
 
 public class ItemManager {
 
-    private static ItemManager instance;
+    public static ItemManager instance;
 
     //This will hold all the items for our ebay project/ active auctions
     private final List<Item> items;
@@ -129,4 +129,63 @@ public class ItemManager {
         }
         return searchResults;
     }
+    //populate a default list in order
+    // to have active auctions when first logging in
+    public void populateDefaultActiveAuctions() {
+        // Create some default items for demonstration purposes
+        Item item1 = new Item(
+                "Vintage Watch",
+                "A beautiful vintage watch in excellent condition.",
+                100.00,
+                "image_url_vintage_watch.jpg",
+                true, // isAuction
+                "Accessories",
+                0
+        );
+        item1.setEndTime(System.currentTimeMillis() + 86400000); // 1 day from now
+        addItem(item1);
+        startAuction(item1);
+
+        Item item2 = new Item(
+                "Gaming Laptop",
+                "High-performance gaming laptop with 16GB RAM and RTX 3070.",
+                1200.00,
+                "image_url_gaming_laptop.jpg",
+                true, // isAuction
+                "Electronics",
+                0
+        );
+        item2.setEndTime(System.currentTimeMillis() + 172800000); // 2 days from now
+        addItem(item2);
+        startAuction(item2);
+
+        Item item3 = new Item(
+                "Artisan Coffee Table",
+                "Handcrafted wooden coffee table with a modern design.",
+                300.00,
+                "image_url_coffee_table.jpg",
+                true, // isAuction
+                "Furniture",
+                0
+        );
+        item3.setEndTime(System.currentTimeMillis() + 259200000); // 3 days from now
+        addItem(item3);
+        startAuction(item3);
+
+        Item item4 = new Item(
+                "2020 Electric Sedan",
+                "Eco-friendly electric car with 250 miles of range.",
+                20000.00,
+                "image_url_electric_sedan.jpg",
+                true, // isAuction
+                "Vehicles",
+                0
+        );
+        item4.setEndTime(System.currentTimeMillis() + 432000000); // 5 days from now
+        addItem(item4);
+        startAuction(item4);
+
+        System.out.println("Default active auctions populated.");
+    }
+
 }

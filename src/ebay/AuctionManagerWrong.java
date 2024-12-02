@@ -1,5 +1,5 @@
-package ebay;
-
+/* package ebay;
+DONT USE THIS/CAN BE DELETED
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,5 +23,6 @@ import java.util.List;
             }
             return activeAuctions;
         }
-
     }
+}
+*/
