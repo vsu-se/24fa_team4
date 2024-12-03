@@ -63,12 +63,11 @@ public class Item {
 
     public String getTimeRemaining() {return timeRemaining;}
 
-    public boolean placeBid(Bid bid) {this.highestBid = bid;
-        return false;
+    public void placeBid(Bid bid) {
+        bids.add(bid);
     }
 
     public List<Bid> getBids() {return bids;}
-
 
 
     // Setters for fields the seller can update
@@ -108,13 +107,6 @@ public class Item {
         this.endTime = endTime;
     }
 
-    public void setTimeRemaining(String timeRemaining) {
-        this.timeRemaining = timeRemaining;
-    }
-
-    public void setBids(List<Bid> bids) {
-        this.bids = bids;
-    }
 
 
 }
