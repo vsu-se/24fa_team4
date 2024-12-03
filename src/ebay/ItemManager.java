@@ -8,11 +8,11 @@ public class ItemManager {
 
     public static ItemManager instance;
 
-    //This will hold all the items for our ebay project/ active auctions
+    // This will hold all the items for our ebay project/active auctions
     private final List<Item> items;
-    private final List<Auction> activeAuctions;
+    private final List<Item> activeAuctions;
 
-    //Private Constructor for singleton pattern
+    // Private Constructor for singleton pattern
     private ItemManager() {
         this.items = new ArrayList<>();
         this.activeAuctions = new ArrayList<>();
@@ -26,7 +26,6 @@ public class ItemManager {
         return instance;
     }
 
-
     // Add item to the list
     public void addItem(Item item) {
         items.add(item);
@@ -35,7 +34,6 @@ public class ItemManager {
     public synchronized void removeItem(String itemName) {
         items.removeIf(item -> item.getItemName().equals(itemName));
     }
-
 
     public List<Item> getAllItems() {
         return items;
@@ -64,21 +62,29 @@ public class ItemManager {
         return null;  // Item not found
     }
 
-    public Auction startAuction(Item item) {
+    public void startAuction(Item item, long endTime) {
         if (items.contains(item) && item.isAuction()) {
+<<<<<<< Updated upstream
             Auction auction = new Auction(item);
             activeAuctions.add(auction);
             System.out.println("Auction started for item: " + item.getItemName() + " (ID: " + item.getItemId() + ")");
             return auction;
+=======
+            item.setAuctionActive(true);
+            item.setEndTime(endTime);
+            activeAuctions.add(item);
+            System.out.println("Auction started for item: " + item.getItemName() + " (ID: " + item.getItemId() + ")");
+>>>>>>> Stashed changes
         } else {
             System.out.println("Item is not available for auction or does not exist.");
         }
-        return null;
     }
 
-    public void addAuction(Auction auction) {
-        activeAuctions.add(auction);
-        System.out.println("Auction added for item: " + auction.getItem().getItemName());
+    public void placeBid(Item item, Bid bid) {
+        if (item.isAuction() && item.isAuctionActive() && bid.getBidAmount() > item.getStartPrice()) {
+            item.getBids().add(bid);
+            item.setStartPrice(bid.getBidAmount());
+        }
     }
 
     public void buyItNow(Item item, User buyer) {
@@ -90,7 +96,7 @@ public class ItemManager {
         }
     }
 
-    public List<Auction> getActiveAuctions() {
+    public List<Item> getActiveAuctions() {
         return activeAuctions;
     }
 
@@ -108,7 +114,6 @@ public class ItemManager {
         }
         return null;
     }
-
 
     public List<Item> getConcludedAuctions() {
         List<Item> concludedAuctions = new ArrayList<>();
@@ -146,6 +151,25 @@ public class ItemManager {
         addItem(item1);
         startAuction(item1);
 
+<<<<<<< Updated upstream
+=======
+    // Populate a default list in order to have active auctions when first logging in
+    public void populateDefaultActiveAuctions() {
+        // Create some default items for demonstration purposes
+        Item item1 = new Item(
+                "Vintage Watch",
+                "A beautiful vintage watch in excellent condition.",
+                100.00,
+                "image_url_vintage_watch.jpg",
+                true, // isAuction
+                "Accessories",
+                0
+        );
+        item1.setEndTime(System.currentTimeMillis() + 86400000); // 1 day from now
+        addItem(item1);
+        startAuction(item1, item1.getEndTime());
+
+>>>>>>> Stashed changes
         Item item2 = new Item(
                 "Gaming Laptop",
                 "High-performance gaming laptop with 16GB RAM and RTX 3070.",
@@ -157,7 +181,11 @@ public class ItemManager {
         );
         item2.setEndTime(System.currentTimeMillis() + 172800000); // 2 days from now
         addItem(item2);
+<<<<<<< Updated upstream
         startAuction(item2);
+=======
+        startAuction(item2, item2.getEndTime());
+>>>>>>> Stashed changes
 
         Item item3 = new Item(
                 "Artisan Coffee Table",
@@ -170,7 +198,11 @@ public class ItemManager {
         );
         item3.setEndTime(System.currentTimeMillis() + 259200000); // 3 days from now
         addItem(item3);
+<<<<<<< Updated upstream
         startAuction(item3);
+=======
+        startAuction(item3, item3.getEndTime());
+>>>>>>> Stashed changes
 
         Item item4 = new Item(
                 "2020 Electric Sedan",
@@ -183,9 +215,17 @@ public class ItemManager {
         );
         item4.setEndTime(System.currentTimeMillis() + 432000000); // 5 days from now
         addItem(item4);
+<<<<<<< Updated upstream
         startAuction(item4);
 
         System.out.println("Default active auctions populated.");
     }
 
 }
+=======
+        startAuction(item4, item4.getEndTime());
+
+        System.out.println("Default active auctions populated.");
+    }
+}
+>>>>>>> Stashed changes

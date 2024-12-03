@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.util.List;
 import java.util.UUID;
 
 class ItemManagerTest {
@@ -13,8 +12,6 @@ class ItemManagerTest {
     private ItemManager itemManager;
     private Item item1;
     private Item item2;
-    private Bidder bidder1;
-    private Bidder bidder2;
 
     @BeforeEach
     void setUp() {
@@ -88,14 +85,13 @@ class ItemManagerTest {
     }
 
     @Test
-    void testAddAuction() {
+    void testStartAuction() {
         // Start an auction for item1
         itemManager.addItem(item1);
-        Auction auction = new Auction(item1);
-        itemManager.startAuction(item1);
+        itemManager.startAuction(item1, System.currentTimeMillis() + 86400000);
 
         assertEquals(1, itemManager.getActiveAuctions().size());
-        assertEquals("Vintage Camera", itemManager.getActiveAuctions().get(0).getItem().getItemName());
+        assertEquals("Vintage Camera", itemManager.getActiveAuctions().get(0).getItemName());
     }
 
     @Test
@@ -125,7 +121,4 @@ class ItemManagerTest {
         Item notFoundItem = itemManager.getItemByUUID(randomUUID);
         assertNull(notFoundItem);
     }
-
-
 }
-
