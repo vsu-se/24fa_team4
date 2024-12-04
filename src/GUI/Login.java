@@ -12,7 +12,8 @@ public class Login extends JFrame {
 
     private JPanel ParentPanel;  // Main container with CardLayout
     private JPanel WelcomePanel; // First panel
-    private JPanel AdminLogin;   // Second panel
+    private JPanel AdminLogin;// Second panel
+    private JPanel NewUserRegistrationPanel;
     private JTextField textField1;
     private JPasswordField passwordField1;
     private JButton signInButton;
@@ -20,8 +21,13 @@ public class Login extends JFrame {
     private JTextField textField2;
     private JPasswordField passwordField2;
     private JButton signInButton1;
+    private JButton newUserClickHereButton;
+    private JButton createAccountButton;
+    private JTextField textField3;
+    private JPasswordField passwordField3;
+    private JButton signInButton3;
 
-    private UserController userController;
+    private final UserController userController;
 
     public Login() {
         userController = new UserController();
@@ -30,6 +36,7 @@ public class Login extends JFrame {
         ParentPanel.setLayout(new CardLayout());
         ParentPanel.add(WelcomePanel, "WelcomePanel");
         ParentPanel.add(AdminLogin, "AdminLogin");
+        ParentPanel.add(NewUserRegistrationPanel, "NewUserRegistrationPanel");
 
         // Set up the JFrame
         setContentPane(ParentPanel);
@@ -76,8 +83,29 @@ public class Login extends JFrame {
                 }
             }
         });
-    }
 
+        newUserClickHereButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String username = textField3.getText();
+                String password = new String(passwordField3.getPassword());
+                CardLayout layout = (CardLayout) ParentPanel.getLayout();
+                layout.show(ParentPanel, "NewUserRegistrationPanel");
+            }
+        });
+
+        createAccountButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String username = textField3.getText();
+                String password = new String(passwordField3.getPassword());
+                userController.registerUser(username, password);
+                JOptionPane.showMessageDialog(Login.this, "Account created successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
+                CardLayout layout = (CardLayout) ParentPanel.getLayout();
+                layout.show(ParentPanel, "WelcomePanel");
+            }
+        });
+    }
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> new Login());
     }
