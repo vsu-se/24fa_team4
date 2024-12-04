@@ -1,17 +1,15 @@
 package ebay;
 
-<<<<<<< Updated upstream
-
-=======
 import java.util.ArrayList;
 import java.util.List;
->>>>>>> Stashed changes
 
 public class User implements Seller, Bidder {
     private String username;
     private String password;
     private boolean isSeller;
     private boolean isBidder;
+    private List<Item> soldItems = new ArrayList<>();
+    private List<Item> boughtItems = new ArrayList<>();
 
     public User(String username, String password, boolean isSeller, boolean isBidder) {
         this.username = username;
@@ -90,11 +88,6 @@ public class User implements Seller, Bidder {
         }
     }
 
-<<<<<<< Updated upstream
-
-}
-
-=======
     public void addSoldItem(Item item) {
         if (item != null) {
             soldItems.add(item);
@@ -165,5 +158,8 @@ public class User implements Seller, Bidder {
         System.out.printf("Total Spent: %.2f%n", totalSpent);
         System.out.printf("Total Shipping Costs: %.2f%n", totalShippingCosts);
     }
+
+    public Iterable<? extends Item> getBoughtItems() {
+        return boughtItems;
+    }
 }
->>>>>>> Stashed changes

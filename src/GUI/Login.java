@@ -1,4 +1,7 @@
+
 package GUI;
+
+import ebay.UserController;
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,7 +21,11 @@ public class Login extends JFrame {
     private JPasswordField passwordField2;
     private JButton signInButton1;
 
+    private UserController userController;
+
     public Login() {
+        userController = new UserController();
+
         // Set up the ParentPanel with CardLayout
         ParentPanel.setLayout(new CardLayout());
         ParentPanel.add(WelcomePanel, "WelcomePanel");
@@ -41,10 +48,37 @@ public class Login extends JFrame {
                 layout.show(ParentPanel, "AdminLogin");
             }
         });
+
+        signInButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String username = textField1.getText();
+                String password = new String(passwordField1.getPassword());
+                if (userController.login(username, password)) {
+                    new UserHomePage(username, password, userController);
+                    dispose();
+                } else {
+                    JOptionPane.showMessageDialog(Login.this, "Invalid username or password", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        });
+
+        signInButton1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String username = textField2.getText();
+                String password = new String(passwordField2.getPassword());
+                if (userController.login(username, password)) {
+                    new UserHomePage(username, password, userController);
+                    dispose();
+                } else {
+                    JOptionPane.showMessageDialog(Login.this, "Invalid username or password", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        });
     }
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> new Login());
     }
 }
-

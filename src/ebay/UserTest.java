@@ -131,15 +131,7 @@ class UserTest {
     @Test
     void testBuyItNowWithUser() {
         sellerUser.listItem(buyNowItem);
-<<<<<<< Updated upstream
-
-        // Buyer purchases the item using "Buy It Now"
         users.buyItNow(buyNowItem);
-
-        // Check if the item is successfully removed from ItemManager
-=======
-        users.buyItNow(buyNowItem);
->>>>>>> Stashed changes
         assertEquals(0, ItemManager.getInstance().getAllItems().size());
     }
 }
