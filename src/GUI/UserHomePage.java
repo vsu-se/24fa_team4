@@ -162,6 +162,17 @@ public class UserHomePage extends JFrame {
                 generateBuyerReport();
             }
         });
+
+        logoutButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Dispose of the current UserHomePage frame
+                dispose();
+
+                // Redirect to the Login page
+                SwingUtilities.invokeLater(() -> new Login());
+            }
+        });
     }
 
     private void generateBuyerReport() {
