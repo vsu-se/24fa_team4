@@ -1,7 +1,7 @@
 
 package GUI;
 
-import ebay.UserController;
+import ebay.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -31,7 +31,7 @@ public class Login extends JFrame {
 
     public Login() {
         userController = new UserController();
-
+        ItemManager itemManager = new ItemManager();
         // Set up the ParentPanel with CardLayout
         ParentPanel.setLayout(new CardLayout());
         ParentPanel.add(WelcomePanel, "WelcomePanel");

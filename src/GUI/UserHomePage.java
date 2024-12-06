@@ -55,6 +55,9 @@ public class UserHomePage extends JFrame {
     private JComboBox<String> categoryComboBox;
     private JButton buyerReportBtn;
     private JTextArea buyerReportArea;
+    private JTextField txtSellerCommission;
+    private JTextField txtBuyerPremium;
+    private JButton saveSettingsBtn;
 
     private ItemController itemController;
     private String username;
@@ -73,8 +76,14 @@ public class UserHomePage extends JFrame {
         setSize(800, 600);
         setLocationRelativeTo(null);
 
+        if (userController.getCurrentUser() == null) {
+            showError("No user is currently logged in.");
+            return;
+        }
+
         customizeComponents();
         setUpEventListeners();
+        populateBuyTab();
 
         add(mainPanel);
         setVisible(true);
@@ -89,7 +98,19 @@ public class UserHomePage extends JFrame {
         buyerReportBtn = new JButton("Generate Buyer Report");
         buyerReportArea = new JTextArea(10, 50);
         buyerReportArea.setEditable(false);
+        lblItemCategory.add(categoryComboBox);
+        saveSettingsBtn = new JButton("Save Settings");
 
+        boolean isAdmin = userController.getCurrentUser().isAdmin();
+        if (isAdmin) {
+            txtSellerCommission = new JTextField();
+            txtBuyerPremium = new JTextField();
+            profilePanel.add(new JLabel("Seller Commission:"));
+            profilePanel.add(txtSellerCommission);
+            profilePanel.add(new JLabel("Buyer Premium:"));
+            profilePanel.add(txtBuyerPremium);
+            profilePanel.add(saveSettingsBtn);
+        }
         setupTabs();
     }
 
@@ -132,7 +153,15 @@ public class UserHomePage extends JFrame {
                 }
             }
         });
-
+        categoryComboBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String selectedCategory = (String) categoryComboBox.getSelectedItem();
+                if (selectedCategory != null) {
+                    itemController.filterItemsByCategory(selectedCategory);
+                }
+            }
+        });
         addItemBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -162,8 +191,22 @@ public class UserHomePage extends JFrame {
                 generateBuyerReport();
             }
         });
-    }
 
+        saveSettingsBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    double sellerCommission = Double.parseDouble(txtSellerCommission.getText());
+                    double buyerPremium = Double.parseDouble(txtBuyerPremium.getText());
+                    userController.setSellerCommission(sellerCommission);
+                    userController.setBuyerPremium(buyerPremium);
+                    showInfo("Settings saved successfully!");
+                } catch (NumberFormatException ex) {
+                    showError("Please enter valid numbers for commission and premium.");
+                }
+            }
+        });
+    }
     private void generateBuyerReport() {
         User currentUser = userController.getCurrentUser();
         if (currentUser != null) {
@@ -275,6 +318,17 @@ public class UserHomePage extends JFrame {
                 item.getItemType(),
                 item.getStartPrice()
         });
+    }
+    private void populateBuyTab() {
+        List<Item> items = itemController.getActiveAuctions();
+        DefaultTableModel model = new DefaultTableModel(new Object[]{"Item Name", "Description", "Buy It Now Price"}, 0);
+        for (Item item : items) {
+            model.addRow(new Object[]{item.getItemName(), item.getDescription(), item.getBuyItNowPrice()});
+        }
+        JTable buyTable = new JTable(model);
+        JScrollPane scrollPane = new JScrollPane(buyTable);
+        buyTab.setLayout(new BorderLayout());
+        buyTab.add(scrollPane, BorderLayout.CENTER);
     }
 
     public void switchToMyAuctionsTab() {

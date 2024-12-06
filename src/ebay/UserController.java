@@ -1,11 +1,16 @@
 package ebay;
 
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class UserController {
     private User currentUser;
     private Map<String, String> userDatabase;
+    private double buyerPremium;
+    private double sellerCommission;
 
     public UserController() {
         userDatabase = new HashMap<>();
@@ -18,6 +23,7 @@ public class UserController {
         if (userDatabase.containsKey(username) && userDatabase.get(username).equals(password)) {
             currentUser = new User(username, password);
             return true;
+
         }
         return false;
     }
@@ -58,4 +64,20 @@ public class UserController {
             System.out.println("Current user is not authorized to view all users.");
         }
     }
+    public void setSellerCommission(double sellerCommission) {
+        this.sellerCommission = sellerCommission;
+    }
+
+    public double getSellerCommission() {
+        return sellerCommission;
+    }
+
+    public void setBuyerPremium(double buyerPremium){
+        this.buyerPremium = buyerPremium;
+    }
+
+    public double getBuyerPremium() {
+        return buyerPremium;
+    }
+
 }
