@@ -107,7 +107,6 @@ public class UserHomePage extends JFrame {
         myAuctionsTab.setLayout(new BorderLayout());
         myAuctionsTab.add(scrollPane, BorderLayout.CENTER);
     }
-
     private void setUpEventListeners() {
         searchBtn.addActionListener(new ActionListener() {
             @Override
