@@ -1,19 +1,40 @@
+
 package ebay;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
+import java.util.ArrayList;
+
 
 public class ItemController {
     private ItemManager itemManager;
+    private List<Item> items;
 
     public ItemController() {
-        this.itemManager = ItemManager.getInstance();
+        items = new ArrayList<>();
+        itemManager = new ItemManager();
+        itemManager.addItem(new Item("Laptop", "High-end gaming laptop", 500.0, "imageUrl", true, "Electronics", 1000.0));
+        itemManager.addItem(new Item("Smartphone", "Latest model smartphone", 300.0, "imageUrl", true, "Electronics", 700.0));
     }
 
     // Add item
     public void addItem(String itemName, String description, double startPrice, String imageUrl, boolean isAuction, String itemType, double buyItNowPrice) {
         Item newItem = new Item(itemName, description, startPrice, imageUrl, isAuction, itemType, buyItNowPrice);
         itemManager.addItem(newItem);
+    }
+
+    public void filterItemsByCategory(String category) {
+        List<Item> filteredItems = items.stream()
+                .filter(item -> item.getCategory().equalsIgnoreCase(category))
+                .collect(Collectors.toList());
+        updateUIWithFilteredItems(filteredItems);
+    }
+
+    private void updateUIWithFilteredItems(List<Item> filteredItems) {
+        // Update the UI with the filtered items
+        // This method should be implemented to refresh the UI with the filtered items
     }
 
     // Remove item by name
@@ -57,7 +78,7 @@ public class ItemController {
         }
     }
 
-    // Buy it now
+    //Buy it now
     public void buyItNow(String itemName, User buyer) {
         Item item = itemManager.getItemByName(itemName);
         if (item != null) {
@@ -65,27 +86,26 @@ public class ItemController {
         }
     }
 
-    // Get active auctions
+
+
     public List<Item> getActiveAuctions() {
-        return itemManager.getActiveAuctions();
+        return itemManager.getActiveAuctions().stream()
+                .sorted(Comparator.comparing(Item::getEndTime))
+                .collect(Collectors.toList());
     }
 
-    // Get concluded auctions
     public List<Item> getConcludedAuctions() {
         return itemManager.getConcludedAuctions();
     }
 
-    // Search items
     public List<Item> searchItems(String searchQuery) {
         return itemManager.searchItems(searchQuery);
     }
 
-    // Clear all items
     public void clearItems() {
         itemManager.clearItems();
     }
 
-    // Populate default active auctions
     public void populateDefaultActiveAuctions() {
         itemManager.populateDefaultActiveAuctions();
     }

@@ -14,7 +14,7 @@ public class ItemManager {
     private final List<Item> activeAuctions;
 
     // Private Constructor for singleton pattern
-    private ItemManager() {
+    public ItemManager() {
         this.items = new ArrayList<>();
         this.activeAuctions = new ArrayList<>();
     }
