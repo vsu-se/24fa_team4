@@ -282,6 +282,9 @@ public class UserHomePage extends JFrame {
         // Get the list of active auctions (items)
         List<Item> activeAuctionsList = ItemManager.getInstance().populateDefaultActiveAuctions();
 
+        // Sort the active auctions by endTime (soonest to end first)
+        activeAuctionsList.sort((item1, item2) -> Long.compare(item1.getEndTime(), item2.getEndTime()));
+
         // Create a new JList with the list of items
         auctionsList = new JList<>(new DefaultListModel<Item>());
 
