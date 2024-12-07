@@ -52,10 +52,9 @@ public class UserHomePage extends JFrame {
     private JTextArea txtProfile;
     private JTextField txtImageUrl;
     private JTable myAuctionsTable;
-    private JComboBox<String> categoryComboBox;
+    private JList<String> categoryList;
     private JButton buyerReportBtn;
     private JTextArea buyerReportArea;
-
     private ItemController itemController;
     private String username;
     private String password;
@@ -85,10 +84,14 @@ public class UserHomePage extends JFrame {
         bidsyTitle.setText("Bidsy");
 
         txtImageUrl = new JTextField();
-        categoryComboBox = new JComboBox<>(new String[]{"Electronics", "Fashion", "Home & Garden", "Sporting Goods", "Toys & Hobbies", "Other"});
         buyerReportBtn = new JButton("Generate Buyer Report");
         buyerReportArea = new JTextArea(10, 50);
         buyerReportArea.setEditable(false);
+
+        String[] categories = {"Electronics", "Fashion", "Home & Garden", "Sporting Goods", "Toys & Hobbies", "Other"};
+        categoryList = new JList<>(categories);
+        categoryList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        listOfCategories.setViewportView(categoryList);
 
         setupTabs();
     }
@@ -102,7 +105,7 @@ public class UserHomePage extends JFrame {
         tabbedPane.addTab("My Auctions", myAuctionsTab);
         tabbedPane.addTab("My Bids", myBidsTab);
 
-        myAuctionsTable = new JTable(new DefaultTableModel(new Object[]{"Item Name", "Description", "Price", "Image URL", "Is Auction", "Item Type"}, 0));
+        myAuctionsTable = new JTable(new DefaultTableModel(new Object[]{"Item Name", "Description", "Price", "Image URL", "Is Auction", "Categories"}, 0));
         JScrollPane scrollPane = new JScrollPane(myAuctionsTable);
         myAuctionsTab.setLayout(new BorderLayout());
         myAuctionsTab.add(scrollPane, BorderLayout.CENTER);
@@ -136,23 +139,39 @@ public class UserHomePage extends JFrame {
         addItemBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String itemName = txtItemName.getText();
-                String itemDescription = txtItemDescription.getText();
-                double startPrice = Double.parseDouble(txtStartPrice.getText());
-                String imageUrl = txtImageUrl.getText();
-                String category = (String) categoryComboBox.getSelectedItem();
+                try {
+                    String itemName = txtItemName.getText();
+                    String itemDescription = txtItemDescription.getText();
+                    double startPrice = Double.parseDouble(txtStartPrice.getText());
+                    String imageUrl = txtImageUrl.getText();
+                    String category = categoryList.getSelectedValue();
 
-                Item item = new Item(itemName, itemDescription, startPrice, imageUrl, true, category, startPrice);
-                itemController.addItem(itemName, itemDescription, startPrice, imageUrl, true, category, startPrice);
-                addItemToMyAuctions(item);
+                    if (category == null) {
+                        showError("Please select a category.");
+                        return;
+                    }
 
-                // Disable input fields and addItemBtn
-                txtItemName.setEnabled(false);
-                txtItemDescription.setEnabled(false);
-                txtStartPrice.setEnabled(false);
-                txtImageUrl.setEnabled(false);
-                categoryComboBox.setEnabled(false);
-                addItemBtn.setEnabled(false);
+                    Item item = new Item(itemName, itemDescription, startPrice, imageUrl, true, category, startPrice);
+                    itemController.addItem(itemName, itemDescription, startPrice, imageUrl, true, category, startPrice);
+                    addItemToMyAuctions(item);
+
+                    txtItemName.setText("");
+                    txtItemDescription.setText("");
+                    txtStartPrice.setText("");
+                    txtImageUrl.setText("");
+                    categoryList.clearSelection();
+
+                    txtItemName.setEnabled(true);
+                    txtItemDescription.setEnabled(true);
+                    txtStartPrice.setEnabled(true);
+                    txtImageUrl.setEnabled(true);
+                    categoryList.setEnabled(true);
+                    addItemBtn.setEnabled(true);
+                } catch (NumberFormatException ex) {
+                    showError("Please enter a valid number for the start price.");
+                } catch (Exception ex) {
+                    showError("An error occurred while adding the item: " + ex.getMessage());
+                }
             }
         });
 

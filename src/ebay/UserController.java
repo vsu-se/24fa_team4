@@ -16,7 +16,7 @@ public class UserController {
         userDatabase = new HashMap<>();
         // Add some default users for demonstration purposes
         userDatabase.put("validUsername", "validPassword");
-        userDatabase.put("admin", "adminPassword");
+        userDatabase.put("admin", "password");
     }
 
     public boolean login(String username, String password) {
