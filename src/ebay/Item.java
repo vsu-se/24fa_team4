@@ -137,4 +137,8 @@ public class Item {
     public String getCategory() {
         return itemType;
     }
+
+    public String toString() {
+        return itemName +", Starting: $" + startPrice;
+    }
 }

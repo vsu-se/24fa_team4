@@ -8,6 +8,8 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/GUI/UserHomePage.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/UserHomePage.form" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/GUI/UserHomePage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/UserHomePage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ebay/Item.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ebay/Item.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ebay/ItemManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ebay/ItemManager.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -32,7 +34,7 @@
   "keyToString": {
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.WIDTH": "311",
+    "UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.WIDTH": "381",
     "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "/Users/tjcarter/Documents/GitHub2/src/GUI",

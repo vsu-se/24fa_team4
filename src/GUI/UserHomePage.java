@@ -49,10 +49,12 @@ public class UserHomePage extends JFrame {
     private JLabel lblMyBids;
     private JPanel profilePanel;
     private JTextArea txtProfile;
+    private JLabel toBuyLbl;
     private JTextField txtImageUrl;
     private JTable myAuctionsTable;
     private JTable buyTable;
     private JList<String> categoryList;
+    private JList<Item> auctionsList;
     private JButton buyerReportBtn;
     private JTextArea buyerReportArea;
     private ItemController itemController;
@@ -73,13 +75,13 @@ public class UserHomePage extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(800, 600);
         setLocationRelativeTo(null);
-
         customizeComponents();
-        setUpEventListeners();
+
 
         add(mainPanel);
         setVisible(true);
         populateActiveAuctions();
+        setUpEventListeners();
     }
 
     //temporary to make systemadmin page work
@@ -95,10 +97,16 @@ public class UserHomePage extends JFrame {
         buyerReportArea = new JTextArea(10, 50);
         buyerReportArea.setEditable(false);
 
+        //For categories box in Sell tab
         String[] categories = {"Electronics", "Fashion", "Home & Garden", "Sporting Goods", "Toys & Hobbies", "Other"};
         categoryList = new JList<>(categories);
         categoryList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         listOfCategories.setViewportView(categoryList);
+
+        //For activeauctions box in Buy tab
+//        activeAuctions = new JList<>(items);
+//        activeAuctions.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+//        listOfCategories.setViewportView(categoryList);
 
         setupTabs();
     }
@@ -117,13 +125,11 @@ public class UserHomePage extends JFrame {
         myAuctionsTab.setLayout(new BorderLayout());
         myAuctionsTab.add(scrollPane, BorderLayout.CENTER);
 
-        buyTable = new JTable(new DefaultTableModel(new Object[]{"Item Name", "Description", "Price", "Image URL"}, 0));
-        JScrollPane buyScrollPane = new JScrollPane(buyTable);
-        buyTab.setLayout(new BorderLayout());
-        buyTab.add(buyScrollPane, BorderLayout.CENTER);
+//        buyTable = new JTable(new DefaultTableModel(new Object[]{"Item Name", "Description", "Price", "Image URL"}, 0));
+//        JScrollPane buyScrollPane = new JScrollPane(buyTable);
+//        buyTab.setLayout(new BorderLayout());
+//        buyTab.add(buyScrollPane, BorderLayout.CENTER);
 
-        //Sell tab
-       // listOfCategories.setPreferredSize(new Dimension(200, 300));
     }
 
     private void setUpEventListeners() {
@@ -166,6 +172,25 @@ public class UserHomePage extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 dispose();
                 SwingUtilities.invokeLater(() -> new Login());
+            }
+        });
+
+        auctionsList.addListSelectionListener(e -> {
+            if (!e.getValueIsAdjusting()) {
+                Item selectedItem = auctionsList.getSelectedValue();
+                if (selectedItem != null) {
+                    //Populate the JTextArea with the selected item's details
+                    txaItemInfo.setText(String.format("Item Name: %s\n" +
+                                    "Description: %s\n" +
+                                    "Start Price: $%.2f\n" +
+                                    "Buy It Now Price: $%.2f\n" +
+                                    "Category: %s\n" +
+                                    "Auction Active: %b\n",
+                            selectedItem.getItemName(), selectedItem.getDescription(),
+                            selectedItem.getStartPrice(), selectedItem.getBuyItNowPrice(),
+                            selectedItem.getItemType(), selectedItem.isAuction()));
+
+                }
             }
         });
     }
@@ -245,29 +270,30 @@ public class UserHomePage extends JFrame {
         }
     }
 
-    private void populateBuyTab() {
-        DefaultTableModel model = (DefaultTableModel) buyTable.getModel();
-        List<Item> preMadeItems = itemController.getPreMadeItems();
-        for (Item item : preMadeItems) {
-            model.addRow(new Object[]{item.getItemName(), item.getDescription(), item.getStartPrice(), item.getImageUrl()});
-        }
-    }
+//    private void populateBuyTab() {
+//        DefaultTableModel model = (DefaultTableModel) buyTable.getModel();
+//        List<Item> preMadeItems = itemController.getPreMadeItems();
+//        for (Item item : preMadeItems) {
+//            model.addRow(new Object[]{item.getItemName(), item.getDescription(), item.getStartPrice(), item.getImageUrl()});
+//        }
+//    }
 
     private void populateActiveAuctions() {
-        DefaultTableModel model = (DefaultTableModel) myAuctionsTable.getModel();
-        model.setRowCount(0); // Clear existing rows
+        // Get the list of active auctions (items)
+        List<Item> activeAuctionsList = ItemManager.getInstance().populateDefaultActiveAuctions();
 
-        List<Item> items = itemManager.getActiveAuctions();
-        for (Item item : items) {
-            model.addRow(new Object[]{
-                    item.getItemName(),
-                    item.getDescription(),
-                    item.getBuyItNowPrice(),
-                    item.getImageUrl(),
-                    item.isAuction(),
-                    item.getItemType()
-            });
+        // Create a new JList with the list of items
+        auctionsList = new JList<>(new DefaultListModel<Item>());
+
+        // Populate the JList with items from the activeAuctionsList
+        DefaultListModel<Item> listModel = (DefaultListModel<Item>) auctionsList.getModel();
+        for (Item item : activeAuctionsList) {
+            listModel.addElement(item);
         }
+
+        // Optionally, add the auctionsList to a JScrollPane if needed
+        JScrollPane scrollPane = new JScrollPane(auctionsList);
+        activeAuctions.setViewportView(scrollPane);
     }
 
     public void showConcludedAuctions() {
