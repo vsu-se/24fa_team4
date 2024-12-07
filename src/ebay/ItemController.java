@@ -15,8 +15,8 @@ public class ItemController {
     public ItemController() {
         items = new ArrayList<>();
         itemManager = new ItemManager();
-        itemManager.addItem(new Item("Laptop", "High-end gaming laptop", 500.0, "imageUrl", true, "Electronics", 1000.0));
-        itemManager.addItem(new Item("Smartphone", "Latest model smartphone", 300.0, "imageUrl", true, "Electronics", 700.0));
+
+
     }
 
     // Add item
@@ -92,6 +92,14 @@ public class ItemController {
         return itemManager.getActiveAuctions().stream()
                 .sorted(Comparator.comparing(Item::getEndTime))
                 .collect(Collectors.toList());
+    }
+    public List<Item> getPreMadeItems() {
+        List<Item> preMadeAuctions = new ArrayList<>();
+        preMadeAuctions.add(new Item("Camera", "Professional camera", 200.0, "imageUrl", true, "Electronics", 500.0));
+        preMadeAuctions.add(new Item("Bike", "Mountain bike", 150.0, "imageUrl", true, "Sporting Goods", 300.0));
+        preMadeAuctions.add(new Item("Smartphone", "Latest model smartphone", 300.0, "imageUrl", true, "Electronics", 700.0));
+        preMadeAuctions.add(new Item("Laptop", "High-end gaming laptop", 500.0, "imageUrl", true, "Electronics", 1000.0));
+        return preMadeAuctions;
     }
 
     public List<Item> getConcludedAuctions() {

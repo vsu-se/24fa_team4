@@ -1,4 +1,3 @@
-// File: src/GUI/UserHomePage.java
 package GUI;
 
 import ebay.*;
@@ -52,6 +51,7 @@ public class UserHomePage extends JFrame {
     private JTextArea txtProfile;
     private JTextField txtImageUrl;
     private JTable myAuctionsTable;
+    private JTable buyTable;
     private JList<String> categoryList;
     private JButton buyerReportBtn;
     private JTextArea buyerReportArea;
@@ -59,12 +59,14 @@ public class UserHomePage extends JFrame {
     private String username;
     private String password;
     private UserController userController;
+    private ItemManager itemManager;
 
-    public UserHomePage(String username, String password, UserController userController) {
+    public UserHomePage(String username, String password, UserController userController, ItemManager itemManager, ItemController itemController) {
         this.username = username;
         this.password = password;
         this.userController = userController;
-        itemController = new ItemController();
+        this.itemManager = itemManager;
+        this.itemController = itemController;
 
         setTitle("Bidsy");
         setIconImage(new ImageIcon("src/GUI/bidsy_mascot2.png").getImage());
@@ -77,6 +79,7 @@ public class UserHomePage extends JFrame {
 
         add(mainPanel);
         setVisible(true);
+        populateActiveAuctions();
     }
 
     private void customizeComponents() {
@@ -109,6 +112,11 @@ public class UserHomePage extends JFrame {
         JScrollPane scrollPane = new JScrollPane(myAuctionsTable);
         myAuctionsTab.setLayout(new BorderLayout());
         myAuctionsTab.add(scrollPane, BorderLayout.CENTER);
+
+        buyTable = new JTable(new DefaultTableModel(new Object[]{"Item Name", "Description", "Price", "Image URL"}, 0));
+        JScrollPane buyScrollPane = new JScrollPane(buyTable);
+        buyTab.setLayout(new BorderLayout());
+        buyTab.add(buyScrollPane, BorderLayout.CENTER);
     }
 
     private void setUpEventListeners() {
@@ -116,62 +124,26 @@ public class UserHomePage extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String searchQuery = searchTextField.getText();
-                itemController.searchItems(searchQuery);
+                handleSearch(searchQuery);
             }
         });
 
         bidButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                int selectedRow = myAuctionsTable.getSelectedRow();
-                if (selectedRow != -1) {
-                    String itemName = (String) myAuctionsTable.getValueAt(selectedRow, 0);
-                    double bidAmountValue = Double.parseDouble(bidAmount.getText());
-                    Bidder bidder = new User(username, password);
-                    Bid bid = new Bid(bidder, bidAmountValue);
-                    itemController.placeBid(itemName, bid);
-                } else {
-                    showError("Please select an item to place a bid.");
-                }
+                double bid = Double.parseDouble(bidAmount.getText());
+                handleBid(bid);
             }
         });
 
         addItemBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                try {
-                    String itemName = txtItemName.getText();
-                    String itemDescription = txtItemDescription.getText();
-                    double startPrice = Double.parseDouble(txtStartPrice.getText());
-                    String imageUrl = txtImageUrl.getText();
-                    String category = categoryList.getSelectedValue();
-
-                    if (category == null) {
-                        showError("Please select a category.");
-                        return;
-                    }
-
-                    Item item = new Item(itemName, itemDescription, startPrice, imageUrl, true, category, startPrice);
-                    itemController.addItem(itemName, itemDescription, startPrice, imageUrl, true, category, startPrice);
-                    addItemToMyAuctions(item);
-
-                    txtItemName.setText("");
-                    txtItemDescription.setText("");
-                    txtStartPrice.setText("");
-                    txtImageUrl.setText("");
-                    categoryList.clearSelection();
-
-                    txtItemName.setEnabled(true);
-                    txtItemDescription.setEnabled(true);
-                    txtStartPrice.setEnabled(true);
-                    txtImageUrl.setEnabled(true);
-                    categoryList.setEnabled(true);
-                    addItemBtn.setEnabled(true);
-                } catch (NumberFormatException ex) {
-                    showError("Please enter a valid number for the start price.");
-                } catch (Exception ex) {
-                    showError("An error occurred while adding the item: " + ex.getMessage());
-                }
+                String itemName = txtItemName.getText();
+                String itemDescription = txtItemDescription.getText();
+                double startPrice = Double.parseDouble(txtStartPrice.getText());
+                String imageUrl = txtImageUrl.getText();
+                handleAddItem(itemName, itemDescription, startPrice, imageUrl);
             }
         });
 
@@ -185,15 +157,53 @@ public class UserHomePage extends JFrame {
         logoutButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Dispose of the current UserHomePage frame
                 dispose();
-
-                // Redirect to the Login page
                 SwingUtilities.invokeLater(() -> new Login());
             }
         });
     }
 
+    private void handleSearch(String searchQuery) {
+        List<Item> searchResults = itemManager.searchItems(searchQuery);
+        showSearchResults(searchResults);
+    }
+
+    private void handleBid(double bid) {
+        Item selectedItem = getSelectedItem();
+        if (selectedItem != null) {
+            User currentUser = userController.getCurrentUser();
+            Bid newBid = new Bid(currentUser, bid);
+            boolean bidSuccess = selectedItem.placeBid(newBid);
+            if (bidSuccess) {
+                showInfo("Bid placed successfully!");
+            } else {
+                showError("Failed to place bid. Please try again.");
+            }
+        } else {
+            showError("No item selected. Please select an item to bid on.");
+        }
+    }
+
+    private void handleAddItem(String itemName, String itemDescription, double startPrice, String imageUrl) {
+        boolean isAuction = getIsAuction().isSelected();
+        String itemType = (String) getItemType().getSelectedItem();
+
+        if (itemType == null) {
+            showError("Please select an item type.");
+            return;
+        }
+
+        Item newItem = new Item(itemName, itemDescription, startPrice, imageUrl, isAuction, itemType, startPrice);
+        User currentUser = userController.getCurrentUser();
+        if (currentUser != null) {
+            currentUser.listItem(newItem);
+            showInfo("Item added successfully!");
+            addItemToMyAuctions(newItem);
+            switchToMyAuctionsTab();
+        } else {
+            showError("No user is currently logged in.");
+        }
+    }
     private void generateBuyerReport() {
         User currentUser = userController.getCurrentUser();
         if (currentUser != null) {
@@ -228,44 +238,58 @@ public class UserHomePage extends JFrame {
         }
     }
 
-    public JButton getSearchBtn() {
-        return searchBtn;
+    private void populateBuyTab() {
+        DefaultTableModel model = (DefaultTableModel) buyTable.getModel();
+        List<Item> preMadeItems = itemController.getPreMadeItems();
+        for (Item item : preMadeItems) {
+            model.addRow(new Object[]{item.getItemName(), item.getDescription(), item.getStartPrice(), item.getImageUrl()});
+        }
     }
 
-    public JTextField getSearchTextField() {
-        return searchTextField;
+    private void populateActiveAuctions() {
+        DefaultTableModel model = (DefaultTableModel) myAuctionsTable.getModel();
+        model.setRowCount(0); // Clear existing rows
+
+        List<Item> items = itemManager.getActiveAuctions();
+        for (Item item : items) {
+            model.addRow(new Object[]{
+                    item.getItemName(),
+                    item.getDescription(),
+                    item.getBuyItNowPrice(),
+                    item.getImageUrl(),
+                    item.isAuction(),
+                    item.getItemType()
+            });
+        }
     }
 
-    public JButton getBidButton() {
-        return bidButton;
+    public void showConcludedAuctions() {
+        List<Item> concludedAuctions = itemManager.getConcludedAuctions();
+        showConcludedAuctions(concludedAuctions);
     }
 
-    public JTextField getBidAmount() {
-        return bidAmount;
-    }
-
-    public JTextField getItemName() {
-        return txtItemName;
-    }
-
-    public JTextField getDescription() {
-        return txtItemDescription;
-    }
-
-    public JTextField getStartPrice() {
-        return txtStartPrice;
-    }
-
-    public JTextField getImageUrl() {
-        return txtImageUrl;
-    }
+    // Getters for components
+    public JButton getSearchBtn() { return searchBtn; }
+    public JTextField getSearchTextField() { return searchTextField; }
+    public JButton getBidButton() { return bidButton; }
+    public JTextField getBidAmount() { return bidAmount; }
+    public JTextField getItemName() { return txtItemName; }
+    public JTextField getDescription() { return txtItemDescription; }
+    public JTextField getStartPrice() { return txtStartPrice; }
+    public JTextField getImageUrl() { return txtImageUrl; }
+    public JButton getAddItemBtn() { return addItemBtn; }
+    public JButton getLogoutButton() { return logoutButton; }
+    public JButton getBuyerReportBtn() { return buyerReportBtn; }
+    public JTextArea getBuyerReportArea() { return buyerReportArea; }
+    public JTable getMyAuctionsTable() { return myAuctionsTable; }
+    public JTable getBuyTable() { return buyTable; }
 
     public JCheckBox getIsAuction() {
         return new JCheckBox();
     }
 
     public JComboBox<String> getItemType() {
-        return null;
+        return new JComboBox<>();
     }
 
     public Item getSelectedItem() {
@@ -281,20 +305,15 @@ public class UserHomePage extends JFrame {
         JOptionPane.showMessageDialog(this, message, "Error", JOptionPane.ERROR_MESSAGE);
     }
 
-    public AbstractButton getAddItemBtn() {
-        return addItemBtn;
-    }
-
     public void showSearchResults(List<Item> searchResults) {
         // Display the search results in the UI
     }
 
     public void showConcludedAuctions(List<Item> concludedAuctions) {
-
+        // Display the concluded auctions in the UI
     }
 
     public void addItemToMyAuctions(Item item) {
-        // Add the item to the "My Auctions" tab
         DefaultTableModel model = (DefaultTableModel) myAuctionsTable.getModel();
         model.addRow(new Object[]{
                 item.getItemName(),
@@ -311,17 +330,11 @@ public class UserHomePage extends JFrame {
         tabbedPane.setSelectedComponent(myAuctionsTab);
     }
 
-    public void startAuction(Item item, long endTime) {
-        // Set auction details and start the auction
-        item.setAuction(true);
-        item.setEndTime(endTime);
-        itemController.startAuction(item.getItemName(), endTime);
-        showInfo("Auction started successfully!");
-    }
-
     public static void main(String[] args) {
-        // Example usage
         UserController userController = new UserController();
-        new UserHomePage("username", "password", userController);
+        ItemManager itemManager = new ItemManager();
+        ItemController itemController = new ItemController();
+
+        new UserHomePage("username", "password", userController, itemManager, itemController);
     }
 }

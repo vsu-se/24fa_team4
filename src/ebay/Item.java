@@ -115,11 +115,12 @@ public class Item {
         }
     }
 
-    public void placeBid(Bid bid) {
+    public boolean placeBid(Bid bid) {
         if (isAuction && auctionActive && bid.getBidAmount() > startPrice) {
             this.bids.add(bid);
             this.startPrice = bid.getBidAmount();
         }
+        return false;
     }
 
     public void buyItNow(User buyer) {

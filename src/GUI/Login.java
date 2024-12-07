@@ -62,7 +62,7 @@ public class Login extends JFrame {
                 String username = textField1.getText();
                 String password = new String(passwordField1.getPassword());
                 if (userController.login(username, password)) {
-                    new UserHomePage(username, password, userController);
+                    new UserHomePage(username, password, userController, itemManager, new ItemController());
                     dispose();
                 } else {
                     JOptionPane.showMessageDialog(Login.this, "Invalid username or password", "Error", JOptionPane.ERROR_MESSAGE);
@@ -76,7 +76,9 @@ public class Login extends JFrame {
                 String username = textField2.getText();
                 String password = new String(passwordField2.getPassword());
                 if (userController.login(username, password)) {
-                    new UserHomePage(username, password, userController);
+                    ItemManager itemManager = new ItemManager();
+                    ItemController itemController = new ItemController();
+                    new UserHomePage(username, password, userController, itemManager, itemController);
                     dispose();
                 } else {
                     JOptionPane.showMessageDialog(Login.this, "Invalid username or password", "Error", JOptionPane.ERROR_MESSAGE);
