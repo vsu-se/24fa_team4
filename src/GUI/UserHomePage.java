@@ -50,6 +50,7 @@ public class UserHomePage extends JFrame {
     private JPanel profilePanel;
     private JTextArea txtProfile;
     private JLabel toBuyLbl;
+    private JLabel lblUserName;
     private JTextField txtImageUrl;
     private JTable myAuctionsTable;
     private JTable buyTable;
@@ -75,10 +76,13 @@ public class UserHomePage extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(800, 600);
         setLocationRelativeTo(null);
-        customizeComponents();
-
 
         add(mainPanel);
+        customizeComponents();
+
+        User currentUser = userController.getCurrentUser();
+        setWelcomeLabel(currentUser);
+
         setVisible(true);
         populateActiveAuctions();
         setUpEventListeners();
@@ -88,14 +92,22 @@ public class UserHomePage extends JFrame {
     public UserHomePage(String username, String password, UserController usercontroller) {
     }
 
+    private void setWelcomeLabel(User user) {
+        if (user != null) {
+            lblUserName.setText("Username: " + user.getUsername());
+        } else {
+            lblUserName.setText("Status: Guest");
+        }
+    }
+
     private void customizeComponents() {
         searchTextField.setText("Search for an item?");
         bidsyTitle.setText("Bidsy");
 
         txtImageUrl = new JTextField();
-        buyerReportBtn = new JButton("Generate Buyer Report");
-        buyerReportArea = new JTextArea(10, 50);
-        buyerReportArea.setEditable(false);
+//        buyerReportBtn = new JButton("Generate Buyer Report");
+//        buyerReportArea = new JTextArea(10, 50);
+//        buyerReportArea.setEditable(false);
 
         //For categories box in Sell tab
         String[] categories = {"Electronics", "Fashion", "Home & Garden", "Sporting Goods", "Toys & Hobbies", "Other"};
