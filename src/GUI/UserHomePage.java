@@ -107,7 +107,6 @@ public class UserHomePage extends JFrame {
         myAuctionsTab.setLayout(new BorderLayout());
         myAuctionsTab.add(scrollPane, BorderLayout.CENTER);
     }
-
     private void setUpEventListeners() {
         searchBtn.addActionListener(new ActionListener() {
             @Override
@@ -160,6 +159,17 @@ public class UserHomePage extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 generateBuyerReport();
+            }
+        });
+
+        logoutButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Dispose of the current UserHomePage frame
+                dispose();
+
+                // Redirect to the Login page
+                SwingUtilities.invokeLater(() -> new Login());
             }
         });
     }

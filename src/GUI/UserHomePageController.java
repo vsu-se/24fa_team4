@@ -84,13 +84,7 @@ public class UserHomePageController {
         userHomePage.switchToMyAuctionsTab(); // Switch to the "My Auctions" tab
     }
 
-    /*public void startAuction(Item item, long endTime) {
-        // Set auction details and start the auction
-        item.setAuction(true);
-        item.setEndTime(endTime);
-        itemManager.startAuction(item);
-        userHomePage.showInfo("Auction started successfully!");
-    } */
+
 
     public void showConcludedAuctions() {
         // Show concluded auctions

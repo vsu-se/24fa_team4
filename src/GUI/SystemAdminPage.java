@@ -4,8 +4,18 @@ import ebay.ItemController;
 import ebay.UserController;
 
 import javax.swing.*;
+import ebay.Item;
 
-public class SystemAdminPage extends UserHomePage {
+
+import javax.swing.table.DefaultTableModel;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.util.List;
+
+public class SystemAdminPage extends UserHomePage{
+
     private JPanel mainPanel;
     private JPanel topPanel;
     private JButton logoutButton;
@@ -51,7 +61,7 @@ public class SystemAdminPage extends UserHomePage {
     private JTextField searchTextField;
     private JTextField nameTextField;
     private JLabel categoryName;
-
+    
     private JPanel userlList;
     private JTextField buyersTxt;
     private JTextField sellersTxt;
@@ -264,3 +274,4 @@ public class SystemAdminPage extends UserHomePage {
 //        new UserHomePage("username", "password", systemAdminPageController);
 //    }
 //}
+

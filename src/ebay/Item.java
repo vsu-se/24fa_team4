@@ -132,4 +132,8 @@ public class Item {
     public void setStartPrice(double bidAmount) {
         this.startPrice = bidAmount;
     }
+
+    public String getCategory() {
+        return itemType;
+    }
 }
