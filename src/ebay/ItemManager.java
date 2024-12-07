@@ -3,6 +3,7 @@ package ebay;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 public class ItemManager {
@@ -12,11 +13,12 @@ public class ItemManager {
     // This will hold all the items for our ebay project/active auctions
     private final List<Item> items;
     private final List<Item> activeAuctions;
+    private List<String> categoryTypes;
 
-    // Private Constructor for singleton pattern
     public ItemManager() {
         this.items = new ArrayList<>();
         this.activeAuctions = new ArrayList<>();
+        this.categoryTypes = new ArrayList<>();
     }
 
     // Static method to provide a single instance of ItemManager
@@ -30,6 +32,16 @@ public class ItemManager {
     // Add item to the list
     public void addItem(Item item) {
         items.add(item);
+        //make sure category/item type is in the list. if not, add.
+        for(Item i : items) {
+            if(Objects.equals(item.getItemType(), i.getItemType())) {
+                categoryTypes.add(item.getItemType());
+            }
+        }
+    }
+
+    public List<String> getTypes() {
+        return categoryTypes;
     }
 
     public synchronized void removeItem(String itemName) {
