@@ -121,6 +121,9 @@ public class UserHomePage extends JFrame {
         JScrollPane buyScrollPane = new JScrollPane(buyTable);
         buyTab.setLayout(new BorderLayout());
         buyTab.add(buyScrollPane, BorderLayout.CENTER);
+
+        //Sell tab
+       // listOfCategories.setPreferredSize(new Dimension(200, 300));
     }
 
     private void setUpEventListeners() {
