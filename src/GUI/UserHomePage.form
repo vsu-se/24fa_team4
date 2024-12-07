@@ -245,12 +245,7 @@
                         </constraints>
                         <properties/>
                         <border type="none"/>
-                        <children>
-                          <component id="50018" class="javax.swing.JList" binding="categoriesList">
-                            <constraints/>
-                            <properties/>
-                          </component>
-                        </children>
+                        <children/>
                       </scrollpane>
                       <component id="3e3f" class="javax.swing.JLabel" binding="lblItemCategory">
                         <constraints>

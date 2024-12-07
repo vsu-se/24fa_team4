@@ -1,6 +1,7 @@
 package GUI;
 
 import ebay.ItemController;
+import ebay.ItemManager;
 import ebay.UserController;
 
 import javax.swing.*;
