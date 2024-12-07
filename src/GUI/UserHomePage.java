@@ -50,6 +50,7 @@ public class UserHomePage extends JFrame {
     private JLabel lblMyBids;
     private JPanel profilePanel;
     private JTextArea txtProfile;
+    private JList<String> categoriesList;
     private JTextField txtImageUrl;
     private JTable myAuctionsTable;
     private JComboBox<String> categoryComboBox;
@@ -106,6 +107,20 @@ public class UserHomePage extends JFrame {
         JScrollPane scrollPane = new JScrollPane(myAuctionsTable);
         myAuctionsTab.setLayout(new BorderLayout());
         myAuctionsTab.add(scrollPane, BorderLayout.CENTER);
+
+        //Sell tab loaded info:
+            //category list -
+        scrollPane.setViewportView(categoriesList);
+        List<String> categories = ItemManager.getInstance().getTypes();
+             //Create a DefaultListModel and add all categories
+        DefaultListModel<String> listModel = new DefaultListModel<>();
+        for (String category : categories) {
+            listModel.addElement(category);
+        }
+
+        // Set the model to the JList
+        categoriesList.setModel(listModel);
+
     }
     private void setUpEventListeners() {
         searchBtn.addActionListener(new ActionListener() {

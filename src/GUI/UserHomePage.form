@@ -3,7 +3,7 @@
   <grid id="27dc6" binding="mainPanel" layout-manager="GridLayoutManager" row-count="4" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
     <margin top="20" left="20" bottom="20" right="20"/>
     <constraints>
-      <xy x="20" y="20" width="906" height="639"/>
+      <xy x="20" y="20" width="920" height="639"/>
     </constraints>
     <properties>
       <foreground color="-8923925"/>
@@ -245,7 +245,12 @@
                         </constraints>
                         <properties/>
                         <border type="none"/>
-                        <children/>
+                        <children>
+                          <component id="50018" class="javax.swing.JList" binding="categoriesList">
+                            <constraints/>
+                            <properties/>
+                          </component>
+                        </children>
                       </scrollpane>
                       <component id="3e3f" class="javax.swing.JLabel" binding="lblItemCategory">
                         <constraints>
@@ -316,7 +321,9 @@
                   </vspacer>
                   <scrollpane id="8bd03" binding="scrollPaneCategories">
                     <constraints>
-                      <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="8" fill="2" indent="0" use-parent-layout="false"/>
+                      <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="0" indent="0" use-parent-layout="false">
+                        <preferred-size width="100" height="100"/>
+                      </grid>
                     </constraints>
                     <properties/>
                     <border type="none"/>
