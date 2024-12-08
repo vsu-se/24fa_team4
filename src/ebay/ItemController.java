@@ -74,7 +74,12 @@ public class ItemController {
     public void placeBid(String itemName, Bid bid) {
         Item item = itemManager.getItemByName(itemName);
         if (item != null) {
-            itemManager.placeBid(item, bid);
+            boolean success = itemManager.placeBid(item, bid);
+            if (success) {
+                // Notify the user that the bid was placed successfully
+            } else {
+
+            }
         }
     }
 
@@ -101,6 +106,7 @@ public class ItemController {
         preMadeAuctions.add(new Item("Laptop", "High-end gaming laptop", 500.0, "imageUrl", true, "Electronics", 1000.0));
         return preMadeAuctions;
     }
+
 
     public List<Item> getConcludedAuctions() {
         return itemManager.getConcludedAuctions();

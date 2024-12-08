@@ -33,8 +33,8 @@ public class ItemManager {
     public void addItem(Item item) {
         items.add(item);
         //make sure category/item type is in the list. if not, add.
-        for(Item i : items) {
-            if(Objects.equals(item.getItemType(), i.getItemType())) {
+        for (Item i : items) {
+            if (Objects.equals(item.getItemType(), i.getItemType())) {
                 categoryTypes.add(item.getItemType());
             }
         }
@@ -86,11 +86,8 @@ public class ItemManager {
         }
     }
 
-    public void placeBid(Item item, Bid bid) {
-        if (item.isAuction() && item.isAuctionActive() && bid.getBidAmount() > item.getStartPrice()) {
-            item.getBids().add(bid);
-            item.setStartPrice(bid.getBidAmount());
-        }
+    public boolean placeBid(Item item, Bid bid) {
+        return item.placeBid(bid);
     }
 
     public void buyItNow(Item item, User buyer) {

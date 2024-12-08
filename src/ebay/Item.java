@@ -1,5 +1,6 @@
 package ebay;
 
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -119,6 +120,7 @@ public class Item {
         if (isAuction && auctionActive && bid.getBidAmount() > startPrice) {
             this.bids.add(bid);
             this.startPrice = bid.getBidAmount();
+            return true;
         }
         return false;
     }

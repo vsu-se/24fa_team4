@@ -63,6 +63,10 @@ public class UserHomePage extends JFrame {
     private String password;
     private UserController userController;
     private ItemManager itemManager;
+    private JTable myBidsTable;
+    private JButton placeBidButton;
+    private User sellerUser;
+    private User buyerUser;
 
     public UserHomePage(String username, String password, UserController userController, ItemManager itemManager, ItemController itemController) {
         this.username = username;
@@ -84,12 +88,8 @@ public class UserHomePage extends JFrame {
         setWelcomeLabel(currentUser);
 
         setVisible(true);
-        populateActiveAuctions();
+        populateBuyTab();
         setUpEventListeners();
-    }
-
-    //temporary to make systemadmin page work
-    public UserHomePage(String username, String password, UserController usercontroller) {
     }
 
     private void setWelcomeLabel(User user) {
@@ -105,21 +105,22 @@ public class UserHomePage extends JFrame {
         bidsyTitle.setText("Bidsy");
 
         txtImageUrl = new JTextField();
-//        buyerReportBtn = new JButton("Generate Buyer Report");
-//        buyerReportArea = new JTextArea(10, 50);
-//        buyerReportArea.setEditable(false);
+        buyerReportBtn = new JButton("Generate Buyer Report");
+        buyerReportArea = new JTextArea(10, 50);
+        buyerReportArea.setEditable(false);
 
-        //For categories box in Sell tab
         String[] categories = {"Electronics", "Fashion", "Home & Garden", "Sporting Goods", "Toys & Hobbies", "Other"};
         categoryList = new JList<>(categories);
         categoryList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         listOfCategories.setViewportView(categoryList);
 
-        //For activeauctions box in Buy tab
-//        activeAuctions = new JList<>(items);
-//        activeAuctions.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-//        listOfCategories.setViewportView(categoryList);
-
+        List<Item> items = itemManager.getActiveAuctions();
+        DefaultListModel<Item> listModel = new DefaultListModel<>();
+        for (Item item : items) {
+            listModel.addElement(item);
+        }
+        auctionsList = new JList<>(listModel);
+        auctionsList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         setupTabs();
     }
 
@@ -137,11 +138,23 @@ public class UserHomePage extends JFrame {
         myAuctionsTab.setLayout(new BorderLayout());
         myAuctionsTab.add(scrollPane, BorderLayout.CENTER);
 
-//        buyTable = new JTable(new DefaultTableModel(new Object[]{"Item Name", "Description", "Price", "Image URL"}, 0));
-//        JScrollPane buyScrollPane = new JScrollPane(buyTable);
-//        buyTab.setLayout(new BorderLayout());
-//        buyTab.add(buyScrollPane, BorderLayout.CENTER);
+        buyTable = new JTable(new DefaultTableModel(new Object[]{"Item Name", "Description", "Price", "Image URL,Category"}, 0));
+        JScrollPane buyScrollPane = new JScrollPane(buyTable);
+        buyTab.setLayout(new BorderLayout());
+        buyTab.add(buyScrollPane, BorderLayout.CENTER);
 
+        bidAmount = new JTextField(10);
+        bidButton = new JButton("Place Bid");
+        JPanel buyTabBottomPanel = new JPanel();
+        buyTabBottomPanel.add(new JLabel("Bid Amount:"));
+        buyTabBottomPanel.add(bidAmount);
+        buyTabBottomPanel.add(bidButton);
+        buyTab.add(buyTabBottomPanel, BorderLayout.SOUTH);
+
+        myBidsTable = new JTable(new DefaultTableModel(new Object[]{"Item Name", "Description", "Bid Amount", "Image URL"}, 0));
+        JScrollPane myBidsScrollPane = new JScrollPane(myBidsTable);
+        myBidsTab.setLayout(new BorderLayout());
+        myBidsTab.add(myBidsScrollPane, BorderLayout.CENTER);
     }
 
     private void setUpEventListeners() {
@@ -156,8 +169,7 @@ public class UserHomePage extends JFrame {
         bidButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                double bid = Double.parseDouble(bidAmount.getText());
-                handleBid(bid);
+                handleBid();
             }
         });
 
@@ -191,7 +203,6 @@ public class UserHomePage extends JFrame {
             if (!e.getValueIsAdjusting()) {
                 Item selectedItem = auctionsList.getSelectedValue();
                 if (selectedItem != null) {
-                    //Populate the JTextArea with the selected item's details
                     txaItemInfo.setText(String.format("Item Name: %s\n" +
                                     "Description: %s\n" +
                                     "Start Price: $%.2f\n" +
@@ -201,7 +212,6 @@ public class UserHomePage extends JFrame {
                             selectedItem.getItemName(), selectedItem.getDescription(),
                             selectedItem.getStartPrice(), selectedItem.getBuyItNowPrice(),
                             selectedItem.getItemType(), selectedItem.isAuction()));
-
                 }
             }
         });
@@ -212,32 +222,38 @@ public class UserHomePage extends JFrame {
         showSearchResults(searchResults);
     }
 
-    private void handleBid(double bid) {
-        Item selectedItem = getSelectedItem();
-        if (selectedItem != null) {
-            User currentUser = userController.getCurrentUser();
-            Bid newBid = new Bid(currentUser, bid);
-            boolean bidSuccess = selectedItem.placeBid(newBid);
-            if (bidSuccess) {
-                showInfo("Bid placed successfully!");
+    private void handleBid() {
+        try {
+            double bid = Double.parseDouble(bidAmount.getText());
+            Item selectedItem = getSelectedItem();
+            if (selectedItem != null) {
+                User currentUser = userController.getCurrentUser();
+                Bid newBid = new Bid(currentUser, bid);
+                boolean bidSuccess = selectedItem.placeBid(newBid);
+                if (bidSuccess) {
+                    showInfo("Bid placed successfully!");
+                    addBidToMyBids(newBid, selectedItem);
+                } else {
+                    showError("Failed to place bid. Please try again.");
+                }
             } else {
-                showError("Failed to place bid. Please try again.");
+                showError("No item selected. Please select an item to bid on.");
             }
-        } else {
-            showError("No item selected. Please select an item to bid on.");
+        } catch (NumberFormatException e) {
+            showError("Invalid bid amount. Please enter a valid number.");
         }
     }
 
     private void handleAddItem(String itemName, String itemDescription, double startPrice, String imageUrl) {
         boolean isAuction = getIsAuction().isSelected();
-        String itemType = (String) getItemType().getSelectedItem();
+        String category = categoryList.getSelectedValue();
 
-        if (itemType == null) {
-            showError("Please select an item type.");
+        if (category == null) {
+            showError("Please select an item category.");
             return;
         }
 
-        Item newItem = new Item(itemName, itemDescription, startPrice, imageUrl, isAuction, itemType, startPrice);
+        Item newItem = new Item(itemName, itemDescription, startPrice, imageUrl, isAuction, category, startPrice);
         User currentUser = userController.getCurrentUser();
         if (currentUser != null) {
             currentUser.listItem(newItem);
@@ -248,6 +264,7 @@ public class UserHomePage extends JFrame {
             showError("No user is currently logged in.");
         }
     }
+
     private void generateBuyerReport() {
         User currentUser = userController.getCurrentUser();
         if (currentUser != null) {
@@ -282,33 +299,12 @@ public class UserHomePage extends JFrame {
         }
     }
 
-//    private void populateBuyTab() {
-//        DefaultTableModel model = (DefaultTableModel) buyTable.getModel();
-//        List<Item> preMadeItems = itemController.getPreMadeItems();
-//        for (Item item : preMadeItems) {
-//            model.addRow(new Object[]{item.getItemName(), item.getDescription(), item.getStartPrice(), item.getImageUrl()});
-//        }
-//    }
-
-    private void populateActiveAuctions() {
-        // Get the list of active auctions (items)
-        List<Item> activeAuctionsList = ItemManager.getInstance().populateDefaultActiveAuctions();
-
-        // Sort the active auctions by endTime (soonest to end first)
-        activeAuctionsList.sort((item1, item2) -> Long.compare(item1.getEndTime(), item2.getEndTime()));
-
-        // Create a new JList with the list of items
-        auctionsList = new JList<>(new DefaultListModel<Item>());
-
-        // Populate the JList with items from the activeAuctionsList
-        DefaultListModel<Item> listModel = (DefaultListModel<Item>) auctionsList.getModel();
-        for (Item item : activeAuctionsList) {
-            listModel.addElement(item);
+    private void populateBuyTab() {
+        DefaultTableModel model = (DefaultTableModel) buyTable.getModel();
+        List<Item> preMadeItems = itemController.getPreMadeItems();
+        for (Item item : preMadeItems) {
+            model.addRow(new Object[]{item.getItemName(), item.getDescription(), item.getStartPrice(), item.getImageUrl()});
         }
-
-        // Optionally, add the auctionsList to a JScrollPane if needed
-        JScrollPane scrollPane = new JScrollPane(auctionsList);
-        activeAuctions.setViewportView(scrollPane);
     }
 
     public void showConcludedAuctions() {
@@ -323,26 +319,20 @@ public class UserHomePage extends JFrame {
     public JTextField getBidAmount() { return bidAmount; }
     public JTextField getItemName() { return txtItemName; }
     public JTextField getDescription() { return txtItemDescription; }
-    public JTextField getStartPrice() { return txtStartPrice; }
     public JTextField getImageUrl() { return txtImageUrl; }
     public JButton getAddItemBtn() { return addItemBtn; }
     public JButton getLogoutButton() { return logoutButton; }
     public JButton getBuyerReportBtn() { return buyerReportBtn; }
     public JTextArea getBuyerReportArea() { return buyerReportArea; }
-    public JTable getMyAuctionsTable() { return myAuctionsTable; }
-    public JTable getBuyTable() { return buyTable; }
+
+
 
     public JCheckBox getIsAuction() {
         return new JCheckBox();
     }
 
-    public JComboBox<String> getItemType() {
-        return new JComboBox<>();
-    }
-
     public Item getSelectedItem() {
-        // Get the selected item from the UI
-        return null;
+        return auctionsList.getSelectedValue();
     }
 
     public void showInfo(String message) {
@@ -371,6 +361,16 @@ public class UserHomePage extends JFrame {
                 item.isAuction(),
                 item.getItemType(),
                 item.getStartPrice()
+        });
+    }
+
+    private void addBidToMyBids(Bid bid, Item item) {
+        DefaultTableModel model = (DefaultTableModel) myBidsTable.getModel();
+        model.addRow(new Object[]{
+                item.getItemName(),
+                item.getDescription(),
+                bid.getBidAmount(),
+                item.getImageUrl()
         });
     }
 
