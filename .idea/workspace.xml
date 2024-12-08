@@ -6,12 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="e8672801-f06b-40ec-a412-fc704470614c" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/24fa_team4/ebay/Item.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/24fa_team4/ebay/Item.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/SystemAdminPage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/SystemAdminPage.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/GUI/UserHomePage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/UserHomePage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/UserHomePageController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ebay/Item.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ebay/Item.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ebay/ItemController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ebay/ItemController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ebay/ItemManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ebay/ItemManager.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -33,29 +28,42 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.UserHomePage.executor": "Run",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.WIDTH": "284",
-    "git-widget-placeholder": "main",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/Users/tjcarter/Documents/GitHub2/src/GUI",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.UserHomePage.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.WIDTH&quot;: &quot;284&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/tjcarter/Documents/GitHub2/src/GUI&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src/GUI" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Application.Login">
+    <configuration name="Login" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="GUI.Login" />
+      <module name="24fa_team4" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="GUI.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="UserHomePage" type="Application" factoryName="Application" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="GUI.UserHomePage" />
       <module name="24fa_team4" />
@@ -69,6 +77,11 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.Login" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
@@ -104,5 +117,25 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/src/GUI/UserHomePage.java</url>
+          <line>269</line>
+          <properties class="GUI.UserHomePage" method="handleAddItem">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/24fa_team4$Login.ic" NAME="Login Coverage Results" MODIFIED="1733699574190" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>GUI.*</FILTER>
+    </SUITE>
   </component>
 </project>

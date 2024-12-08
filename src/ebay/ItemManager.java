@@ -32,6 +32,7 @@ public class ItemManager {
     // Add item to the list
     public void addItem(Item item) {
         items.add(item);
+        activeAuctions.add(item);
         //make sure category/item type is in the list. if not, add.
         for (Item i : items) {
             if (Objects.equals(item.getItemType(), i.getItemType())) {

@@ -67,6 +67,7 @@ public class UserHomePage extends JFrame {
     private JButton placeBidButton;
     private User sellerUser;
     private User buyerUser;
+    private DefaultListModel<Item> listModel;
 
     public UserHomePage(String username, String password, UserController userController, ItemManager itemManager, ItemController itemController) {
         this.username = username;
@@ -109,19 +110,20 @@ public class UserHomePage extends JFrame {
         buyerReportArea = new JTextArea(10, 50);
         buyerReportArea.setEditable(false);
 
+        // Generate categories list
         String[] categories = {"Electronics", "Fashion", "Home & Garden", "Sporting Goods", "Toys & Hobbies", "Other"};
         categoryList = new JList<>(categories);
         categoryList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         listOfCategories.setViewportView(categoryList);
 
-        List<Item> items = itemManager.getActiveAuctions();
-        DefaultListModel<Item> listModel = new DefaultListModel<>();
-        for (Item item : items) {
-            listModel.addElement(item);
-        }
+        // Generate active auctions list from ItemManager
+        listModel = new DefaultListModel<>();  // Initialize the list model once
         auctionsList = new JList<>(listModel);
         auctionsList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         setupTabs();
+
+        // Initialize the active auctions list with items from ItemManager
+        updateActiveAuctionsList();
     }
 
     private void setupTabs() {
@@ -143,8 +145,8 @@ public class UserHomePage extends JFrame {
         buyTab.setLayout(new BorderLayout());
         buyTab.add(buyScrollPane, BorderLayout.CENTER);
 
-        bidAmount = new JTextField(10);
-        bidButton = new JButton("Place Bid");
+//        bidAmount = new JTextField(10);
+//        bidButton = new JButton("Place Bid");
         JPanel buyTabBottomPanel = new JPanel();
         buyTabBottomPanel.add(new JLabel("Bid Amount:"));
         buyTabBottomPanel.add(bidAmount);
@@ -155,6 +157,24 @@ public class UserHomePage extends JFrame {
         JScrollPane myBidsScrollPane = new JScrollPane(myBidsTable);
         myBidsTab.setLayout(new BorderLayout());
         myBidsTab.add(myBidsScrollPane, BorderLayout.CENTER);
+    }
+
+    private void updateActiveAuctionsList() {
+        // Get the current list of active auctions from the ItemManager
+        List<Item> activeAuctions = itemManager.getActiveAuctions();
+
+        // Get the DefaultListModel associated with your auctionsList
+        DefaultListModel<Item> listModel = (DefaultListModel<Item>) auctionsList.getModel();
+
+        // Clear the current model and add all active auctions from the ItemManager
+        listModel.clear();
+        for (Item item : activeAuctions) {
+            listModel.addElement(item);
+        }
+
+        // Optionally, you can make sure the newly updated list is visible
+        auctionsList.revalidate();
+        auctionsList.repaint();
     }
 
     private void setUpEventListeners() {
@@ -199,22 +219,22 @@ public class UserHomePage extends JFrame {
             }
         });
 
-        auctionsList.addListSelectionListener(e -> {
-            if (!e.getValueIsAdjusting()) {
-                Item selectedItem = auctionsList.getSelectedValue();
-                if (selectedItem != null) {
-                    txaItemInfo.setText(String.format("Item Name: %s\n" +
-                                    "Description: %s\n" +
-                                    "Start Price: $%.2f\n" +
-                                    "Buy It Now Price: $%.2f\n" +
-                                    "Category: %s\n" +
-                                    "Auction Active: %b\n",
-                            selectedItem.getItemName(), selectedItem.getDescription(),
-                            selectedItem.getStartPrice(), selectedItem.getBuyItNowPrice(),
-                            selectedItem.getItemType(), selectedItem.isAuction()));
-                }
-            }
-        });
+//        auctionsList.addListSelectionListener(e -> {
+//            if (!e.getValueIsAdjusting()) {
+//                Item selectedItem = auctionsList.getSelectedValue();
+//                if (selectedItem != null) {
+//                    txaItemInfo.setText(String.format("Item Name: %s\n" +
+//                                    "Description: %s\n" +
+//                                    "Start Price: $%.2f\n" +
+//                                    "Buy It Now Price: $%.2f\n" +
+//                                    "Category: %s\n" +
+//                                    "Auction Active: %b\n",
+//                            selectedItem.getItemName(), selectedItem.getDescription(),
+//                            selectedItem.getStartPrice(), selectedItem.getBuyItNowPrice(),
+//                            selectedItem.getItemType(), selectedItem.isAuction()));
+//                }
+//            }
+//        });
     }
 
     private void handleSearch(String searchQuery) {
@@ -244,8 +264,11 @@ public class UserHomePage extends JFrame {
         }
     }
 
-    private void handleAddItem(String itemName, String itemDescription, double startPrice, String imageUrl) {
-        boolean isAuction = getIsAuction().isSelected();
+    //WHY WONT THIS METHOD ADD TO THE ACTIVEAUCTIONS LIST IN BUY TAB?
+    ////////////////////////////////////////////////
+    // This method is called when an item is added to the backend (ItemManager)
+    public void handleAddItem(String itemName, String itemDescription, double startPrice, String imageUrl) {
+        boolean isAuction = true;
         String category = categoryList.getSelectedValue();
 
         if (category == null) {
@@ -253,13 +276,31 @@ public class UserHomePage extends JFrame {
             return;
         }
 
+        // Create a new Item with the provided details
         Item newItem = new Item(itemName, itemDescription, startPrice, imageUrl, isAuction, category, startPrice);
+
         User currentUser = userController.getCurrentUser();
         if (currentUser != null) {
-            currentUser.listItem(newItem);
+            currentUser.listItem(newItem);  // Add the item to the user's listings
             showInfo("Item added successfully!");
-            addItemToMyAuctions(newItem);
+
+            // Add the item to the backend (ItemManager)
+            itemManager.addItem(newItem);
+
+            // Update the active auctions list in the view (JList)
+            updateActiveAuctionsList();  // This will refresh the JList with the updated list of active auctions
+
+            // Add the item to the "My Auctions" list (assuming you have this method to update that view)
+            addItemToMyAuctions(newItem);  // Add to My Auctions list
+
+            // Switch to the "My Auctions" tab
             switchToMyAuctionsTab();
+
+            // Clear the input fields after adding the item
+            txtItemName.setText("");  // Clear the item name field
+            txtItemDescription.setText("");  // Clear the item description field
+            txtStartPrice.setText("");  // Clear the start price field
+            txtImageUrl.setText("");  // Clear the image URL field
         } else {
             showError("No user is currently logged in.");
         }
