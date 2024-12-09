@@ -1,5 +1,10 @@
 
-package ebay;
+package controller;
+
+import model.Bid;
+import model.Item;
+import model.ItemManager;
+import model.User;
 
 import java.util.Comparator;
 import java.util.List;

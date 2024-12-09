@@ -1,4 +1,4 @@
-package ebay;
+package model;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +32,7 @@ public class User implements Seller, Bidder {
     public User(String username, String password) {
         this(username, password, false, false);
     }
+
 
     public String getUsername() {
         return username;

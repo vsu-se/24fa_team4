@@ -1,5 +1,5 @@
 
-package ebay;
+package model;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -88,9 +88,11 @@ public class ItemManager {
     }
 
     public boolean placeBid(Item item, Bid bid) {
-        return item.placeBid(bid);
+        if (item.isAuction() && item.getEndTime() > System.currentTimeMillis()) {
+            return item.placeBid(bid);
     }
-
+        return false;
+    }
     public void buyItNow(Item item, User buyer) {
         if (items.contains(item) && !item.isAuction()) {
             items.remove(item);

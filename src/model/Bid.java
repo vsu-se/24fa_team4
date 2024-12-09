@@ -1,4 +1,4 @@
-package ebay;
+package model;
 
 public class Bid {
     private Bidder bidder;

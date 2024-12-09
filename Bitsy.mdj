@@ -26,7 +26,7 @@
 					"_parent": {
 						"$ref": "AAAAAAFF+qBWK6M3Z8Y="
 					},
-					"name": "ebay"
+					"name": "model"
 				},
 				{
 					"_type": "UMLClassDiagram",
