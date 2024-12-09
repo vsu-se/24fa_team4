@@ -5,11 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e8672801-f06b-40ec-a412-fc704470614c" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/ebay/datafiles/user_data" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ebay/datafiles/user_data.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/UserHomePage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/UserHomePage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ebay/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ebay/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GUI/UserHomePageTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/UserHomePageTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ebay/datafiles/user_data" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ebay/datafiles/user_data.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/ebay/datafiles/user_data.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -65,7 +64,7 @@
       <recent name="$PROJECT_DIR$/src/GUI" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.Main">
+  <component name="RunManager">
     <configuration name="Login" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="GUI.Login" />
       <module name="24fa_team4" />

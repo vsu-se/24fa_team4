@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Test;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -20,37 +19,48 @@ public class UserHomePageTest {
 
     @BeforeEach
     public void setUp() {
+        // Initialize controllers and managers
         userController = new UserController();
         itemManager = new ItemManager();
         itemController = new ItemController(itemManager);
 
+        // Clear any existing items
         itemManager.clearItems();
 
-//        User testUser = new User("testUser", "password");
-//        userController.setCurrentUser(testUser);
+        // Set up a test user
+        User testUser = new User("testUser", "password");
+        userController.setCurrentUser(testUser);
 
+        // Create UserHomePage
         userHomePage = new UserHomePage("testUser", "password", userController, itemManager, itemController);
     }
 
     @Test
     public void testSetWelcomeLabel() {
+        // Arrange
         User user = new User("testUser", "password");
+
+        // Act
         userHomePage.setWelcomeLabel(user);
+
+        // Assert
         JLabel lblUserName = userHomePage.getLblUserName();
         assertEquals("Username: testUser", lblUserName.getText());
     }
 
     @Test
     public void testHandleAddItem() {
+        // Arrange
         String itemName = "Test Item";
         String itemDescription = "Test Description";
         double startPrice = 100.0;
         String imageUrl = "http://example.com/image.jpg";
 
+        // Act
         userHomePage.getCategoryList().setSelectedValue("Electronics", true);
-
         userHomePage.handleAddItem(itemName, itemDescription, startPrice, imageUrl);
 
+        // Assert
         List<Item> items = itemManager.getItems();
         assertEquals(5, items.size());
         assertEquals(itemName, items.get(4).getItemName());
@@ -58,22 +68,19 @@ public class UserHomePageTest {
 
     @Test
     public void testHandleBid() {
-        // Ensure the buyTable is populated with the necessary items
+        // Arrange
         DefaultTableModel model = (DefaultTableModel) userHomePage.getBuyTable().getModel();
         model.addRow(new Object[]{"Vintage Watch", "Test Description", 100.0, "http://example.com/image.jpg"});
-
-        // Select the item in the buyTable
         userHomePage.getBuyTable().setRowSelectionInterval(0, 0);
         userHomePage.getBidAmount().setText("150.0");
 
-        // Ensure the item is added to the ItemManager
         Item item = new Item("Vintage Watch", "Test Description", 100.0, "http://example.com/image.jpg", true, "Electronics", 100.0);
         itemManager.addItem(item);
 
-        // Handle the bid
+        // Act
         userHomePage.handleBid();
 
-        // Verify the bid was added correctly
+        // Assert
         Item updatedItem = itemManager.getItemByName("Vintage Watch");
         assertNotNull(updatedItem);
         assertEquals(1, updatedItem.getBids().size());
@@ -82,15 +89,36 @@ public class UserHomePageTest {
 
     @Test
     public void testGenerateBuyerReport() {
+        // Arrange
         User user = userController.getCurrentUser();
         Item item = new Item("Test Item", "Test Description", 100.0, "http://example.com/image.jpg", true, "Electronics", 100.0);
         user.addBoughtItem(item);
 
+        // Act
         userHomePage.generateBuyerReport();
 
+        // Assert
         JTextArea buyerReportArea = userHomePage.getBuyerReportArea();
         String report = buyerReportArea.getText();
         assertTrue(report.contains("Buyer's Report for testUser"));
         assertTrue(report.contains("Test Item"));
+    }
+
+    @Test
+    public void testSaveAndReloadUserData() {
+        // Arrange
+        userController.registerUser("newUser", "newPassword");
+
+        // Act
+        boolean loginSuccessfulBeforeReload = userController.login("newUser", "newPassword");
+        userController.logout();
+
+        // Simulate reinitializing the system
+        userController = new UserController();
+        boolean loginSuccessfulAfterReload = userController.login("newUser", "newPassword");
+
+        // Assert
+        assertTrue(loginSuccessfulBeforeReload);
+        assertTrue(loginSuccessfulAfterReload);
     }
 }
