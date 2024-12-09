@@ -14,8 +14,6 @@ public class Main {
         UserController userController = new UserController();
         ItemManager itemManager = new ItemManager();
         ItemController itemController = new ItemController(itemManager);
-
-        new UserHomePage("username", "password", userController, itemManager, itemController);
         });
     }
 }
