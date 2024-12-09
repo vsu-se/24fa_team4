@@ -7,6 +7,7 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.util.List;
+import java.util.UUID;
 
 public class UserHomePage extends JFrame {
 
@@ -244,17 +245,23 @@ public class UserHomePage extends JFrame {
 
     private void handleBid() {
         try {
-            double bid = Double.parseDouble(bidAmount.getText());
-            Item selectedItem = getSelectedItem();
-            if (selectedItem != null) {
-                User currentUser = userController.getCurrentUser();
-                Bid newBid = new Bid(currentUser, bid);
-                boolean bidSuccess = selectedItem.placeBid(newBid);
-                if (bidSuccess) {
-                    showInfo("Bid placed successfully!");
-                    addBidToMyBids(newBid, selectedItem);
+            double bidAmountValue = Double.parseDouble(bidAmount.getText());
+            int selectedRow = buyTable.getSelectedRow();
+            if (selectedRow != -1) {
+                String itemId = (String) buyTable.getValueAt(selectedRow, 0); // Assuming the item ID is in the first column
+                Item selectedItem = itemManager.getItemById(itemId);
+                if (selectedItem != null) {
+                    User currentUser = userController.getCurrentUser();
+                    Bid newBid = new Bid(currentUser, bidAmountValue);
+                    boolean bidSuccess = selectedItem.placeBid(newBid);
+                    if (bidSuccess) {
+                        showInfo("Bid placed successfully!");
+                        addBidToMyBids(newBid, selectedItem);
+                    } else {
+                        showError("Failed to place bid. Please try again.");
+                    }
                 } else {
-                    showError("Failed to place bid. Please try again.");
+                    showError("Selected item not found.");
                 }
             } else {
                 showError("No item selected. Please select an item to bid on.");
@@ -292,7 +299,7 @@ public class UserHomePage extends JFrame {
 
             // Add the item to the "My Auctions" list (assuming you have this method to update that view)
             addItemToMyAuctions(newItem);  // Add to My Auctions list
-
+            addItemToBuyTab(newItem); // Add to Buy Tab
             // Switch to the "My Auctions" tab
             switchToMyAuctionsTab();
 
@@ -305,6 +312,10 @@ public class UserHomePage extends JFrame {
             showError("No user is currently logged in.");
         }
     }
+    private void addItemToBuyTab(Item newItem) {
+        DefaultTableModel model = (DefaultTableModel) buyTable.getModel();
+       model.addRow(new Object[]{newItem.getItemName(),newItem.getDescription(),newItem.getStartPrice(),newItem.getImageUrl()});
+        }
 
     private void generateBuyerReport() {
         User currentUser = userController.getCurrentUser();
@@ -342,9 +353,17 @@ public class UserHomePage extends JFrame {
 
     private void populateBuyTab() {
         DefaultTableModel model = (DefaultTableModel) buyTable.getModel();
-        List<Item> preMadeItems = itemController.getPreMadeItems();
-        for (Item item : preMadeItems) {
-            model.addRow(new Object[]{item.getItemName(), item.getDescription(), item.getStartPrice(), item.getImageUrl()});
+        itemController.populateDefaultActiveAuctions();
+        List<Item> preMadeItems = itemController.getAllItems();
+        for (int i = 0; i < preMadeItems.size(); i++) {
+            Item item = preMadeItems.get(i);
+            JButton bidButton = new JButton("Bid");
+            int rowIndex = i; // Capture the current index
+            bidButton.addActionListener(e -> {
+                buyTable.setRowSelectionInterval(rowIndex, rowIndex);
+                placeBidButton.doClick(); // Trigger the existing placeBidButton action
+            });
+            model.addRow(new Object[]{item.getItemName(), item.getDescription(), item.getStartPrice(), item.getImageUrl(), bidButton});
         }
     }
 
@@ -419,11 +438,5 @@ public class UserHomePage extends JFrame {
         tabbedPane.setSelectedComponent(myAuctionsTab);
     }
 
-    public static void main(String[] args) {
-        UserController userController = new UserController();
-        ItemManager itemManager = new ItemManager();
-        ItemController itemController = new ItemController();
 
-        new UserHomePage("username", "password", userController, itemManager, itemController);
-    }
 }

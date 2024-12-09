@@ -140,7 +140,7 @@ public class ItemManager {
     }
 
     // Populate a default list in order to have active auctions when first logging in
-    public List<Item> populateDefaultActiveAuctions() {
+    public void populateDefaultActiveAuctions() {
         // Create some default items for demonstration purposes
         Item item1 = new Item(
                 "Vintage Watch",
@@ -194,6 +194,5 @@ public class ItemManager {
         addItem(item4);
         startAuction(item4, item4.getEndTime());
 
-        return items;
     }
 }
