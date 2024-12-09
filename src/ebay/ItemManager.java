@@ -88,7 +88,7 @@ public class ItemManager {
     }
 
     public boolean placeBid(Item item, Bid bid) {
-        return item.placeBid(bid);
+        return item.addBid(bid);
     }
 
     public void buyItNow(Item item, User buyer) {
@@ -194,5 +194,9 @@ public class ItemManager {
         addItem(item4);
         startAuction(item4, item4.getEndTime());
 
+    }
+
+    public List<Item> getItems() {
+        return items;
     }
 }

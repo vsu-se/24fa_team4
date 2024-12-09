@@ -12,9 +12,9 @@ public class ItemController {
     private ItemManager itemManager;
     private List<Item> items;
 
-    public ItemController() {
-        items = new ArrayList<>();
-        itemManager = new ItemManager();
+    public ItemController(ItemManager itemManager) {
+        this.items = new ArrayList<>();
+        this.itemManager = itemManager;
 
 
     }
@@ -71,16 +71,12 @@ public class ItemController {
     }
 
     // Place bid
-    public void placeBid(String itemName, Bid bid) {
+    public boolean placeBid(String itemName, Bid bid) {
         Item item = itemManager.getItemByName(itemName);
         if (item != null) {
-            boolean success = itemManager.placeBid(item, bid);
-            if (success) {
-                // Notify the user that the bid was placed successfully
-            } else {
-
-            }
+            return itemManager.placeBid(item, bid);
         }
+        return false;
     }
 
     //Buy it now

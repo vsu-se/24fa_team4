@@ -5,12 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e8672801-f06b-40ec-a412-fc704470614c" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/GUI/Main.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/GUI/UserHomePageTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/24fa_team4/ebay/Item.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/24fa_team4/ebay/Item.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/GUI/Login.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/Login.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GUI/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/GUI/UserHomePage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/UserHomePage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ebay/Item.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ebay/Item.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ebay/ItemController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ebay/ItemController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ebay/ItemManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ebay/ItemManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ebay/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ebay/UserController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,6 +46,8 @@
   "keyToString": {
     "Application.Main.executor": "Run",
     "Application.UserHomePage.executor": "Run",
+    "JUnit.UserHomePageTest.executor": "Run",
+    "JUnit.UserHomePageTest.testHandleBid.executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.WIDTH": "284",
@@ -57,13 +63,29 @@
   }
 }]]></component>
   <component name="RecentsManager">
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="GUI" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src/GUI" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Application.Main">
     <configuration name="Login" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="GUI.Login" />
+      <module name="24fa_team4" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="GUI.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="GUI.Main" />
       <module name="24fa_team4" />
       <extension name="coverage">
         <pattern>
@@ -88,8 +110,26 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="UserHomePageTest.testHandleBid" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="24fa_team4" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="GUI.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="GUI" />
+      <option name="MAIN_CLASS_NAME" value="GUI.UserHomePageTest" />
+      <option name="METHOD_NAME" value="testHandleBid" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.Main" />
+        <item itemvalue="JUnit.UserHomePageTest.testHandleBid" />
         <item itemvalue="Application.Login" />
       </list>
     </recent_temporary>
@@ -112,7 +152,8 @@
       <updated>1733530968132</updated>
       <workItem from="1733530969538" duration="543000" />
       <workItem from="1733619686094" duration="5116000" />
-      <workItem from="1733713654685" duration="2210000" />
+      <workItem from="1733713654685" duration="3916000" />
+      <workItem from="1733766835053" duration="8546000" />
     </task>
     <servers />
   </component>

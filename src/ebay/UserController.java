@@ -80,4 +80,8 @@ public class UserController {
         return buyerPremium;
     }
 
+    public void setCurrentUser(User testUser) {
+        System.out.println("Setting current user: " + testUser.getUsername());
+        this.currentUser = testUser;
+    }
 }

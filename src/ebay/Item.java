@@ -1,6 +1,5 @@
 package ebay;
 
-import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -107,9 +106,13 @@ public class Item {
         return bids;
     }
 
+    public boolean addBid(Bid bid) {
+        return bids.add(bid);
+    }
 
 
-    public void startAuction() {
+
+        public void startAuction() {
         if (isAuction) {
             this.auctionActive = true;
             this.endTime = System.currentTimeMillis() + 86400000; // Default to 1 day
@@ -142,5 +145,13 @@ public class Item {
 
     public String toString() {
         return itemName +", Starting: $" + startPrice;
+    }
+
+    public double getBidAmount(double bidAmount) {
+        return bidAmount;
+    }
+
+    public double getCurrentbid() {
+        return startPrice;
     }
 }

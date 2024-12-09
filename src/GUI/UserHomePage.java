@@ -7,7 +7,6 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.util.List;
-import java.util.UUID;
 
 public class UserHomePage extends JFrame {
 
@@ -94,7 +93,7 @@ public class UserHomePage extends JFrame {
         setUpEventListeners();
     }
 
-    private void setWelcomeLabel(User user) {
+    public void setWelcomeLabel(User user) {
         if (user != null) {
             lblUserName.setText("Username: " + user.getUsername());
         } else {
@@ -111,6 +110,10 @@ public class UserHomePage extends JFrame {
         buyerReportArea = new JTextArea(10, 50);
         buyerReportArea.setEditable(false);
 
+        bidAmount = new JTextField(10);
+        bidButton = new JButton("Place Bid");
+
+
         // Generate categories list
         String[] categories = {"Electronics", "Fashion", "Home & Garden", "Sporting Goods", "Toys & Hobbies", "Other"};
         categoryList = new JList<>(categories);
@@ -121,10 +124,18 @@ public class UserHomePage extends JFrame {
         listModel = new DefaultListModel<>();  // Initialize the list model once
         auctionsList = new JList<>(listModel);
         auctionsList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
+        //Initialize the myBidsTable
+        myBidsTable = new JTable(new DefaultTableModel(new Object[]{"Item Name", "Description", "Current Bid", "Image URL"}, 0));
+        JScrollPane myBidsScrollPane = new JScrollPane(myBidsTable);
+        myBidsTab.add(myBidsScrollPane);
         setupTabs();
 
         // Initialize the active auctions list with items from ItemManager
         updateActiveAuctionsList();
+
+        // Set custom renderer and editor for the "Bid" column in buyTable
+
     }
 
     private void setupTabs() {
@@ -243,37 +254,26 @@ public class UserHomePage extends JFrame {
         showSearchResults(searchResults);
     }
 
-    private void handleBid() {
-        try {
-            double bidAmountValue = Double.parseDouble(bidAmount.getText());
-            int selectedRow = buyTable.getSelectedRow();
-            if (selectedRow != -1) {
-                String itemId = (String) buyTable.getValueAt(selectedRow, 0); // Assuming the item ID is in the first column
-                Item selectedItem = itemManager.getItemById(itemId);
-                if (selectedItem != null) {
-                    User currentUser = userController.getCurrentUser();
-                    Bid newBid = new Bid(currentUser, bidAmountValue);
-                    boolean bidSuccess = selectedItem.placeBid(newBid);
-                    if (bidSuccess) {
-                        showInfo("Bid placed successfully!");
-                        addBidToMyBids(newBid, selectedItem);
-                    } else {
-                        showError("Failed to place bid. Please try again.");
-                    }
-                } else {
-                    showError("Selected item not found.");
-                }
+    void handleBid() {
+        int selectedRow = buyTable.getSelectedRow();
+        if (selectedRow != -1 ) {
+            String itemName = (String) buyTable.getValueAt(selectedRow, 0);
+            System.out.println("Selected item name: " + itemName);
+            Item item = itemManager.getItemByName(itemName);
+            if (item != null) {
+                double bidAmountValue = Double.parseDouble(bidAmount.getText());
+                System.out.println("Bid amount: " + bidAmountValue);
+                item.addBid(new Bid(userController.getCurrentUser(), bidAmountValue));
+                System.out.println("Bid added successfully");
             } else {
-                showError("No item selected. Please select an item to bid on.");
+                System.out.println("Item not found");
             }
-        } catch (NumberFormatException e) {
-            showError("Invalid bid amount. Please enter a valid number.");
+        } else {
+            System.out.println("No row selected");
         }
     }
 
-    //WHY WONT THIS METHOD ADD TO THE ACTIVEAUCTIONS LIST IN BUY TAB?
-    ////////////////////////////////////////////////
-    // This method is called when an item is added to the backend (ItemManager)
+
     public void handleAddItem(String itemName, String itemDescription, double startPrice, String imageUrl) {
         boolean isAuction = true;
         String category = categoryList.getSelectedValue();
@@ -317,7 +317,7 @@ public class UserHomePage extends JFrame {
        model.addRow(new Object[]{newItem.getItemName(),newItem.getDescription(),newItem.getStartPrice(),newItem.getImageUrl()});
         }
 
-    private void generateBuyerReport() {
+    void generateBuyerReport() {
         User currentUser = userController.getCurrentUser();
         if (currentUser != null) {
             StringBuilder report = new StringBuilder();
@@ -355,21 +355,19 @@ public class UserHomePage extends JFrame {
         DefaultTableModel model = (DefaultTableModel) buyTable.getModel();
         itemController.populateDefaultActiveAuctions();
         List<Item> preMadeItems = itemController.getAllItems();
-        for (int i = 0; i < preMadeItems.size(); i++) {
-            Item item = preMadeItems.get(i);
-            JButton bidButton = new JButton("Bid");
-            int rowIndex = i; // Capture the current index
-            bidButton.addActionListener(e -> {
-                buyTable.setRowSelectionInterval(rowIndex, rowIndex);
-                placeBidButton.doClick(); // Trigger the existing placeBidButton action
-            });
-            model.addRow(new Object[]{item.getItemName(), item.getDescription(), item.getStartPrice(), item.getImageUrl(), bidButton});
+        for (Item item : preMadeItems) {
+            model.addRow(new Object[]{item.getItemName(), item.getDescription(), item.getStartPrice(), item.getImageUrl()});
         }
     }
 
     public void showConcludedAuctions() {
         List<Item> concludedAuctions = itemManager.getConcludedAuctions();
         showConcludedAuctions(concludedAuctions);
+    }
+
+    private void updateMyBidsTable(Item item) {
+        DefaultTableModel myBidsModel = (DefaultTableModel) myBidsTable.getModel();
+        myBidsModel.addRow(new Object[]{item.getItemName(), item.getDescription(), item.getCurrentbid(), item.getImageUrl()});
     }
 
     // Getters for components
@@ -439,4 +437,15 @@ public class UserHomePage extends JFrame {
     }
 
 
+    public JLabel getLblUserName() {
+        return lblUserName;
+    }
+
+    public JList<String> getCategoryList() {
+        return categoryList;
+    }
+
+    public JTable getBuyTable() {
+        return buyTable;
+    }
 }
