@@ -133,9 +133,6 @@ public class UserHomePage extends JFrame {
 
         // Initialize the active auctions list with items from ItemManager
         updateActiveAuctionsList();
-
-        // Set custom renderer and editor for the "Bid" column in buyTable
-
     }
 
     private void setupTabs() {
