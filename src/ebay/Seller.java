@@ -1,4 +1,4 @@
-package model;
+package ebay;
 
 public interface Seller {
 

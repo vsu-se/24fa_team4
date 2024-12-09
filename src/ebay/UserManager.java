@@ -1,4 +1,4 @@
-package model;
+package ebay;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,23 +36,6 @@ public class UserManager {
     // Getter for users list for SystemAdmin or other classes
     public List<User> getUsers() {
         return users;
-    }
-
-    public boolean register(String username, String password) {
-        if (findUserByUsername(username) == null) {
-            User newUser = new User(username, password);
-            addUser(newUser);
-            return true;
-        }
-        return false;
-    }
-
-    public User login(String username, String password) {
-        User user = findUserByUsername(username);
-        if (user != null && user.getPassword().equals(password)) {
-            return user;
-        }
-        return null;
     }
 }
 

@@ -1,8 +1,9 @@
-package controller;
+package ebay;
 
-import model.User;
-
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class UserController {
