@@ -51,6 +51,7 @@ public class UserHomePage extends JFrame {
     private JTextArea txtProfile;
     private JLabel toBuyLbl;
     private JLabel lblUserName;
+    private JScrollPane myBidsScrollPane;
     private JTextField txtImageUrl;
     private JTable myAuctionsTable;
     private JTable buyTable;
@@ -127,8 +128,7 @@ public class UserHomePage extends JFrame {
 
         //Initialize the myBidsTable
         myBidsTable = new JTable(new DefaultTableModel(new Object[]{"Item Name", "Description", "Current Bid", "Image URL"}, 0));
-        JScrollPane myBidsScrollPane = new JScrollPane(myBidsTable);
-        myBidsTab.add(myBidsScrollPane);
+        myBidsScrollPane = new JScrollPane(myBidsTable);
         setupTabs();
 
         // Initialize the active auctions list with items from ItemManager
@@ -157,8 +157,8 @@ public class UserHomePage extends JFrame {
         buyTab.setLayout(new BorderLayout());
         buyTab.add(buyScrollPane, BorderLayout.CENTER);
 
-//        bidAmount = new JTextField(10);
-//        bidButton = new JButton("Place Bid");
+        bidAmount = new JTextField(10);
+        bidButton = new JButton("Place Bid");
         JPanel buyTabBottomPanel = new JPanel();
         buyTabBottomPanel.add(new JLabel("Bid Amount:"));
         buyTabBottomPanel.add(bidAmount);

@@ -26,8 +26,8 @@ public class UserHomePageTest {
 
         itemManager.clearItems();
 
-        User testUser = new User("testUser", "password");
-        userController.setCurrentUser(testUser);
+//        User testUser = new User("testUser", "password");
+//        userController.setCurrentUser(testUser);
 
         userHomePage = new UserHomePage("testUser", "password", userController, itemManager, itemController);
     }
