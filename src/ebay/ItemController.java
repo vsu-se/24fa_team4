@@ -11,6 +11,9 @@ import java.util.ArrayList;
 public class ItemController {
     private ItemManager itemManager;
     private List<Item> items;
+    private double sellerCommission;
+    private double buyerPremium;
+
 
     public ItemController(ItemManager itemManager) {
         this.items = new ArrayList<>();
@@ -93,7 +96,21 @@ public class ItemController {
                 .sorted(Comparator.comparing(Item::getEndTime))
                 .collect(Collectors.toList());
     }
+    public void setSellerCommission(double commission) {
+        this.sellerCommission = commission;
+    }
 
+    public double getSellerCommission() {
+        return sellerCommission;
+    }
+
+    public void setBuyerPremium(double premium) {
+        this.buyerPremium = premium;
+    }
+
+    public double getBuyerPremium() {
+        return buyerPremium;
+    }
     public void populateDefaultActiveAuctions() {
         itemManager.populateDefaultActiveAuctions();
     }
