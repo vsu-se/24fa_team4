@@ -17,7 +17,7 @@ public class UserHomePage extends JFrame {
     private JPanel homeTab;
     private JPanel buyTab;
     private JPanel sellTab;
-    private JPanel categoriesTab;
+    private JPanel reportsTab;
     private JPanel myAuctionsTab;
     private JTextField searchTextField;
     private JLabel bidsyTitle;
@@ -43,7 +43,6 @@ public class UserHomePage extends JFrame {
     private JButton searchBtn;
     private JLabel lblCustomerService;
     private JLabel lblCategories;
-    private JScrollPane scrollPaneCategories;
     private JLabel lblMyAuctions;
     private JPanel myBidsTab;
     private JLabel lblMyBids;
@@ -141,7 +140,7 @@ public class UserHomePage extends JFrame {
         tabbedPane.addTab("Home", homeTab);
         tabbedPane.addTab("Buy", buyTab);
         tabbedPane.addTab("Sell", sellTab);
-        tabbedPane.addTab("Categories", categoriesTab);
+        tabbedPane.addTab("Report", reportsTab);
         tabbedPane.addTab("My Auctions", myAuctionsTab);
         tabbedPane.addTab("My Bids", myBidsTab);
 
