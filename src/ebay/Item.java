@@ -26,7 +26,7 @@ public class Item {
         this.isAuction = isAuction;
         this.itemType = itemType;
         this.buyItNowPrice = buyItNowPrice;
-        this.auctionActive = false;
+        this.auctionActive = true;
         this.bids = new ArrayList<>();
     }
 
@@ -153,5 +153,9 @@ public class Item {
 
     public double getCurrentbid() {
         return startPrice;
+    }
+
+    public void setItemId(UUID id) {
+        itemId = id;
     }
 }
