@@ -5,21 +5,12 @@ import ebay.ItemManager;
 import ebay.UserController;
 
 import javax.swing.*;
-import ebay.Item;
-
-import javax.swing.table.DefaultTableModel;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.IOException;
-import java.util.List;
 
 public class SystemAdminPage extends UserHomePage {
 
     private JPanel mainPanel;
     private JPanel topPanel;
     private JButton logoutButton;
-    private JPanel tabsPanel;
     private JTabbedPane tabbedPane;
     private JPanel homeTab;
     private JLabel txtWelcome;
@@ -50,7 +41,6 @@ public class SystemAdminPage extends UserHomePage {
     private JLabel lblMyAuctions;
     private JPanel myBidsTab;
     private JLabel lblMyBids;
-    private JPanel bottomPanel;
     private JLabel lblCustomerService;
     private JLabel bidsyTitle;
     private JPanel concludedAuctions;
@@ -63,13 +53,10 @@ public class SystemAdminPage extends UserHomePage {
     private JLabel categoryName;
 
     private JPanel userlList;
-    private JTextField buyersTxt;
-    private JTextField sellersTxt;
-    private JLabel buyerslbl;
-    private JLabel sellerslbl;
-    private JLabel buyersPremiumlbl;
-    private JLabel sellerCommissionlbl;
     private JPanel usersList;
+    private JTextField textField1;
+    private JTextField textField2;
+    private JButton saveButton;
     private JTextField txtImageUrl;
     private JComboBox<String> categoryComboBox;
     private JTable myAuctionsTable;
