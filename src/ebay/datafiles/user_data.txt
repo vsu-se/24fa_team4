@@ -2,4 +2,6 @@ mm,mm
 newUser,newPassword
 ld,hunt
 admin,adminPassword
+klvdesfnlkgnrlkk,sdfndjrkngkr
 validUsername,validPassword
+jasmine,eguavoen

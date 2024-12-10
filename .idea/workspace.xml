@@ -5,8 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e8672801-f06b-40ec-a412-fc704470614c" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/uiDesigner.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/UserHomePage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/UserHomePage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/24fa_team4/ebay/Item.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/24fa_team4/ebay/Item.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/24fa_team4/ebay/ItemManagerTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/24fa_team4/ebay/ItemManagerTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/24fa_team4/ebay/ItemTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/24fa_team4/ebay/ItemTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/24fa_team4/ebay/User.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/24fa_team4/ebay/User.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GUI/SystemAdminPage.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/SystemAdminPage.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GUI/SystemAdminPage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/SystemAdminPage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ebay/datafiles/auctions_data.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/ebay/datafiles/auctions_data.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ebay/datafiles/user_data.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/ebay/datafiles/user_data.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -34,26 +43,28 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
-    &quot;Application.UserHomePage.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.UserHomePageTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.UserHomePageTest.testHandleBid.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.WIDTH&quot;: &quot;284&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;banks&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/tjcarter/Documents/GitHub2/src/GUI&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.Main.executor": "Run",
+    "Application.UserHomePage.executor": "Run",
+    "JUnit.UserHomePageTest.executor": "Run",
+    "JUnit.UserHomePageTest.testHandleBid.executor": "Run",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "UI_DESIGNER_EDITOR_MODE.PaletteManager.SHOW": "false",
+    "UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.SHOW": "true",
+    "UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.WIDTH": "284",
+    "git-widget-placeholder": "EguavoenBranch",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "/Users/tjcarter/Documents/GitHub2/src/GUI",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
       <recent name="GUI" />
@@ -126,14 +137,6 @@
       </list>
     </recent_temporary>
   </component>
-  <component name="SharedIndexes">
-    <attachedChunks>
-      <set>
-        <option value="bundled-jdk-9823dce3aa75-28b599e66164-intellij.indexing.shared.core-IU-242.23726.103" />
-        <option value="bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-IU-242.23726.103" />
-      </set>
-    </attachedChunks>
-  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -162,6 +165,17 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/GUI/Main.java</url>
+          <line>8</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/24fa_team4$Login.ic" NAME="Login Coverage Results" MODIFIED="1733699574190" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">

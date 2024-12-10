@@ -1,5 +1,4 @@
-4c7a30b7-afa7-4f6d-ac24-115b528e06ef,Vintage Watch,A beautiful vintage watch in excellent condition.,100.0,image_url_vintage_watch.jpg,true,Accessories,0.0,1733879389777,true
-e66f3301-4df3-4725-ae40-0d6c1de26f74,Gaming Laptop,High-performance gaming laptop with 16GB RAM and RTX 3070.,1200.0,image_url_gaming_laptop.jpg,true,Electronics,0.0,1733879389778,true
-f7cacb12-129c-4e19-bd78-84e75f3fe5e5,Artisan Coffee Table,Handcrafted wooden coffee table with a modern design.,300.0,image_url_coffee_table.jpg,true,Furniture,0.0,1733879389779,true
-83646cef-c96f-4343-923a-3a423bb94009,2020 Electric Sedan,Eco-friendly electric car with 250 miles of range.,20000.0,image_url_electric_sedan.jpg,true,Vehicles,0.0,1733879389780,true
-ae3218e8-930d-494c-ba6e-88f125dbe762,Shirt,Pretty shirt with ruffles on the sleeves,15.0,,true,Fashion,15.0,0,true
+d201e9ac-4214-46ef-bff0-781c63cca8ec,Vintage Watch,A beautiful vintage watch in excellent condition.,100.0,image_url_vintage_watch.jpg,true,Accessories,0.0,1733922068884,true
+6863029e-1d34-4343-b306-d632cc0cc254,Gaming Laptop,High-performance gaming laptop with 16GB RAM and RTX 3070.,1200.0,image_url_gaming_laptop.jpg,true,Electronics,0.0,1733922068884,true
+456efce8-e7d0-4aef-8011-a720fe695ac5,Artisan Coffee Table,Handcrafted wooden coffee table with a modern design.,300.0,image_url_coffee_table.jpg,true,Furniture,0.0,1733922068884,true
+9aa50dfa-83a7-402d-98b7-d2509c738268,2020 Electric Sedan,Eco-friendly electric car with 250 miles of range.,20000.0,image_url_electric_sedan.jpg,true,Vehicles,0.0,1733922068884,true
