@@ -23,8 +23,8 @@ public class ItemController {
     }
 
     // Add item
-    public void addItem(String itemName, String description, double startPrice, String imageUrl, boolean isAuction, String itemType, double buyItNowPrice) {
-        Item newItem = new Item(itemName, description, startPrice, imageUrl, isAuction, itemType, buyItNowPrice);
+    public void addItem(String itemName, String description, double startPrice, String imageUrl, boolean isAuction, String itemType, double buyItNowPrice,  long endTime) {
+        Item newItem = new Item(itemName, description, startPrice, imageUrl, isAuction, itemType, buyItNowPrice, endTime);
         itemManager.addItem(newItem);
     }
 

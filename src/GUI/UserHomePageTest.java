@@ -58,7 +58,7 @@ public class UserHomePageTest {
 
         // Act
         userHomePage.getCategoryList().setSelectedValue("Electronics", true);
-        userHomePage.handleAddItem(itemName, itemDescription, startPrice, imageUrl);
+        userHomePage.handleAddItem(itemName, itemDescription, startPrice, imageUrl, 84000000);
 
         // Assert
         List<Item> items = itemManager.getItems();
@@ -74,7 +74,7 @@ public class UserHomePageTest {
         userHomePage.getBuyTable().setRowSelectionInterval(0, 0);
         userHomePage.getBidAmount().setText("150.0");
 
-        Item item = new Item("Vintage Watch", "Test Description", 100.0, "http://example.com/image.jpg", true, "Electronics", 100.0);
+        Item item = new Item("Vintage Watch", "Test Description", 100.0, "http://example.com/image.jpg", true, "Electronics", 100.0, 8400000);
         itemManager.addItem(item);
 
         // Act
@@ -91,7 +91,7 @@ public class UserHomePageTest {
     public void testGenerateBuyerReport() {
         // Arrange
         User user = userController.getCurrentUser();
-        Item item = new Item("Test Item", "Test Description", 100.0, "http://example.com/image.jpg", true, "Electronics", 100.0);
+        Item item = new Item("Test Item", "Test Description", 100.0, "http://example.com/image.jpg", true, "Electronics", 100.0, 8400000);
         user.addBoughtItem(item);
 
         // Act

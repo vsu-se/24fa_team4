@@ -116,7 +116,7 @@ public class ItemManager {
     }
 
     public void clearItems() {
-        items.clear();
+        getAllItems().clear();
         activeAuctions.clear();
         saveItems(); // Save state after clearing items
     }
@@ -151,16 +151,16 @@ public class ItemManager {
     }
 
     public void populateDefaultActiveAuctions() {
-        addDefaultItemIfNotExists("Vintage Watch", "A beautiful vintage watch in excellent condition.", 100.0, "image_url_vintage_watch.jpg", true, "Accessories", 0.0);
-        addDefaultItemIfNotExists("Gaming Laptop", "High-performance gaming laptop with 16GB RAM and RTX 3070.", 1200.0, "image_url_gaming_laptop.jpg", true, "Electronics", 0.0);
-        addDefaultItemIfNotExists("Artisan Coffee Table", "Handcrafted wooden coffee table with a modern design.", 300.0, "image_url_coffee_table.jpg", true, "Furniture", 0.0);
-        addDefaultItemIfNotExists("2020 Electric Sedan", "Eco-friendly electric car with 250 miles of range.", 20000.0, "image_url_electric_sedan.jpg", true, "Vehicles", 0.0);
+        addDefaultItemIfNotExists("Vintage Watch", "A beautiful vintage watch in excellent condition.", 100.0, "image_url_vintage_watch.jpg", true, "Accessories", 0.0,50000);
+        addDefaultItemIfNotExists("Gaming Laptop", "High-performance gaming laptop with 16GB RAM and RTX 3070.", 1200.0, "image_url_gaming_laptop.jpg", true, "Electronics", 0.0,60000);
+        addDefaultItemIfNotExists("Artisan Coffee Table", "Handcrafted wooden coffee table with a modern design.", 300.0, "image_url_coffee_table.jpg", true, "Furniture", 0.0, 80000);
+        addDefaultItemIfNotExists("2020 Electric Sedan", "Eco-friendly electric car with 250 miles of range.", 20000.0, "image_url_electric_sedan.jpg", true, "Vehicles", 0.0, 100000);
     }
 
     // Helper method to add an item if it does not already exist
-    private void addDefaultItemIfNotExists(String itemName, String description, double startPrice, String imageUrl, boolean isAuction, String itemType, double buyItNowPrice) {
+    private void addDefaultItemIfNotExists(String itemName, String description, double startPrice, String imageUrl, boolean isAuction, String itemType, double buyItNowPrice, long endTime) {
         if (getItemByName(itemName) == null) {
-            Item newItem = new Item(itemName, description, startPrice, imageUrl, isAuction, itemType, buyItNowPrice);
+            Item newItem = new Item(itemName, description, startPrice, imageUrl, isAuction, itemType, buyItNowPrice,endTime);
             addItem(newItem);
             startAuction(newItem, System.currentTimeMillis() + 86400000); // Default auction end time: 1 day
         }
@@ -236,7 +236,7 @@ public class ItemManager {
         long endTime = Long.parseLong(parts[8]);
         boolean auctionActive = Boolean.parseBoolean(parts[9]);
 
-        Item item = new Item(itemName, description, startPrice, imageUrl, isAuction, itemType, buyItNowPrice);
+        Item item = new Item(itemName, description, startPrice, imageUrl, isAuction, itemType, buyItNowPrice,endTime);
         item.setItemId(itemId);
         item.setEndTime(endTime);
         item.setAuctionActive(auctionActive);

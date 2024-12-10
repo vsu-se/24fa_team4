@@ -6,10 +6,18 @@
   <component name="ChangeListManager">
     <list default="true" id="e8672801-f06b-40ec-a412-fc704470614c" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/UserHomePage.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/UserHomePage.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/24fa_team4/ebay/Item.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/24fa_team4/ebay/Item.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/24fa_team4/ebay/ItemManagerTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/24fa_team4/ebay/ItemManagerTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/24fa_team4/ebay/ItemTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/24fa_team4/ebay/ItemTest.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/GUI/UserHomePage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/UserHomePage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GUI/UserHomePageTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/UserHomePageTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ebay/Item.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ebay/Item.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ebay/ItemController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ebay/ItemController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ebay/ItemManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ebay/ItemManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ebay/ItemManagerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ebay/ItemManagerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ebay/ItemTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ebay/ItemTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ebay/UserTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ebay/UserTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ebay/datafiles/auctions_data.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/ebay/datafiles/auctions_data.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,8 +55,11 @@
     "Application.GUI.Main.executor": "Run",
     "Application.Main.executor": "Run",
     "Application.UserHomePage.executor": "Run",
+    "JUnit.ItemManagerTest.executor": "Run",
+    "JUnit.ItemTest.executor": "Run",
     "JUnit.UserHomePageTest.executor": "Run",
     "JUnit.UserHomePageTest.testHandleBid.executor": "Run",
+    "JUnit.UserTest.executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.WIDTH": "284",
@@ -71,7 +82,7 @@
       <recent name="$PROJECT_DIR$/src/GUI" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.GUI.Main">
+  <component name="RunManager">
     <configuration name="GUI.Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="GUI.Main" />
       <module name="24fa_team4" />
@@ -170,6 +181,8 @@
       <workItem from="1733619686094" duration="5116000" />
       <workItem from="1733713654685" duration="3916000" />
       <workItem from="1733766835053" duration="10271000" />
+      <workItem from="1733841550423" duration="396000" />
+      <workItem from="1733842116376" duration="6167000" />
     </task>
     <servers />
   </component>

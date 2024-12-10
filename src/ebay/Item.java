@@ -17,7 +17,8 @@ public class Item {
     private boolean auctionActive;
     private List<Bid> bids;
 
-    public Item(String itemName, String description, double startPrice, String imageUrl, boolean isAuction, String itemType, double buyItNowPrice) {
+
+    public Item(String itemName, String description, double startPrice, String imageUrl, boolean isAuction, String itemType, double buyItNowPrice, long endTime) {
         this.itemId = UUID.randomUUID();
         this.itemName = itemName;
         this.description = description;
@@ -28,6 +29,7 @@ public class Item {
         this.buyItNowPrice = buyItNowPrice;
         this.auctionActive = true;
         this.bids = new ArrayList<>();
+        this.endTime = endTime;
     }
 
     // Getters and setters...
