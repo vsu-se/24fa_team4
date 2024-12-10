@@ -254,26 +254,40 @@ public class UserHomePage extends JFrame {
         showSearchResults(searchResults);
     }
 
-    void handleBid() {
+     void handleBid() {
         int selectedRow = buyTable.getSelectedRow();
         if (selectedRow != -1) {
-            String itemName = (String) buyTable.getValueAt(selectedRow, 0);
+            String itemName = (String) buyTable.getValueAt(selectedRow, 0); // Get the selected item name
             System.out.println("Selected item name: " + itemName);
-            Item item = itemManager.getItemByName(itemName);
+            Item item = itemManager.getItemByName(itemName); // Fetch the item from ItemManager
             if (item != null) {
-                double bidAmountValue = Double.parseDouble(bidAmount.getText());
-                System.out.println("Bid amount: " + bidAmountValue);
-                if (bidAmountValue <= item.getCurrentbid()) {
-                    showError("Bid amount must be greater than the current bid.");
-                    return;
-                } else {
-                    item.addBid(new Bid(userController.getCurrentUser(), bidAmountValue));
-                    System.out.println("Bid added successfully");
-                    updateMyBidsTable(item);
-                    DefaultTableModel buyTableModel = (DefaultTableModel) buyTable.getModel();
-                    buyTableModel.removeRow(selectedRow);
+                try {
+                    double bidAmountValue = Double.parseDouble(bidAmount.getText());
+                    System.out.println("Bid amount: " + bidAmountValue);
 
+                    // Ensure the bid amount is greater than the current bid
+                    if (bidAmountValue <= item.getCurrentbid()) {
+                        showError("Bid amount must be greater than the current bid.");
+                        return;
+                    }
+
+                    // Add the bid to the item
+                    Bid newBid = new Bid(userController.getCurrentUser(), bidAmountValue);
+                    item.addBid(newBid);
+                    System.out.println("Bid added successfully");
+
+                    // Update the Buy Table with the new bid amount
+                    DefaultTableModel buyTableModel = (DefaultTableModel) buyTable.getModel();
+                    buyTableModel.setValueAt(bidAmountValue, selectedRow, 2); // Update the "Price" column with the new bid amount
+
+                    // Update the My Bids Table
+                    updateMyBidsTable(item);
+
+                    // Optional: Highlight the My Bids Tab
                     tabbedPane.setSelectedComponent(myBidsTab);
+
+                } catch (NumberFormatException e) {
+                    showError("Invalid bid amount. Please enter a valid number.");
                 }
             } else {
                 System.out.println("Item not found");
@@ -282,6 +296,7 @@ public class UserHomePage extends JFrame {
             System.out.println("No row selected");
         }
     }
+
 
     public void handleAddItem(String itemName, String itemDescription, double startPrice, String imageUrl,long endTime) {
         boolean isAuction = true;
@@ -407,7 +422,28 @@ public class UserHomePage extends JFrame {
 
     private void updateMyBidsTable(Item item) {
         DefaultTableModel myBidsModel = (DefaultTableModel) myBidsTable.getModel();
-        myBidsModel.addRow(new Object[]{item.getItemName(), item.getDescription(), item.getCurrentbid(), item.getImageUrl()});
+        boolean itemExists = false;
+
+        // Check if the item already exists in the My Bids Table
+        for (int i = 0; i < myBidsModel.getRowCount(); i++) {
+            String existingItemName = (String) myBidsModel.getValueAt(i, 0);
+            if (existingItemName.equals(item.getItemName())) {
+                // Update the bid amount for the existing item
+                myBidsModel.setValueAt(item.getCurrentbid(), i, 2);
+                itemExists = true;
+                break;
+            }
+        }
+
+        // If the item doesn't exist, add it to the table
+        if (!itemExists) {
+            myBidsModel.addRow(new Object[]{
+                    item.getItemName(),
+                    item.getDescription(),
+                    item.getCurrentbid(),
+                    item.getImageUrl()
+            });
+        }
     }
 
     // Getters for components

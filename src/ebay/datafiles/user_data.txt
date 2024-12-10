@@ -3,3 +3,4 @@ newUser,newPassword
 ld,hunt
 admin,adminPassword
 validUsername,validPassword
+greg,greg

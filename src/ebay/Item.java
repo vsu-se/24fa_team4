@@ -137,6 +137,19 @@ public class Item {
         }
     }
 
+    public double getHighestBid() {
+        if (bids.isEmpty()) {
+            return startPrice; // If no bids, return the starting price
+        }
+        double highestBid = startPrice;
+        for (Bid bid : bids) {
+            if (bid.getBidAmount() > highestBid) {
+                highestBid = bid.getBidAmount();
+            }
+        }
+        return highestBid;
+    }
+
     public void setStartPrice(double bidAmount) {
         this.startPrice = bidAmount;
     }
@@ -154,7 +167,7 @@ public class Item {
     }
 
     public double getCurrentbid() {
-        return startPrice;
+        return bids.isEmpty() ? startPrice : getHighestBid();
     }
 
     public void setItemId(UUID id) {
