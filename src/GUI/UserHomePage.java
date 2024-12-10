@@ -17,7 +17,7 @@ public class UserHomePage extends JFrame {
     private JPanel homeTab;
     private JPanel buyTab;
     private JPanel sellTab;
-    private JPanel reportsTab;
+    private JPanel categoriesTab;
     private JPanel myAuctionsTab;
     private JTextField searchTextField;
     private JLabel bidsyTitle;
@@ -42,9 +42,8 @@ public class UserHomePage extends JFrame {
     private JButton addItemBtn;
     private JButton searchBtn;
     private JLabel lblCustomerService;
-    private JLabel buyersReport;
-    private JLabel sellerReport;
-    private JScrollPane scrollPaneReports;
+    private JLabel lblCategories;
+    private JScrollPane scrollPaneCategories;
     private JLabel lblMyAuctions;
     private JPanel myBidsTab;
     private JLabel lblMyBids;
@@ -54,6 +53,7 @@ public class UserHomePage extends JFrame {
     private JLabel lblUserName;
     private JScrollPane myBidsScrollPane;
     private JTextField txtImageUrl;
+    private JTextField txtEndTime;
     private JTable myAuctionsTable;
     private JTable buyTable;
     private JList<String> categoryList;
@@ -66,15 +66,10 @@ public class UserHomePage extends JFrame {
     private UserController userController;
     private ItemManager itemManager;
     private JTable myBidsTable;
+    private JButton placeBidButton;
     private User sellerUser;
     private User buyerUser;
     private DefaultListModel<Item> listModel;
-    private JTextField sellerCommissionField;
-    private JTextField buyerPremiumField;
-    private JButton setCommissionButton;
-    private JButton setPremiumButton;
-    private JButton sellerReportBtn;
-
 
     public UserHomePage(String username, String password, UserController userController, ItemManager itemManager, ItemController itemController) {
         this.username = username;
@@ -95,7 +90,6 @@ public class UserHomePage extends JFrame {
         User currentUser = userController.getCurrentUser();
         setWelcomeLabel(currentUser);
 
-
         setVisible(true);
         populateBuyTab();
         setUpEventListeners();
@@ -115,16 +109,12 @@ public class UserHomePage extends JFrame {
 
         txtImageUrl = new JTextField();
         buyerReportBtn = new JButton("Generate Buyer Report");
-        sellerReportBtn = new JButton("Generate Seller Report");
-        JPanel reportsPanel = new JPanel();
-        reportsPanel.add(buyerReportBtn);
-        reportsPanel.add(sellerReportBtn);
-        reportsTab.setLayout(new BorderLayout());
-        reportsTab.add(reportsPanel, BorderLayout.NORTH);
+        buyerReportArea = new JTextArea(10, 50);
         buyerReportArea.setEditable(false);
 
         bidAmount = new JTextField(10);
         bidButton = new JButton("Place Bid");
+
 
         // Generate categories list
         String[] categories = {"Electronics", "Fashion", "Home & Garden", "Sporting Goods", "Toys & Hobbies", "Other"};
@@ -137,7 +127,7 @@ public class UserHomePage extends JFrame {
         auctionsList = new JList<>(listModel);
         auctionsList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
-        // Initialize the myBidsTable
+        //Initialize the myBidsTable
         myBidsTable = new JTable(new DefaultTableModel(new Object[]{"Item Name", "Description", "Current Bid", "Image URL"}, 0));
         myBidsScrollPane = new JScrollPane(myBidsTable);
         setupTabs();
@@ -146,14 +136,12 @@ public class UserHomePage extends JFrame {
         updateActiveAuctionsList();
     }
 
-
-
     private void setupTabs() {
         tabbedPane.removeAll();
         tabbedPane.addTab("Home", homeTab);
         tabbedPane.addTab("Buy", buyTab);
         tabbedPane.addTab("Sell", sellTab);
-        tabbedPane.addTab("Reports", reportsTab);
+        tabbedPane.addTab("Categories", categoriesTab);
         tabbedPane.addTab("My Auctions", myAuctionsTab);
         tabbedPane.addTab("My Bids", myBidsTab);
 
@@ -179,48 +167,6 @@ public class UserHomePage extends JFrame {
         JScrollPane myBidsScrollPane = new JScrollPane(myBidsTable);
         myBidsTab.setLayout(new BorderLayout());
         myBidsTab.add(myBidsScrollPane, BorderLayout.CENTER);
-
-        JButton generateBuyerReportBtn = new JButton("Generate Buyer Report");
-        JButton generateSellerReportBtn = new JButton("Generate Seller Report");
-        JPanel reportsPanel = new JPanel();
-        reportsPanel.add(generateBuyerReportBtn);
-        reportsPanel.add(generateSellerReportBtn);
-        reportsTab.setLayout(new BorderLayout());
-        reportsTab.add(reportsPanel, BorderLayout.NORTH);
-    }
-
-    private void sellerBuyerCommission() {
-        sellerCommissionField = new JTextField(10);
-        buyerPremiumField = new JTextField(10);
-        setCommissionButton = new JButton("Set Commission");
-        setPremiumButton = new JButton("Set Premium");
-
-        setCommissionButton.addActionListener(e -> setSellerCommission());
-        setPremiumButton.addActionListener(e -> setBuyerPremium());
-
-        JPanel adminPanel = new JPanel();
-        adminPanel.add(new JLabel("Seller Commission:"));
-        adminPanel.add(sellerCommissionField);
-        adminPanel.add(setCommissionButton);
-        adminPanel.add(new JLabel("Buyer Premium:"));
-        adminPanel.add(buyerPremiumField);
-        adminPanel.add(setPremiumButton);
-
-        JPanel profileContentPanel = new JPanel(new BorderLayout());
-        profileContentPanel.add(new JScrollPane(txtProfile), BorderLayout.CENTER);
-        profileContentPanel.add(adminPanel, BorderLayout.SOUTH);
-
-        profilePanel.setLayout(new BorderLayout());
-        profilePanel.add(profileContentPanel, BorderLayout.CENTER);
-    }
-
-    private void setSellerCommission() {
-        double commission = Double.parseDouble(sellerCommissionField.getText());
-        itemController.setSellerCommission(commission);
-    }
-    private void setBuyerPremium() {
-        double premium = Double.parseDouble(buyerPremiumField.getText());
-        itemController.setBuyerPremium(premium);
     }
 
     private void updateActiveAuctionsList() {
@@ -264,14 +210,16 @@ public class UserHomePage extends JFrame {
                 String itemDescription = txtItemDescription.getText();
                 double startPrice = Double.parseDouble(txtStartPrice.getText());
                 String imageUrl = txtImageUrl.getText();
-                handleAddItem(itemName, itemDescription, startPrice, imageUrl);
+                long endTime = Long.parseLong(txtEndTime.getText());
+                handleAddItem(itemName, itemDescription, startPrice, imageUrl,endTime);
             }
         });
 
         buyerReportBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                generateBuyerReport();
+                showBuyerReport(userController.getCurrentUser());
+                showSellerReport(userController.getCurrentUser());
             }
         });
 
@@ -335,7 +283,7 @@ public class UserHomePage extends JFrame {
         }
     }
 
-    public void handleAddItem(String itemName, String itemDescription, double startPrice, String imageUrl) {
+    public void handleAddItem(String itemName, String itemDescription, double startPrice, String imageUrl,long endTime) {
         boolean isAuction = true;
         String category = categoryList.getSelectedValue();
 
@@ -345,7 +293,7 @@ public class UserHomePage extends JFrame {
         }
 
         // Create a new Item with the provided details
-        Item newItem = new Item(itemName, itemDescription, startPrice, imageUrl, isAuction, category, startPrice);
+        Item newItem = new Item(itemName, itemDescription, startPrice, imageUrl, isAuction, category, startPrice, endTime);
 
         User currentUser = userController.getCurrentUser();
         if (currentUser != null) {
@@ -375,22 +323,56 @@ public class UserHomePage extends JFrame {
     }
     private void addItemToBuyTab(Item newItem) {
         DefaultTableModel model = (DefaultTableModel) buyTable.getModel();
-       model.addRow(new Object[]{newItem.getItemName(),newItem.getDescription(),newItem.getStartPrice(),newItem.getImageUrl()});
+        model.addRow(new Object[]{newItem.getItemName(),newItem.getDescription(),newItem.getStartPrice(),newItem.getImageUrl()});
+    }
+
+    public void showSellerReport(User user) {
+        double totalWinningBids = 0;
+        double totalShippingCosts = 0;
+        double totalSellerCommission = 0;
+
+        JTextArea sellerReportArea = new JTextArea();
+        sellerReportArea.append("Seller's Report for " + user.getUsername() + "\n");
+        sellerReportArea.append("--------------------------------------------------\n");
+        sellerReportArea.append("Item Name | Price | Seller's Commission | Shipping\n");
+        sellerReportArea.append("--------------------------------------------------\n");
+
+        for (Item item : user.getSoldItems()) {
+            if (item != null) {
+                double price = item.getBuyItNowPrice();
+                double sellersCommission = price * 0.20;
+                double shippingCost = 10.0;
+
+                totalWinningBids += price;
+                totalSellerCommission += sellersCommission;
+                totalShippingCosts += shippingCost;
+
+                sellerReportArea.append(String.format("%s | %.2f | %.2f | %.2f%n", item.getItemName(), price, sellersCommission, shippingCost));
+            }
         }
 
-    void generateBuyerReport() {
-        User currentUser = userController.getCurrentUser();
-        if (currentUser != null) {
-            StringBuilder report = new StringBuilder();
-            report.append("Buyer's Report for ").append(currentUser.getUsername()).append("\n");
-            report.append("--------------------------------------------------\n");
-            report.append("Item Name | Price | Shipping\n");
-            report.append("--------------------------------------------------\n");
+        double totalProfits = totalWinningBids - totalSellerCommission - totalShippingCosts;
 
+        sellerReportArea.append("--------------------------------------------------\n");
+        sellerReportArea.append(String.format("Total Winning Bids: %.2f%n", totalWinningBids));
+        sellerReportArea.append(String.format("Total Shipping Costs: %.2f%n", totalShippingCosts));
+        sellerReportArea.append(String.format("Total Seller's Commissions: %.2f%n", totalSellerCommission));
+        sellerReportArea.append(String.format("Total Profits: %.2f%n", totalProfits));
+
+        JOptionPane.showMessageDialog(this, new JScrollPane(sellerReportArea), "Seller Report", JOptionPane.INFORMATION_MESSAGE);
+    }
+
+        public void showBuyerReport (User user){
             double totalSpent = 0;
             double totalShippingCosts = 0;
 
-            for (Item item : currentUser.getBoughtItems()) {
+            JTextArea buyerReportArea = new JTextArea();
+            buyerReportArea.append("Buyer's Report for " + user.getUsername() + "\n");
+            buyerReportArea.append("--------------------------------------------------\n");
+            buyerReportArea.append("Item Name | Price | Shipping\n");
+            buyerReportArea.append("--------------------------------------------------\n");
+
+            for (Item item : user.getBoughtItems()) {
                 if (item != null) {
                     double price = item.getBuyItNowPrice();
                     double shippingCost = 10.0;
@@ -398,19 +380,16 @@ public class UserHomePage extends JFrame {
                     totalSpent += price;
                     totalShippingCosts += shippingCost;
 
-                    report.append(String.format("%s | %.2f | %.2f%n", item.getItemName(), price, shippingCost));
+                    buyerReportArea.append(String.format("%s | %.2f | %.2f%n", item.getItemName(), price, shippingCost));
                 }
             }
 
-            report.append("--------------------------------------------------\n");
-            report.append(String.format("Total Spent: %.2f%n", totalSpent));
-            report.append(String.format("Total Shipping Costs: %.2f%n", totalShippingCosts));
+            buyerReportArea.append("--------------------------------------------------\n");
+            buyerReportArea.append(String.format("Total Spent: %.2f%n", totalSpent));
+            buyerReportArea.append(String.format("Total Shipping Costs: %.2f%n", totalShippingCosts));
 
-            buyerReportArea.setText(report.toString());
-        } else {
-            showError("No user is currently logged in.");
+            JOptionPane.showMessageDialog(this, new JScrollPane(buyerReportArea), "Buyer Report", JOptionPane.INFORMATION_MESSAGE);
         }
-    }
 
     private void populateBuyTab() {
         DefaultTableModel model = (DefaultTableModel) buyTable.getModel();
@@ -508,8 +487,5 @@ public class UserHomePage extends JFrame {
 
     public JTable getBuyTable() {
         return buyTable;
-    }
-    private boolean isAdmin() {
-        return userController.getCurrentUser().isAdmin();
     }
 }

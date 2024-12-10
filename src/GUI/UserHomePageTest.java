@@ -29,10 +29,13 @@ public class UserHomePageTest {
 
         // Set up a test user
         User testUser = new User("testUser", "password");
+        testUser.setAuthorizedToListItems(true);
         userController.setCurrentUser(testUser);
 
         // Create UserHomePage
         userHomePage = new UserHomePage("testUser", "password", userController, itemManager, itemController);
+        DefaultTableModel buyTableModel = (DefaultTableModel) userHomePage.getBuyTable().getModel();
+        buyTableModel.setRowCount(0);
     }
 
     @Test
@@ -55,15 +58,15 @@ public class UserHomePageTest {
         String itemDescription = "Test Description";
         double startPrice = 100.0;
         String imageUrl = "http://example.com/image.jpg";
+        long endTime = 84000000;
+        itemManager.clearItems();
 
-        // Act
         userHomePage.getCategoryList().setSelectedValue("Electronics", true);
-        userHomePage.handleAddItem(itemName, itemDescription, startPrice, imageUrl, 84000000);
+        userHomePage.handleAddItem(itemName, itemDescription, startPrice, imageUrl, endTime);
 
-        // Assert
         List<Item> items = itemManager.getItems();
-        assertEquals(5, items.size());
-        assertEquals(itemName, items.get(4).getItemName());
+        assertEquals(1, items.size());
+        assertEquals(itemName, items.get(0).getItemName());
     }
 
     @Test
@@ -88,18 +91,19 @@ public class UserHomePageTest {
     }
 
     @Test
-    public void testGenerateBuyerReport() {
+    public void testShowBuyerReport() {
         // Arrange
         User user = userController.getCurrentUser();
         Item item = new Item("Test Item", "Test Description", 100.0, "http://example.com/image.jpg", true, "Electronics", 100.0, 8400000);
         user.addBoughtItem(item);
 
         // Act
-        userHomePage.generateBuyerReport();
+        userHomePage.showBuyerReport(user);
 
         // Assert
         JTextArea buyerReportArea = userHomePage.getBuyerReportArea();
         String report = buyerReportArea.getText();
+        System.out.println(report);
         assertTrue(report.contains("Buyer's Report for testUser"));
         assertTrue(report.contains("Test Item"));
     }

@@ -12,6 +12,7 @@ public class User implements Seller, Bidder {
     private UserManager userManager;
     private List<Item> soldItems = new ArrayList<>();
     private List<Item> boughtItems = new ArrayList<>();
+    private boolean authorizedToListItems;
 
     public User(String username, String password, boolean isSeller, boolean isBidder) {
         this.username = username;
@@ -115,66 +116,11 @@ public class User implements Seller, Bidder {
         }
     }
 
-    public void showSellerReport() {
-        double totalWinningBids = 0;
-        double totalShippingCosts = 0;
-        double totalSellerCommission = 0;
-
-        System.out.println("Seller's Report for " + username);
-        System.out.println("--------------------------------------------------");
-        System.out.println("Item Name | Price | Seller's Commission | Shipping");
-        System.out.println("--------------------------------------------------");
-
-        for (Item item : soldItems) {
-            if (item != null) {
-                double price = item.getBuyItNowPrice();
-                double sellersCommission = price * 0.20;
-                double shippingCost = 10.0;
-
-                totalWinningBids += price;
-                totalSellerCommission += sellersCommission;
-                totalShippingCosts += shippingCost;
-
-                System.out.printf("%s | %.2f | %.2f | %.2f%n", item.getItemName(), price, sellersCommission, shippingCost);
-            }
-        }
-
-        double totalProfits = totalWinningBids - totalSellerCommission - totalShippingCosts;
-
-        System.out.println("--------------------------------------------------");
-        System.out.printf("Total Winning Bids: %.2f%n", totalWinningBids);
-        System.out.printf("Total Shipping Costs: %.2f%n", totalShippingCosts);
-        System.out.printf("Total Seller's Commissions: %.2f%n", totalSellerCommission);
-        System.out.printf("Total Profits: %.2f%n", totalProfits);
+    public List<Item> getSoldItems() {
+        return soldItems;
     }
 
-    public void showBuyerReport() {
-        double totalSpent = 0;
-        double totalShippingCosts = 0;
-
-        System.out.println("Buyer's Report for " + username);
-        System.out.println("--------------------------------------------------");
-        System.out.println("Item Name | Price | Shipping");
-        System.out.println("--------------------------------------------------");
-
-        for (Item item : boughtItems) {
-            if (item != null) {
-                double price = item.getBuyItNowPrice();
-                double shippingCost = 10.0;
-
-                totalSpent += price;
-                totalShippingCosts += shippingCost;
-
-                System.out.printf("%s | %.2f | %.2f%n", item.getItemName(), price, shippingCost);
-            }
-        }
-
-        System.out.println("--------------------------------------------------");
-        System.out.printf("Total Spent: %.2f%n", totalSpent);
-        System.out.printf("Total Shipping Costs: %.2f%n", totalShippingCosts);
-    }
-
-    public Iterable<? extends Item> getBoughtItems() {
+    public List<Item> getBoughtItems() {
         return boughtItems;
     }
 
@@ -189,6 +135,14 @@ public class User implements Seller, Bidder {
         if (isAdmin) {
             userManager.viewAllUsers();
         }
+    }
+
+    public void setAuthorizedToListItems(boolean authorized) {
+        this.authorizedToListItems = authorized;
+    }
+
+    public boolean isAuthorizedToListItems() {
+        return authorizedToListItems;
     }
 
     public void approveItem(ItemManager itemManager, Item item) {
