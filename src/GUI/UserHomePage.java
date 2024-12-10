@@ -253,21 +253,25 @@ public class UserHomePage extends JFrame {
 
     void handleBid() {
         int selectedRow = buyTable.getSelectedRow();
-        if (selectedRow != -1 ) {
+        if (selectedRow != -1) {
             String itemName = (String) buyTable.getValueAt(selectedRow, 0);
             System.out.println("Selected item name: " + itemName);
             Item item = itemManager.getItemByName(itemName);
             if (item != null) {
                 double bidAmountValue = Double.parseDouble(bidAmount.getText());
                 System.out.println("Bid amount: " + bidAmountValue);
-                item.addBid(new Bid(userController.getCurrentUser(), bidAmountValue));
-                System.out.println("Bid added successfully");
-                updateMyBidsTable(item);
-                DefaultTableModel buyTableModel = (DefaultTableModel) buyTable.getModel();
-                buyTableModel.removeRow(selectedRow);
+                if (bidAmountValue <= item.getCurrentbid()) {
+                    showError("Bid amount must be greater than the current bid.");
+                    return;
+                } else {
+                    item.addBid(new Bid(userController.getCurrentUser(), bidAmountValue));
+                    System.out.println("Bid added successfully");
+                    updateMyBidsTable(item);
+                    DefaultTableModel buyTableModel = (DefaultTableModel) buyTable.getModel();
+                    buyTableModel.removeRow(selectedRow);
 
-                tabbedPane.setSelectedComponent(myBidsTab);
-
+                    tabbedPane.setSelectedComponent(myBidsTab);
+                }
             } else {
                 System.out.println("Item not found");
             }
@@ -275,7 +279,6 @@ public class UserHomePage extends JFrame {
             System.out.println("No row selected");
         }
     }
-
 
     public void handleAddItem(String itemName, String itemDescription, double startPrice, String imageUrl) {
         boolean isAuction = true;
