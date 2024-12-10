@@ -26,7 +26,7 @@ public class UserController {
 
     public boolean login(String username, String password) {
         if (userDatabase.containsKey(username) && userDatabase.get(username).equals(password)) {
-            currentUser = new User(username, password);
+            currentUser = new User(username, password, true, true);
             return true;
 
         }
