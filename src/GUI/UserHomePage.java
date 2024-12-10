@@ -262,6 +262,12 @@ public class UserHomePage extends JFrame {
                 System.out.println("Bid amount: " + bidAmountValue);
                 item.addBid(new Bid(userController.getCurrentUser(), bidAmountValue));
                 System.out.println("Bid added successfully");
+                updateMyBidsTable(item);
+                DefaultTableModel buyTableModel = (DefaultTableModel) buyTable.getModel();
+                buyTableModel.removeRow(selectedRow);
+
+                tabbedPane.setSelectedComponent(myBidsTab);
+
             } else {
                 System.out.println("Item not found");
             }
