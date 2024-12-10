@@ -314,25 +314,58 @@
                   </grid>
                 </children>
               </grid>
-              <grid id="bdbb2" binding="reportsTab" layout-manager="GridLayoutManager" row-count="2" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-                <margin top="0" left="0" bottom="0" right="0"/>
+              <grid id="bdbb2" binding="reportsTab" layout-manager="GridLayoutManager" row-count="4" column-count="5" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                <margin top="10" left="10" bottom="10" right="10"/>
                 <constraints>
                   <tabbedpane title="Reports"/>
                 </constraints>
                 <properties/>
                 <border type="none"/>
                 <children>
-                  <component id="3d858" class="javax.swing.JLabel" binding="lblCategories">
+                  <component id="3d858" class="javax.swing.JLabel" binding="lblReports">
                     <constraints>
-                      <grid row="0" column="0" row-span="1" col-span="3" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+                      <grid row="0" column="0" row-span="1" col-span="5" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties>
                       <text value="Here you can find reports based on what you buy and sell. "/>
                     </properties>
                   </component>
-                  <vspacer id="d2d3e">
+                  <component id="15962" class="javax.swing.JTextArea" binding="reportsText">
                     <constraints>
-                      <grid row="1" column="2" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+                      <grid row="1" column="1" row-span="3" col-span="2" vsize-policy="6" hsize-policy="6" anchor="4" fill="2" indent="0" use-parent-layout="false">
+                        <minimum-size width="400" height="300"/>
+                        <preferred-size width="400" height="300"/>
+                        <maximum-size width="400" height="300"/>
+                      </grid>
+                    </constraints>
+                    <properties>
+                      <text value="Reports show up here."/>
+                    </properties>
+                  </component>
+                  <vspacer id="a91f6">
+                    <constraints>
+                      <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                  </vspacer>
+                  <component id="c5687" class="javax.swing.JButton" binding="sellersReportBtn">
+                    <constraints>
+                      <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <text value="Seller's Report"/>
+                    </properties>
+                  </component>
+                  <component id="1e658" class="javax.swing.JButton" binding="buyersReportBtn">
+                    <constraints>
+                      <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <text value="Buyer's Report"/>
+                    </properties>
+                  </component>
+                  <vspacer id="7f078">
+                    <constraints>
+                      <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
                     </constraints>
                   </vspacer>
                 </children>

@@ -42,7 +42,7 @@ public class UserHomePage extends JFrame {
     private JButton addItemBtn;
     private JButton searchBtn;
     private JLabel lblCustomerService;
-    private JLabel lblCategories;
+    private JLabel lblReports;
     private JLabel lblMyAuctions;
     private JPanel myBidsTab;
     private JLabel lblMyBids;
@@ -51,6 +51,9 @@ public class UserHomePage extends JFrame {
     private JLabel toBuyLbl;
     private JLabel lblUserName;
     private JScrollPane myBidsScrollPane;
+    private JTextArea reportsText;
+    private JButton buyersReportBtn;
+    private JButton sellersReportBtn;
     private JTextField txtImageUrl;
     private JTextField txtEndTime;
     private JTable myAuctionsTable;
@@ -108,8 +111,8 @@ public class UserHomePage extends JFrame {
 
         txtImageUrl = new JTextField();
         buyerReportBtn = new JButton("Generate Buyer Report");
-        buyerReportArea = new JTextArea(10, 50);
-        buyerReportArea.setEditable(false);
+//        buyerReportArea = new JTextArea(10, 50);
+//        buyerReportArea.setEditable(false);
 
         bidAmount = new JTextField(10);
         bidButton = new JButton("Place Bid");
@@ -140,7 +143,7 @@ public class UserHomePage extends JFrame {
         tabbedPane.addTab("Home", homeTab);
         tabbedPane.addTab("Buy", buyTab);
         tabbedPane.addTab("Sell", sellTab);
-        tabbedPane.addTab("Report", reportsTab);
+        tabbedPane.addTab("Reports", reportsTab);
         tabbedPane.addTab("My Auctions", myAuctionsTab);
         tabbedPane.addTab("My Bids", myBidsTab);
 
@@ -214,14 +217,22 @@ public class UserHomePage extends JFrame {
             }
         });
 
-        buyerReportBtn.addActionListener(new ActionListener() {
+        buyersReportBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                reportsText.setText("");
                 showBuyerReport(userController.getCurrentUser());
+
+
+            }
+        });
+        sellersReportBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                reportsText.setText("");
                 showSellerReport(userController.getCurrentUser());
             }
         });
-
         logoutButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -346,10 +357,10 @@ public class UserHomePage extends JFrame {
         double totalSellerCommission = 0;
 
         JTextArea sellerReportArea = new JTextArea();
-        sellerReportArea.append("Seller's Report for " + user.getUsername() + "\n");
-        sellerReportArea.append("--------------------------------------------------\n");
-        sellerReportArea.append("Item Name | Price | Seller's Commission | Shipping\n");
-        sellerReportArea.append("--------------------------------------------------\n");
+        reportsText.append("Seller's Report for " + user.getUsername() + "\n");
+        reportsText.append("--------------------------------------------------\n");
+        reportsText.append("Item Name | Price | Seller's Commission | Shipping\n");
+        reportsText.append("--------------------------------------------------\n");
 
         for (Item item : user.getSoldItems()) {
             if (item != null) {
@@ -361,19 +372,19 @@ public class UserHomePage extends JFrame {
                 totalSellerCommission += sellersCommission;
                 totalShippingCosts += shippingCost;
 
-                sellerReportArea.append(String.format("%s | %.2f | %.2f | %.2f%n", item.getItemName(), price, sellersCommission, shippingCost));
+                reportsText.append(String.format("%s | %.2f | %.2f | %.2f%n", item.getItemName(), price, sellersCommission, shippingCost));
             }
         }
 
         double totalProfits = totalWinningBids - totalSellerCommission - totalShippingCosts;
 
-        sellerReportArea.append("--------------------------------------------------\n");
-        sellerReportArea.append(String.format("Total Winning Bids: %.2f%n", totalWinningBids));
-        sellerReportArea.append(String.format("Total Shipping Costs: %.2f%n", totalShippingCosts));
-        sellerReportArea.append(String.format("Total Seller's Commissions: %.2f%n", totalSellerCommission));
-        sellerReportArea.append(String.format("Total Profits: %.2f%n", totalProfits));
+        reportsText.append("--------------------------------------------------\n");
+        reportsText.append(String.format("Total Winning Bids: %.2f%n", totalWinningBids));
+        reportsText.append(String.format("Total Shipping Costs: %.2f%n", totalShippingCosts));
+        reportsText.append(String.format("Total Seller's Commissions: %.2f%n", totalSellerCommission));
+        reportsText.append(String.format("Total Profits: %.2f%n", totalProfits));
 
-        JOptionPane.showMessageDialog(this, new JScrollPane(sellerReportArea), "Seller Report", JOptionPane.INFORMATION_MESSAGE);
+     //   JOptionPane.showMessageDialog(this, new JScrollPane(reportsText), "Seller Report", JOptionPane.INFORMATION_MESSAGE);
     }
 
         public void showBuyerReport (User user){
@@ -381,10 +392,10 @@ public class UserHomePage extends JFrame {
             double totalShippingCosts = 0;
 
             JTextArea buyerReportArea = new JTextArea();
-            buyerReportArea.append("Buyer's Report for " + user.getUsername() + "\n");
-            buyerReportArea.append("--------------------------------------------------\n");
-            buyerReportArea.append("Item Name | Price | Shipping\n");
-            buyerReportArea.append("--------------------------------------------------\n");
+            reportsText.append("Buyer's Report for " + user.getUsername() + "\n");
+            reportsText.append("--------------------------------------------------\n");
+            reportsText.append("Item Name | Price | Shipping\n");
+            reportsText.append("--------------------------------------------------\n");
 
             for (Item item : user.getBoughtItems()) {
                 if (item != null) {
@@ -394,15 +405,15 @@ public class UserHomePage extends JFrame {
                     totalSpent += price;
                     totalShippingCosts += shippingCost;
 
-                    buyerReportArea.append(String.format("%s | %.2f | %.2f%n", item.getItemName(), price, shippingCost));
+                    reportsText.append(String.format("%s | %.2f | %.2f%n", item.getItemName(), price, shippingCost));
                 }
             }
 
-            buyerReportArea.append("--------------------------------------------------\n");
-            buyerReportArea.append(String.format("Total Spent: %.2f%n", totalSpent));
-            buyerReportArea.append(String.format("Total Shipping Costs: %.2f%n", totalShippingCosts));
+            reportsText.append("--------------------------------------------------\n");
+            reportsText.append(String.format("Total Spent: %.2f%n", totalSpent));
+            reportsText.append(String.format("Total Shipping Costs: %.2f%n", totalShippingCosts));
 
-            JOptionPane.showMessageDialog(this, new JScrollPane(buyerReportArea), "Buyer Report", JOptionPane.INFORMATION_MESSAGE);
+           // JOptionPane.showMessageDialog(this, new JScrollPane(reportsText), "Buyer Report", JOptionPane.INFORMATION_MESSAGE);
         }
 
     private void populateBuyTab() {
