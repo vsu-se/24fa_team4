@@ -106,20 +106,26 @@ public class Item {
         return bids;
     }
 
+    public boolean addBid(Bid bid) {
+        return bids.add(bid);
+    }
 
 
-    public void startAuction() {
+
+        public void startAuction() {
         if (isAuction) {
             this.auctionActive = true;
             this.endTime = System.currentTimeMillis() + 86400000; // Default to 1 day
         }
     }
 
-    public void placeBid(Bid bid) {
+    public boolean placeBid(Bid bid) {
         if (isAuction && auctionActive && bid.getBidAmount() > startPrice) {
             this.bids.add(bid);
             this.startPrice = bid.getBidAmount();
+            return true;
         }
+        return false;
     }
 
     public void buyItNow(User buyer) {
@@ -135,5 +141,17 @@ public class Item {
 
     public String getCategory() {
         return itemType;
+    }
+
+    public String toString() {
+        return itemName +", Starting: $" + startPrice;
+    }
+
+    public double getBidAmount(double bidAmount) {
+        return bidAmount;
+    }
+
+    public double getCurrentbid() {
+        return startPrice;
     }
 }

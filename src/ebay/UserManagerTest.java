@@ -51,6 +51,7 @@ public class UserManagerTest {
         userManager.viewAllUsers();
         assertEquals(2, userManager.getUsers().size(), "User list should still have 2 users");
     }
+
 }
 
 

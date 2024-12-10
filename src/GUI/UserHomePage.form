@@ -3,7 +3,7 @@
   <grid id="27dc6" binding="mainPanel" layout-manager="GridLayoutManager" row-count="4" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
     <margin top="20" left="20" bottom="20" right="20"/>
     <constraints>
-      <xy x="20" y="20" width="906" height="639"/>
+      <xy x="20" y="20" width="920" height="639"/>
     </constraints>
     <properties>
       <foreground color="-8923925"/>
@@ -90,7 +90,7 @@
                       <text value="Welcome to Bidsy! Here, you can put items up for auction and bid on items. "/>
                     </properties>
                   </component>
-                  <grid id="4339c" binding="profilePanel" layout-manager="GridLayoutManager" row-count="1" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                  <grid id="4339c" binding="profilePanel" layout-manager="GridLayoutManager" row-count="3" column-count="4" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
                     <margin top="0" left="0" bottom="0" right="0"/>
                     <constraints>
                       <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
@@ -98,29 +98,42 @@
                     <properties/>
                     <border type="none"/>
                     <children>
-                      <component id="9c101" class="javax.swing.JLabel">
-                        <constraints>
-                          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="9" fill="0" indent="0" use-parent-layout="false"/>
-                        </constraints>
-                        <properties>
-                          <text value="Your Profile:"/>
-                        </properties>
-                      </component>
                       <component id="5064a" class="javax.swing.JTextArea" binding="txtProfile">
                         <constraints>
-                          <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
+                          <grid row="2" column="3" row-span="1" col-span="1" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
                             <preferred-size width="150" height="50"/>
                           </grid>
                         </constraints>
                         <properties>
-                          <text value="this can be username, sign up for email newsletter, etc.  maybe make this home page have something else?"/>
+                          <text value=""/>
+                        </properties>
+                      </component>
+                      <hspacer id="82dbe">
+                        <constraints>
+                          <grid row="2" column="2" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                        </constraints>
+                      </hspacer>
+                      <component id="bbdbe" class="javax.swing.JLabel" binding="lblUserName">
+                        <constraints>
+                          <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="1" fill="0" indent="0" use-parent-layout="false"/>
+                        </constraints>
+                        <properties>
+                          <text value="Label"/>
+                        </properties>
+                      </component>
+                      <component id="9c101" class="javax.swing.JLabel">
+                        <constraints>
+                          <grid row="0" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="9" fill="0" indent="0" use-parent-layout="false"/>
+                        </constraints>
+                        <properties>
+                          <text value="Your Profile:"/>
                         </properties>
                       </component>
                     </children>
                   </grid>
                 </children>
               </grid>
-              <grid id="2e4e8" binding="buyTab" layout-manager="GridLayoutManager" row-count="2" column-count="4" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+              <grid id="2e4e8" binding="buyTab" layout-manager="GridLayoutManager" row-count="3" column-count="4" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
                 <margin top="0" left="0" bottom="0" right="0"/>
                 <constraints>
                   <tabbedpane title="Buy"/>
@@ -130,7 +143,7 @@
                 <children>
                   <scrollpane id="28f46" binding="activeAuctions">
                     <constraints>
-                      <grid row="0" column="0" row-span="2" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                      <grid row="1" column="0" row-span="2" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties/>
                     <border type="none"/>
@@ -138,7 +151,7 @@
                   </scrollpane>
                   <component id="97c19" class="javax.swing.JTextArea" binding="txaItemInfo">
                     <constraints>
-                      <grid row="0" column="1" row-span="1" col-span="3" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
+                      <grid row="1" column="1" row-span="1" col-span="3" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
                         <preferred-size width="150" height="50"/>
                       </grid>
                     </constraints>
@@ -148,7 +161,7 @@
                   </component>
                   <component id="829c8" class="javax.swing.JTextField" binding="bidAmount">
                     <constraints>
-                      <grid row="1" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="0" indent="0" use-parent-layout="false">
+                      <grid row="2" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="0" indent="0" use-parent-layout="false">
                         <minimum-size width="100" height="-1"/>
                         <preferred-size width="100" height="-1"/>
                         <maximum-size width="50" height="-1"/>
@@ -160,7 +173,7 @@
                   </component>
                   <component id="34d76" class="javax.swing.JButton" binding="bidButton">
                     <constraints>
-                      <grid row="1" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                      <grid row="2" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties>
                       <text value="Bid"/>
@@ -168,10 +181,18 @@
                   </component>
                   <component id="b8a63" class="javax.swing.JLabel" binding="lblBidAmount">
                     <constraints>
-                      <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                      <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties>
                       <text value="Offer a bid:"/>
+                    </properties>
+                  </component>
+                  <component id="13e0d" class="javax.swing.JLabel" binding="toBuyLbl">
+                    <constraints>
+                      <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <text value="Looking to buy? Choose an item and bid an offer."/>
                     </properties>
                   </component>
                 </children>
@@ -238,9 +259,9 @@
                       <scrollpane id="6a982" binding="listOfCategories">
                         <constraints>
                           <grid row="1" column="0" row-span="1" col-span="2" vsize-policy="7" hsize-policy="7" anchor="9" fill="0" indent="0" use-parent-layout="false">
-                            <minimum-size width="100" height="30"/>
-                            <preferred-size width="100" height="30"/>
-                            <maximum-size width="100" height="30"/>
+                            <minimum-size width="150" height="70"/>
+                            <preferred-size width="150" height="70"/>
+                            <maximum-size width="150" height="70"/>
                           </grid>
                         </constraints>
                         <properties/>
@@ -258,7 +279,7 @@
                       <component id="79ec0" class="javax.swing.JTextField" binding="txtItemDescription">
                         <constraints>
                           <grid row="5" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="8" fill="0" indent="0" use-parent-layout="false">
-                            <preferred-size width="300" height="150"/>
+                            <preferred-size width="300" height="100"/>
                           </grid>
                         </constraints>
                         <properties/>
@@ -316,7 +337,9 @@
                   </vspacer>
                   <scrollpane id="8bd03" binding="scrollPaneCategories">
                     <constraints>
-                      <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="8" fill="2" indent="0" use-parent-layout="false"/>
+                      <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="0" indent="0" use-parent-layout="false">
+                        <preferred-size width="100" height="100"/>
+                      </grid>
                     </constraints>
                     <properties/>
                     <border type="none"/>
@@ -347,7 +370,7 @@
                   </vspacer>
                 </children>
               </grid>
-              <grid id="7296f" binding="myBidsTab" layout-manager="GridLayoutManager" row-count="2" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+              <grid id="7296f" binding="myBidsTab" layout-manager="GridLayoutManager" row-count="2" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
                 <margin top="0" left="0" bottom="0" right="0"/>
                 <constraints>
                   <tabbedpane title="My Bids"/>
@@ -357,7 +380,7 @@
                 <children>
                   <component id="66263" class="javax.swing.JLabel" binding="lblMyBids">
                     <constraints>
-                      <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+                      <grid row="0" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties>
                       <text value="Here you can see any bids you have made on active auctions. "/>
@@ -365,9 +388,17 @@
                   </component>
                   <vspacer id="c37e7">
                     <constraints>
-                      <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+                      <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
                     </constraints>
                   </vspacer>
+                  <scrollpane id="c532" binding="myBidsScrollPane">
+                    <constraints>
+                      <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties/>
+                    <border type="none"/>
+                    <children/>
+                  </scrollpane>
                 </children>
               </grid>
             </children>

@@ -134,4 +134,12 @@ class UserTest {
         users.buyItNow(buyNowItem);
         assertEquals(0, ItemManager.getInstance().getAllItems().size());
     }
+
+    @Test
+    void testSetBuyersPremium(){
+        UserManager userManager = new UserManager();
+        User admin = new User("admin", "admin", "password", userManager);
+        admin.setBuyersPremium(20.20);
+        assertEquals(20.20, admin.getBuyersPremium());
+    }
 }

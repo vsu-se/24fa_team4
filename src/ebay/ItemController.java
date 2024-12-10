@@ -12,11 +12,11 @@ public class ItemController {
     private ItemManager itemManager;
     private List<Item> items;
 
-    public ItemController() {
-        items = new ArrayList<>();
-        itemManager = new ItemManager();
-        itemManager.addItem(new Item("Laptop", "High-end gaming laptop", 500.0, "imageUrl", true, "Electronics", 1000.0));
-        itemManager.addItem(new Item("Smartphone", "Latest model smartphone", 300.0, "imageUrl", true, "Electronics", 700.0));
+    public ItemController(ItemManager itemManager) {
+        this.items = new ArrayList<>();
+        this.itemManager = itemManager;
+
+
     }
 
     // Add item
@@ -71,11 +71,12 @@ public class ItemController {
     }
 
     // Place bid
-    public void placeBid(String itemName, Bid bid) {
+    public boolean placeBid(String itemName, Bid bid) {
         Item item = itemManager.getItemByName(itemName);
         if (item != null) {
-            itemManager.placeBid(item, bid);
+            return itemManager.placeBid(item, bid);
         }
+        return false;
     }
 
     //Buy it now
@@ -87,12 +88,16 @@ public class ItemController {
     }
 
 
-
     public List<Item> getActiveAuctions() {
         return itemManager.getActiveAuctions().stream()
                 .sorted(Comparator.comparing(Item::getEndTime))
                 .collect(Collectors.toList());
     }
+
+    public void populateDefaultActiveAuctions() {
+        itemManager.populateDefaultActiveAuctions();
+    }
+
 
     public List<Item> getConcludedAuctions() {
         return itemManager.getConcludedAuctions();
@@ -106,7 +111,4 @@ public class ItemController {
         itemManager.clearItems();
     }
 
-    public void populateDefaultActiveAuctions() {
-        itemManager.populateDefaultActiveAuctions();
-    }
 }

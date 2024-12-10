@@ -29,10 +29,11 @@ public class Login extends JFrame {
 
     private final UserController userController;
 
+
     public Login() {
         userController = new UserController();
         ItemManager itemManager = new ItemManager();
-        // Set up the ParentPanel with CardLayout
+
         ParentPanel.setLayout(new CardLayout());
         ParentPanel.add(WelcomePanel, "WelcomePanel");
         ParentPanel.add(AdminLogin, "AdminLogin");
@@ -62,7 +63,7 @@ public class Login extends JFrame {
                 String username = textField1.getText();
                 String password = new String(passwordField1.getPassword());
                 if (userController.login(username, password)) {
-                    new UserHomePage(username, password, userController);
+                    new UserHomePage(username, password, userController, itemManager, new ItemController(itemManager));
                     dispose();
                 } else {
                     JOptionPane.showMessageDialog(Login.this, "Invalid username or password", "Error", JOptionPane.ERROR_MESSAGE);
@@ -76,7 +77,9 @@ public class Login extends JFrame {
                 String username = textField2.getText();
                 String password = new String(passwordField2.getPassword());
                 if (userController.login(username, password)) {
-                    new UserHomePage(username, password, userController);
+                    ItemManager itemManager = new ItemManager();
+                    ItemController itemController = new ItemController(itemManager);
+                    new UserHomePage(username, password, userController, itemManager, itemController);
                     dispose();
                 } else {
                     JOptionPane.showMessageDialog(Login.this, "Invalid username or password", "Error", JOptionPane.ERROR_MESSAGE);
@@ -105,8 +108,5 @@ public class Login extends JFrame {
                 layout.show(ParentPanel, "WelcomePanel");
             }
         });
-    }
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> new Login());
     }
 }

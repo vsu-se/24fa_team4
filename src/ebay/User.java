@@ -9,6 +9,8 @@ public class User implements Seller, Bidder {
     private boolean isSeller;
     private boolean isBidder;
     private boolean isAdmin;
+    private double buyersPremium;
+    private double sellersCommission;
     private UserManager userManager;
     private List<Item> soldItems = new ArrayList<>();
     private List<Item> boughtItems = new ArrayList<>();
@@ -196,5 +198,25 @@ public class User implements Seller, Bidder {
             itemManager.addItem(item);
             System.out.println("Item approved and added: " + item.getItemName());
         }
+    }
+
+    public void setBuyersPremium(Double buyersPremium) {
+        if(isAdmin){
+            this.buyersPremium = buyersPremium;
+        }
+    }
+
+    public double getBuyersPremium() {
+        return buyersPremium;
+    }
+
+    public void setSellersCommission(Double sellersCommission) {
+        if(isAdmin){
+            this.sellersCommission = sellersCommission;
+        }
+    }
+
+    public double getSellersCommission() {
+        return sellersCommission;
     }
 }
