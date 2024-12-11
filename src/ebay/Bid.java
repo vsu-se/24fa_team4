@@ -17,5 +17,9 @@ public class Bid {
         return bidAmount;
     }
 
-
+    @Override
+    public String toString() {
+        return "Bidder: " + bidder.getUsername() + ", Amount: $" + bidAmount;
     }
+
+}

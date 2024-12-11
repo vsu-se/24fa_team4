@@ -5,16 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e8672801-f06b-40ec-a412-fc704470614c" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/24fa_team4/GUI/LoginScreen.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/24fa_team4/GUI/LoginScreen.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/ebay/datafiles/bid_history_data.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/24fa_team4/ebay/Bid.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/24fa_team4/ebay/Bid.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/24fa_team4/ebay/Bidder.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/24fa_team4/ebay/Bidder.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/24fa_team4/ebay/Item.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/24fa_team4/ebay/Item.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/24fa_team4/ebay/ItemManagerTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/24fa_team4/ebay/ItemManagerTest.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/24fa_team4/ebay/ItemTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/24fa_team4/ebay/ItemTest.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/24fa_team4/ebay/Seller.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/24fa_team4/ebay/Seller.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/24fa_team4/ebay/User.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/24fa_team4/ebay/User.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/GUI/UserHomePage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/UserHomePage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ebay/Bid.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ebay/Bid.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ebay/Item.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ebay/Item.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ebay/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ebay/User.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

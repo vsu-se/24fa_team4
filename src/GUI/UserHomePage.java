@@ -264,7 +264,7 @@ public class UserHomePage extends JFrame {
         showSearchResults(searchResults);
     }
 
-     void handleBid() {
+    void handleBid() {
         int selectedRow = buyTable.getSelectedRow();
         if (selectedRow != -1) {
             String itemName = (String) buyTable.getValueAt(selectedRow, 0); // Get the selected item name
@@ -281,18 +281,17 @@ public class UserHomePage extends JFrame {
                         return;
                     }
 
-                    // Add the bid to the item
                     Bid newBid = new Bid(userController.getCurrentUser(), bidAmountValue);
                     item.addBid(newBid);
+                    item.saveBidHistoryToFile();
+
                     System.out.println("Bid added successfully");
 
                     DefaultTableModel buyTableModel = (DefaultTableModel) buyTable.getModel();
                     buyTableModel.removeRow(selectedRow);
 
-                    // Update the My Bids Table
                     updateMyBidsTable(item);
 
-                    // Optional: Highlight the My Bids Tab
                     tabbedPane.setSelectedComponent(myBidsTab);
 
                 } catch (NumberFormatException e) {
@@ -316,7 +315,6 @@ public class UserHomePage extends JFrame {
             return;
         }
 
-        // Create a new Item with the provided details
         Item newItem = new Item(itemName, itemDescription, startPrice, imageUrl, isAuction, category, startPrice, endTime);
 
         User currentUser = userController.getCurrentUser();
@@ -326,11 +324,10 @@ public class UserHomePage extends JFrame {
 
             // Add the item to the backend (ItemManager)
             itemManager.addItem(newItem);
+            newItem.saveBidHistoryToFile();
 
-            // Update the active auctions list in the view (JList)
-            updateActiveAuctionsList();  // This will refresh the JList with the updated list of active auctions
+            updateActiveAuctionsList();
 
-            // Add the item to the "My Auctions" list (assuming you have this method to update that view)
             addItemToMyAuctions(newItem);  // Add to My Auctions list
             addItemToBuyTab(newItem); // Add to Buy Tab
             // Switch to the "My Auctions" tab

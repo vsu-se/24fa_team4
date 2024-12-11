@@ -1,0 +1,8 @@
+Item: Vintage Watch (ID: fef6d567-1007-46d1-8a01-1bee26251b18)
+New Bid: Bidder: ld, Amount: $101.0
+------------------------
+Item: Vintage Watch)
+Description: A beautiful vintage watch in excellent condition.
+Bids:
+Bidder: ld, Amount: $101.0
+------------------------

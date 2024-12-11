@@ -1,5 +1,9 @@
 package ebay;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -16,7 +20,7 @@ public class Item {
     private long endTime;
     private boolean auctionActive;
     private List<Bid> bids;
-
+    private static final String DATA_FILE_PATH = "src/ebay/datafiles/bid_history_data.txt";
 
     public Item(String itemName, String description, double startPrice, String imageUrl, boolean isAuction, String itemType, double buyItNowPrice, long endTime) {
         this.itemId = UUID.randomUUID();
@@ -30,9 +34,9 @@ public class Item {
         this.auctionActive = true;
         this.bids = new ArrayList<>();
         this.endTime = endTime;
+        ensureDataFileExists();
     }
 
-    // Getters and setters...
     public void setItemName(String itemName) {
         this.itemName = itemName;
     }
@@ -109,12 +113,14 @@ public class Item {
     }
 
     public boolean addBid(Bid bid) {
-        return bids.add(bid);
+        boolean added = bids.add(bid);
+        if (added) {
+            saveBidToFile(bid);
+        }
+        return added;
     }
 
-
-
-        public void startAuction() {
+    public void startAuction() {
         if (isAuction) {
             this.auctionActive = true;
             this.endTime = System.currentTimeMillis() + 86400000; // Default to 1 day
@@ -125,6 +131,7 @@ public class Item {
         if (isAuction && auctionActive && bid.getBidAmount() > startPrice) {
             this.bids.add(bid);
             this.startPrice = bid.getBidAmount();
+            saveBidToFile(bid);
             return true;
         }
         return false;
@@ -173,4 +180,43 @@ public class Item {
     public void setItemId(UUID id) {
         itemId = id;
     }
+
+    public void saveBidHistoryToFile() {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(DATA_FILE_PATH, true))) {
+            writer.write("Item: " + itemName + ")\n");
+            writer.write("Description: " + description + "\n");
+            writer.write("Bids:\n");
+            for (Bid bid : bids) {
+                writer.write(bid.toString() + "\n");
+            }
+            writer.write("------------------------\n");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    private void saveBidToFile(Bid bid) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(DATA_FILE_PATH, true))) {
+            writer.write("Item: " + itemName + " (ID: " + itemId + ")\n");
+            writer.write("New Bid: " + bid.toString() + "\n");
+            writer.write("------------------------\n");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void ensureDataFileExists() {
+        File dataFile = new File(DATA_FILE_PATH);
+        File parentDir = dataFile.getParentFile();
+        try {
+            if (!parentDir.exists()) {
+                parentDir.mkdirs();
+            }
+            if (!dataFile.exists()) {
+                dataFile.createNewFile();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 }
