@@ -7,15 +7,6 @@
     <list default="true" id="e8672801-f06b-40ec-a412-fc704470614c" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/GUI/UserHomePage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/UserHomePage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/UserHomePageTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/UserHomePageTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ebay/Bid.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ebay/Bid.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ebay/Bidder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ebay/Bidder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ebay/Item.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ebay/Item.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ebay/ItemManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ebay/ItemManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ebay/ItemManagerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ebay/ItemManagerTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ebay/Seller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ebay/Seller.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ebay/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ebay/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ebay/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ebay/UserController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ebay/datafiles/auctions_data.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/ebay/datafiles/auctions_data.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -55,38 +46,38 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.GUI.Main.executor": "Run",
-    "Application.Main.executor": "Run",
-    "Application.UserHomePage.executor": "Run",
-    "JUnit.ItemManagerTest.executor": "Run",
-    "JUnit.ItemTest.executor": "Run",
-    "JUnit.UserHomePageTest.executor": "Run",
-    "JUnit.UserHomePageTest.testHandleAddItem.executor": "Run",
-    "JUnit.UserHomePageTest.testHandleBid.executor": "Run",
-    "JUnit.UserManagerTest.executor": "Run",
-    "JUnit.UserTest.executor": "Run",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "UI_DESIGNER_EDITOR_MODE.PaletteManager.SHOW": "true",
-    "UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.SHOW": "true",
-    "UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.WIDTH": "184",
-    "git-widget-placeholder": "banks",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/Users/tjcarter/Documents/GitHub2/src/GUI",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.GUI.Main.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
+    &quot;Application.UserHomePage.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.ItemManagerTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.ItemTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.UserHomePageTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.UserHomePageTest.testHandleAddItem.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.UserHomePageTest.testHandleBid.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.UserManagerTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.UserTest.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;UI_DESIGNER_EDITOR_MODE.PaletteManager.SHOW&quot;: &quot;true&quot;,
+    &quot;UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.SHOW&quot;: &quot;true&quot;,
+    &quot;UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.WIDTH&quot;: &quot;184&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;banks&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/tjcarter/Documents/GitHub2/src/GUI&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
       <recent name="GUI" />
@@ -95,7 +86,7 @@
       <recent name="$PROJECT_DIR$/src/GUI" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Application.GUI.Main">
     <configuration name="GUI.Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="GUI.Main" />
       <module name="24fa_team4" />
@@ -183,8 +174,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.UserHomePageTest" />
         <item itemvalue="Application.GUI.Main" />
+        <item itemvalue="JUnit.UserHomePageTest" />
         <item itemvalue="JUnit.UserTest" />
         <item itemvalue="JUnit.UserHomePageTest.testHandleAddItem" />
         <item itemvalue="Application.Main" />

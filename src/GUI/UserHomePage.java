@@ -134,7 +134,6 @@ public class UserHomePage extends JFrame {
         String[] categories = {"Electronics", "Fashion", "Home & Garden", "Sporting Goods", "Toys & Hobbies", "Other"};
         categoryList = new JList<>(categories);
         categoryList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        listOfCategories = new JScrollPane();
         listOfCategories.setViewportView(categoryList);
 
         // Generate active auctions list from ItemManager
@@ -409,7 +408,7 @@ public class UserHomePage extends JFrame {
         for (Item item : user.getSoldItems()) {
             report.append(item.getItemName()).append("\n");
         }
-        sellerReportArea.setText(report.toString());
+        reportsText.setText(report.toString());
     }
 
     public void showBuyerReport(User user) {
@@ -417,7 +416,7 @@ public class UserHomePage extends JFrame {
         for (Item item : user.getBoughtItems()) {
             report.append(item.getItemName()).append("\n");
         }
-        buyerReportArea.setText(report.toString());
+        reportsText.setText(report.toString());
     }
 
     private void populateBuyTab() {
