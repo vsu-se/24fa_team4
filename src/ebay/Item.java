@@ -3,6 +3,7 @@ package ebay;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.Date;
 
 public class Item {
     private UUID itemId;
@@ -13,12 +14,12 @@ public class Item {
     private boolean isAuction;
     private String itemType;
     private double buyItNowPrice;
-    private long endTime;
+    private Date endTime;
     private boolean auctionActive;
     private List<Bid> bids;
 
 
-    public Item(String itemName, String description, double startPrice, String imageUrl, boolean isAuction, String itemType, double buyItNowPrice, long endTime) {
+    public Item(String itemName, String description, double startPrice, String imageUrl, boolean isAuction, String itemType, double buyItNowPrice, Date endTime) {
         this.itemId = UUID.randomUUID();
         this.itemName = itemName;
         this.description = description;
@@ -88,11 +89,11 @@ public class Item {
         return buyItNowPrice;
     }
 
-    public long getEndTime() {
+    public Date getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(long endTime) {
+    public void setEndTime(Date endTime) {
         this.endTime = endTime;
     }
 
@@ -117,7 +118,7 @@ public class Item {
         public void startAuction() {
         if (isAuction) {
             this.auctionActive = true;
-            this.endTime = System.currentTimeMillis() + 86400000; // Default to 1 day
+            this.endTime = new Date(System.currentTimeMillis() + 86400000); // Default to 1 day
         }
     }
 

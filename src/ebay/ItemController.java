@@ -1,12 +1,11 @@
-
 package ebay;
 
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.ArrayList;
-
 
 public class ItemController {
     private ItemManager itemManager;
@@ -14,16 +13,13 @@ public class ItemController {
     private double sellerCommission;
     private double buyerPremium;
 
-
     public ItemController(ItemManager itemManager) {
         this.items = new ArrayList<>();
         this.itemManager = itemManager;
-
-
     }
 
     // Add item
-    public void addItem(String itemName, String description, double startPrice, String imageUrl, boolean isAuction, String itemType, double buyItNowPrice,  long endTime) {
+    public void addItem(String itemName, String description, double startPrice, String imageUrl, boolean isAuction, String itemType, double buyItNowPrice, Date endTime) {
         Item newItem = new Item(itemName, description, startPrice, imageUrl, isAuction, itemType, buyItNowPrice, endTime);
         itemManager.addItem(newItem);
     }
@@ -66,7 +62,7 @@ public class ItemController {
     }
 
     // Start auction
-    public void startAuction(String itemName, long endTime) {
+    public void startAuction(String itemName, Date endTime) {
         Item item = itemManager.getItemByName(itemName);
         if (item != null) {
             itemManager.startAuction(item, endTime);
@@ -82,7 +78,7 @@ public class ItemController {
         return false;
     }
 
-    //Buy it now
+    // Buy it now
     public void buyItNow(String itemName, User buyer) {
         Item item = itemManager.getItemByName(itemName);
         if (item != null) {
@@ -90,12 +86,12 @@ public class ItemController {
         }
     }
 
-
     public List<Item> getActiveAuctions() {
         return itemManager.getActiveAuctions().stream()
                 .sorted(Comparator.comparing(Item::getEndTime))
                 .collect(Collectors.toList());
     }
+
     public void setSellerCommission(double commission) {
         this.sellerCommission = commission;
     }
@@ -111,10 +107,10 @@ public class ItemController {
     public double getBuyerPremium() {
         return buyerPremium;
     }
+
     public void populateDefaultActiveAuctions() {
         itemManager.populateDefaultActiveAuctions();
     }
-
 
     public List<Item> getConcludedAuctions() {
         return itemManager.getConcludedAuctions();
@@ -127,5 +123,4 @@ public class ItemController {
     public void clearItems() {
         itemManager.clearItems();
     }
-
 }

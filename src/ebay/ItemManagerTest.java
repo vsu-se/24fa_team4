@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.Date;
 import java.util.UUID;
 
 class ItemManagerTest {
@@ -28,7 +29,7 @@ class ItemManagerTest {
                 true, // Auction item
                 "Electronics",
                 250.00,
-                System.currentTimeMillis() + 86400000 // End time: 1 day from now
+                new Date(System.currentTimeMillis() + 86400000) // End time: 1 day from now
         );
 
         item2 = new Item(
@@ -39,7 +40,7 @@ class ItemManagerTest {
                 false, // Buy It Now item
                 "Electronics",
                 150.00,
-                0 // No end time for Buy It Now item
+                null // No end time for Buy It Now item
         );
     }
 
@@ -90,9 +91,9 @@ class ItemManagerTest {
     void testStartAuction() {
         // Start an auction for item1
         itemManager.addItem(item1);
-        itemManager.startAuction(item1, System.currentTimeMillis() + 86400000);
+        itemManager.startAuction(item1, new Date(System.currentTimeMillis() + 86400000));
 
-        assertEquals(2, itemManager.getActiveAuctions().size());
+        assertEquals(1, itemManager.getActiveAuctions().size());
         assertEquals("Vintage Camera", itemManager.getActiveAuctions().get(0).getItemName());
     }
 

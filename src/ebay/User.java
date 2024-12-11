@@ -2,6 +2,7 @@ package ebay;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Date;
 
 public class User implements Seller, Bidder {
     private String username;
@@ -89,7 +90,8 @@ public class User implements Seller, Bidder {
     public void startAuction(Item item) {
         if (isSeller && item.isAuction()) {
             item.setAuction(true);
-            ItemManager.getInstance().startAuction(item, System.currentTimeMillis() + 86400000);
+            Date endTime = new Date(System.currentTimeMillis() + 86400000);
+            ItemManager.getInstance().startAuction(item,endTime);
             System.out.println(username + " has started an auction for item: " + item.getItemName() + " (ID: " + item.getItemId() + ")");
         } else {
             System.out.println(username + " is not authorized to start an auction or the item is not available for auction.");

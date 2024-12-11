@@ -1,12 +1,19 @@
 package GUI;
 
 import ebay.*;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import jdatepicker.JDatePicker;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+
 
 public class UserHomePage extends JFrame {
 
@@ -72,6 +79,8 @@ public class UserHomePage extends JFrame {
     private User sellerUser;
     private User buyerUser;
     private DefaultListModel<Item> listModel;
+    private JDatePicker datePicker;
+    private JSpinner timeSpinner;
 
     public UserHomePage(String username, String password, UserController userController, ItemManager itemManager, ItemController itemController) {
         this.username = username;
@@ -128,6 +137,18 @@ public class UserHomePage extends JFrame {
         listModel = new DefaultListModel<>();  // Initialize the list model once
         auctionsList = new JList<>(listModel);
         auctionsList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
+        datePicker = new JDatePicker();
+        timeSpinner = new JSpinner(new SpinnerDateModel());
+        JSpinner.DateEditor timeEditor = new JSpinner.DateEditor(timeSpinner, "HH:mm:ss");
+        timeSpinner.setEditor(timeEditor);
+        timeSpinner.setValue(new Date());
+
+        // Add date picker and time spinner to the addItemPanel
+        addItemPanel.add(new JLabel("End Date:"));
+        addItemPanel.add((JComponent) datePicker);
+        addItemPanel.add(new JLabel("End Time:"));
+        addItemPanel.add(timeSpinner);
 
         //Initialize the myBidsTable
         myBidsTable = new JTable(new DefaultTableModel(new Object[]{"Item Name", "Description", "Current Bid", "Image URL"}, 0));
@@ -285,7 +306,6 @@ public class UserHomePage extends JFrame {
                     Bid newBid = new Bid(userController.getCurrentUser(), bidAmountValue);
                     item.addBid(newBid);
                     System.out.println("Bid added successfully");
-
                     DefaultTableModel buyTableModel = (DefaultTableModel) buyTable.getModel();
                     buyTableModel.removeRow(selectedRow);
 
@@ -307,7 +327,7 @@ public class UserHomePage extends JFrame {
     }
 
 
-    public void handleAddItem(String itemName, String itemDescription, double startPrice, String imageUrl,long endTime) {
+    public void handleAddItem(String itemName, String itemDescription, double startPrice, String imageUrl, Date endTime) {
         boolean isAuction = true;
         String category = categoryList.getSelectedValue();
 
@@ -315,6 +335,16 @@ public class UserHomePage extends JFrame {
             showError("Please select an item category.");
             return;
         }
+        Date selectedDate = (Date) datePicker.getModel().getValue();
+        Date selectedTime = (Date) timeSpinner.getValue();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(selectedDate);
+        Calendar timeCalendar = Calendar.getInstance();
+        timeCalendar.setTime(selectedTime);
+        calendar.set(Calendar.HOUR_OF_DAY, timeCalendar.get(Calendar.HOUR_OF_DAY));
+        calendar.set(Calendar.MINUTE, timeCalendar.get(Calendar.MINUTE));
+        calendar.set(Calendar.SECOND, timeCalendar.get(Calendar.SECOND));
+        long endTime = calendar.getTimeInMillis();
 
         // Create a new Item with the provided details
         Item newItem = new Item(itemName, itemDescription, startPrice, imageUrl, isAuction, category, startPrice, endTime);

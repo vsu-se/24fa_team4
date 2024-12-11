@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import java.util.Date;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -58,7 +59,7 @@ public class UserHomePageTest {
         String itemDescription = "Test Description";
         double startPrice = 100.0;
         String imageUrl = "http://example.com/image.jpg";
-        long endTime = 84000000;
+        Date endTime = new Date(System.currentTimeMillis() + 84000000);
         itemManager.clearItems();
 
         userHomePage.getCategoryList().setSelectedValue("Electronics", true);
@@ -77,7 +78,7 @@ public class UserHomePageTest {
         userHomePage.getBuyTable().setRowSelectionInterval(0, 0);
         userHomePage.getBidAmount().setText("150.0");
 
-        Item item = new Item("Vintage Watch", "Test Description", 100.0, "http://example.com/image.jpg", true, "Electronics", 100.0, 8400000);
+        Item item = new Item("Vintage Watch", "Test Description", 100.0, "http://example.com/image.jpg", true, "Electronics", 100.0, new Date(System.currentTimeMillis() + 8400000));
         itemManager.addItem(item);
 
         // Act
@@ -94,7 +95,7 @@ public class UserHomePageTest {
     public void testShowBuyerReport() {
         // Arrange
         User user = userController.getCurrentUser();
-        Item item = new Item("Test Item", "Test Description", 100.0, "http://example.com/image.jpg", true, "Electronics", 100.0, 8400000);
+        Item item = new Item("Test Item", "Test Description", 100.0, "http://example.com/image.jpg", true, "Electronics", 100.0, new Date(System.currentTimeMillis() + 8400000));
         user.addBoughtItem(item);
 
         // Act

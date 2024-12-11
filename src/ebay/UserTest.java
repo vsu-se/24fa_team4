@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.util.Date;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -33,7 +34,7 @@ class UserTest {
                 true, // This is an auction item
                 "Electronics",
                 250.0,
-                System.currentTimeMillis() + 86400000 // End time: 1 day from now
+                new Date(System.currentTimeMillis() + 86400000) // End time: 1 day from now
         );
         buyNowItem = new Item(
                 "Retro Radio",
@@ -43,7 +44,7 @@ class UserTest {
                 false, // This item is for "Buy It Now"
                 "Electronics",
                 150.0,
-                0
+                null // No end time for Buy It Now item
         );
     }
 
