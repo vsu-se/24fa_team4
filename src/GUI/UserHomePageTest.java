@@ -92,6 +92,71 @@ public class UserHomePageTest {
     }
 
     @Test
+    public void testHandleInvalidBidAmount() {
+        // Arrange
+        DefaultTableModel model = (DefaultTableModel) userHomePage.getBuyTable().getModel();
+        model.addRow(new Object[]{"Vintage Watch", "Test Description", 100.0, "http://example.com/image.jpg"});
+        userHomePage.getBuyTable().setRowSelectionInterval(0, 0);
+        userHomePage.getBidAmount().setText("invalid");
+
+        Item item = new Item("Vintage Watch", "Test Description", 100.0, "http://example.com/image.jpg", true, "Electronics", 100.0, Instant.now().plusSeconds(8400));
+        itemManager.addItem(item);
+
+        // Act
+        userHomePage.handleBid();
+
+        // Assert
+        Item updatedItem = itemManager.getItemByName("Vintage Watch");
+        assertNotNull(updatedItem);
+        assertEquals(0, updatedItem.getBids().size());
+    }
+
+    @Test
+    public void testHandleAddItemWithoutCategory() {
+        // Arrange
+        String itemName = "Test Item";
+        String itemDescription = "Test Description";
+        double startPrice = 100.0;
+        String imageUrl = "http://example.com/image.jpg";
+        Instant endTime = Instant.now().plusSeconds(84000);
+        itemManager.clearItems();
+
+        // Act
+        userHomePage.handleAddItem(itemName, itemDescription, startPrice, imageUrl, endTime);
+
+        // Assert
+        List<Item> items = itemManager.getItems();
+        assertEquals(0, items.size());
+    }
+
+    @Test
+    public void testHandleSearch() {
+        // Arrange
+        String searchQuery = "testItem";
+        Item item = new Item("testItem", "description", 10.0, "url", true, "category", 10.0, Instant.now());
+        itemManager.addItem(item);
+
+        // Act
+        userHomePage.handleSearch(searchQuery);
+
+        // Assert
+        // Verify that the search results are displayed
+        // This can be done by checking the state of the UI components or using a mock
+        List<Item> searchResults = itemManager.searchItems(searchQuery);
+        assertEquals(1, searchResults.size());
+        assertEquals("testItem", searchResults.get(0).getItemName());
+    }
+
+    @Test
+    public void testUserLogout() {
+        // Act
+        userHomePage.getLogoutButton().doClick();
+
+        // Assert
+        assertNull(userController.getCurrentUser());
+    }
+
+    @Test
     public void testShowBuyerReport() {
         // Arrange
         User user = userController.getCurrentUser();

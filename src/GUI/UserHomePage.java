@@ -71,6 +71,7 @@ public class UserHomePage extends JFrame {
     private JList<Item> auctionsList;
     private JButton buyerReportBtn;
     private JTextArea buyerReportArea;
+    private JTextArea sellerReportArea;
     private ItemController itemController;
     private String username;
     private String password;
@@ -124,6 +125,7 @@ public class UserHomePage extends JFrame {
 
         txtImageUrl = new JTextField();
         buyerReportBtn = new JButton("Generate Buyer Report");
+        sellerReportArea = new JTextArea();
 
         bidAmount = new JTextField(10);
         bidButton = new JButton("Place Bid");
@@ -306,7 +308,7 @@ public class UserHomePage extends JFrame {
 //        });
     }
 
-    private void handleSearch(String searchQuery) {
+    public void handleSearch(String searchQuery) {
         List<Item> searchResults = itemManager.searchItems(searchQuery);
         showSearchResults(searchResults);
     }
@@ -403,69 +405,20 @@ public class UserHomePage extends JFrame {
     }
 
     public void showSellerReport(User user) {
-        double totalWinningBids = 0;
-        double totalShippingCosts = 0;
-        double totalSellerCommission = 0;
-
-        JTextArea sellerReportArea = new JTextArea();
-        reportsText.append("Seller's Report for " + user.getUsername() + "\n");
-        reportsText.append("--------------------------------------------------\n");
-        reportsText.append("Item Name | Price | Seller's Commission | Shipping\n");
-        reportsText.append("--------------------------------------------------\n");
-
+        StringBuilder report = new StringBuilder("Seller's Report for " + user.getUsername() + "\n");
         for (Item item : user.getSoldItems()) {
-            if (item != null) {
-                double price = item.getBuyItNowPrice();
-                double sellersCommission = price * 0.20;
-                double shippingCost = 10.0;
-
-                totalWinningBids += price;
-                totalSellerCommission += sellersCommission;
-                totalShippingCosts += shippingCost;
-
-                reportsText.append(String.format("%s | %.2f | %.2f | %.2f%n", item.getItemName(), price, sellersCommission, shippingCost));
-            }
+            report.append(item.getItemName()).append("\n");
         }
-
-        double totalProfits = totalWinningBids - totalSellerCommission - totalShippingCosts;
-
-        reportsText.append("--------------------------------------------------\n");
-        reportsText.append(String.format("Total Winning Bids: %.2f%n", totalWinningBids));
-        reportsText.append(String.format("Total Shipping Costs: %.2f%n", totalShippingCosts));
-        reportsText.append(String.format("Total Seller's Commissions: %.2f%n", totalSellerCommission));
-        reportsText.append(String.format("Total Profits: %.2f%n", totalProfits));
-
-     //   JOptionPane.showMessageDialog(this, new JScrollPane(reportsText), "Seller Report", JOptionPane.INFORMATION_MESSAGE);
+        sellerReportArea.setText(report.toString());
     }
 
-        public void showBuyerReport (User user){
-            double totalSpent = 0;
-            double totalShippingCosts = 0;
-
-            JTextArea buyerReportArea = new JTextArea();
-            reportsText.append("Buyer's Report for " + user.getUsername() + "\n");
-            reportsText.append("--------------------------------------------------\n");
-            reportsText.append("Item Name | Price | Shipping\n");
-            reportsText.append("--------------------------------------------------\n");
-
-            for (Item item : user.getBoughtItems()) {
-                if (item != null) {
-                    double price = item.getBuyItNowPrice();
-                    double shippingCost = 10.0;
-
-                    totalSpent += price;
-                    totalShippingCosts += shippingCost;
-
-                    reportsText.append(String.format("%s | %.2f | %.2f%n", item.getItemName(), price, shippingCost));
-                }
-            }
-
-            reportsText.append("--------------------------------------------------\n");
-            reportsText.append(String.format("Total Spent: %.2f%n", totalSpent));
-            reportsText.append(String.format("Total Shipping Costs: %.2f%n", totalShippingCosts));
-
-           // JOptionPane.showMessageDialog(this, new JScrollPane(reportsText), "Buyer Report", JOptionPane.INFORMATION_MESSAGE);
+    public void showBuyerReport(User user) {
+        StringBuilder report = new StringBuilder("Buyer's Report for " + user.getUsername() + "\n");
+        for (Item item : user.getBoughtItems()) {
+            report.append(item.getItemName()).append("\n");
         }
+        buyerReportArea.setText(report.toString());
+    }
 
     private void populateBuyTab() {
         DefaultTableModel model = (DefaultTableModel) buyTable.getModel();
@@ -519,6 +472,9 @@ public class UserHomePage extends JFrame {
     public JButton getLogoutButton() { return logoutButton; }
     public JButton getBuyerReportBtn() { return buyerReportBtn; }
     public JTextArea getBuyerReportArea() { return buyerReportArea; }
+    public JTextArea getSellerReportArea() {
+        return sellerReportArea;
+    }
 
 
 

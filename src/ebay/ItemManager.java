@@ -215,7 +215,7 @@ public class ItemManager {
                 item.isAuction() + "," +
                 item.getItemType() + "," +
                 item.getBuyItNowPrice() + "," +
-                item.getEndTime().toEpochMilli() + "," +
+                (item.getEndTime() != null ? item.getEndTime().toEpochMilli() : "null") + "," +
                 item.isAuctionActive();
     }
 
@@ -234,7 +234,7 @@ public class ItemManager {
         boolean isAuction = Boolean.parseBoolean(parts[5]);
         String itemType = parts[6];
         double buyItNowPrice = Double.parseDouble(parts[7]);
-        Instant endTime = Instant.ofEpochMilli(Long.parseLong(parts[8]));
+        Instant endTime = "null".equals(parts[8]) ? null : Instant.ofEpochMilli(Long.parseLong(parts[8]));
         boolean auctionActive = Boolean.parseBoolean(parts[9]);
 
         Item item = new Item(itemName, description, startPrice, imageUrl, isAuction, itemType, buyItNowPrice, endTime);

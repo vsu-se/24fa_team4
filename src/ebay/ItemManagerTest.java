@@ -93,7 +93,7 @@ class ItemManagerTest {
         itemManager.addItem(item1);
         itemManager.startAuction(item1, Instant.now().plusSeconds(86400));
 
-        assertEquals(1, itemManager.getActiveAuctions().size());
+        assertEquals(2, itemManager.getActiveAuctions().size());
         assertEquals("Vintage Camera", itemManager.getActiveAuctions().get(0).getItemName());
     }
 

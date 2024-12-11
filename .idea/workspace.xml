@@ -5,40 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e8672801-f06b-40ec-a412-fc704470614c" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/javapicker.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/24fa_team4.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/24fa_team4.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/java.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/jdatepicker/AbstractDateModel.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/jdatepicker/ComponentColorDefaults.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/jdatepicker/ComponentFormatDefaults.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/jdatepicker/ComponentIconDefaults.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/jdatepicker/ComponentTextDefaults.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/jdatepicker/DateComponent.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/jdatepicker/DateComponentFormatter.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/jdatepicker/DateModel.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/jdatepicker/DatePanel.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/jdatepicker/DatePicker.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/jdatepicker/JDatePanel.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/jdatepicker/JDatePicker.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/jdatepicker/SqlDateModel.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/jdatepicker/UtilCalendarModel.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/jdatepicker/UtilDateModel.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/jdatepicker/constraints/DateSelectionConstraint.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/jdatepicker/constraints/RangeConstraint.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/jdatepicker/constraints/WeekdayConstraint.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/jdatepicker/constraints/WeekendConstraint.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/jdatepicker/graphics/JNextIcon.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/jdatepicker/graphics/JPreviousIcon.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/GUI/UserHomePage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/UserHomePage.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/GUI/UserHomePageTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/UserHomePageTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ebay/Bid.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ebay/Bid.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ebay/Bidder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ebay/Bidder.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ebay/Item.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ebay/Item.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ebay/ItemController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ebay/ItemController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ebay/ItemManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ebay/ItemManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ebay/ItemManagerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ebay/ItemManagerTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ebay/ItemTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ebay/ItemTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ebay/Seller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ebay/Seller.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ebay/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ebay/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ebay/UserTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ebay/UserTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ebay/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ebay/UserController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ebay/datafiles/auctions_data.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/ebay/datafiles/auctions_data.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -68,7 +45,7 @@
     <option name="stateVersion" value="1" />
   </component>
   <component name="ProblemsViewState">
-    <option name="selectedTabId" value="ProjectErrors" />
+    <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 7
@@ -88,6 +65,7 @@
     "JUnit.UserHomePageTest.executor": "Run",
     "JUnit.UserHomePageTest.testHandleAddItem.executor": "Run",
     "JUnit.UserHomePageTest.testHandleBid.executor": "Run",
+    "JUnit.UserManagerTest.executor": "Run",
     "JUnit.UserTest.executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
@@ -117,7 +95,7 @@
       <recent name="$PROJECT_DIR$/src/GUI" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.GUI.Main">
+  <component name="RunManager">
     <configuration name="GUI.Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="GUI.Main" />
       <module name="24fa_team4" />
@@ -205,8 +183,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.GUI.Main" />
         <item itemvalue="JUnit.UserHomePageTest" />
+        <item itemvalue="Application.GUI.Main" />
         <item itemvalue="JUnit.UserTest" />
         <item itemvalue="JUnit.UserHomePageTest.testHandleAddItem" />
         <item itemvalue="Application.Main" />
@@ -237,7 +215,7 @@
       <workItem from="1733842116376" duration="6167000" />
       <workItem from="1733849590474" duration="3653000" />
       <workItem from="1733874648678" duration="4131000" />
-      <workItem from="1733879473540" duration="4113000" />
+      <workItem from="1733879473540" duration="5563000" />
     </task>
     <servers />
   </component>

@@ -3,7 +3,6 @@ package ebay;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
-import java.time.Clock;
 
 public class User implements Seller, Bidder {
     private String username;
