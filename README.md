@@ -1,0 +1,1 @@
+Our SWE assignment was to create a auction similuator. We were provided with user stories and attempted to implement the stories into our application. We used MVC format and a GUI for the application process.
