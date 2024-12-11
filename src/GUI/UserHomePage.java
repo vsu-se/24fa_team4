@@ -39,7 +39,7 @@ public class UserHomePage extends JFrame {
     private JLabel lblItemCategory;
     private JScrollPane listOfCategories;
     private JButton logoutButton;
-    private JTextArea txaItemInfo;
+  //  private JTextArea txaItemInfo;
     private JLabel lblBidAmount;
     private JLabel lblItemName;
     private JTextField txtItemName;
@@ -63,6 +63,8 @@ public class UserHomePage extends JFrame {
     private JTextArea reportsText;
     private JButton buyersReportBtn;
     private JButton sellersReportBtn;
+    private JLabel clockLabel;
+    private JLabel lblTime;
     private JTextField txtImageUrl;
     private JTextField txtEndTime;
     private JTable myAuctionsTable;
@@ -83,6 +85,7 @@ public class UserHomePage extends JFrame {
     private User buyerUser;
     private DefaultListModel<Item> listModel;
     private JSpinner timeSpinner;
+    private JLabel lblDate;
     private JSpinner dateSpinner;
 
     public UserHomePage(String username, String password, UserController userController, ItemManager itemManager, ItemController itemController) {
@@ -107,6 +110,7 @@ public class UserHomePage extends JFrame {
         setVisible(true);
         populateBuyTab();
         setUpEventListeners();
+        startClock();
     }
 
     public void setWelcomeLabel(User user) {
@@ -145,29 +149,24 @@ public class UserHomePage extends JFrame {
         Instant now = clock.instant();
         Date currentDate = Date.from(now);
 
-        // Initialize the JSpinner for date selection
-        dateSpinner = new JSpinner(new SpinnerDateModel(currentDate, null, null, Calendar.DAY_OF_MONTH));
-        JSpinner.DateEditor dateEditor = new JSpinner.DateEditor(dateSpinner, "yyyy-MM-dd");
-        dateSpinner.setEditor(dateEditor);
+        if (dateSpinner != null) {
+            SpinnerDateModel dateModel = new SpinnerDateModel(new Date(), null, null, Calendar.DAY_OF_MONTH);
+            dateSpinner.setModel(dateModel);
+            JSpinner.DateEditor dateEditor = new JSpinner.DateEditor(dateSpinner, "yyyy-MM-dd");
+            dateSpinner.setEditor(dateEditor);
+        }
 
-        // Initialize the JSpinner for time selection
-        timeSpinner = new JSpinner(new SpinnerDateModel(currentDate, null, null, Calendar.HOUR_OF_DAY));
-        JSpinner.DateEditor timeEditor = new JSpinner.DateEditor(timeSpinner, "HH:mm:ss");
-        timeSpinner.setEditor(timeEditor);
-        timeSpinner.setValue(currentDate);
-
-        // Add date picker and time spinner to the addItemPanel
-        addItemPanel = new JPanel();
-        addItemPanel.add(new JLabel("End Date:"));
-        addItemPanel.add(dateSpinner);
-        addItemPanel.add(new JLabel("End Time:"));
-        addItemPanel.add(timeSpinner);
+        if (timeSpinner != null) {
+            SpinnerDateModel timeModel = new SpinnerDateModel(new Date(), null, null, Calendar.HOUR_OF_DAY);
+            timeSpinner.setModel(timeModel);
+            JSpinner.DateEditor timeEditor = new JSpinner.DateEditor(timeSpinner, "hh:mm a");
+            timeSpinner.setEditor(timeEditor);
+        }
 
         // Initialize the myBidsTable
         myBidsTable = new JTable(new DefaultTableModel(new Object[]{"Item Name", "Description", "Current Bid", "Image URL"}, 0));
         myBidsScrollPane = new JScrollPane(myBidsTable);
         setupTabs();
-
         // Initialize the active auctions list with items from ItemManager
         updateActiveAuctionsList();
     }
@@ -203,6 +202,9 @@ public class UserHomePage extends JFrame {
         JScrollPane myBidsScrollPane = new JScrollPane(myBidsTable);
         myBidsTab.setLayout(new BorderLayout());
         myBidsTab.add(myBidsScrollPane, BorderLayout.CENTER);
+
+//        sellTab.add(dateSpinner);
+//        sellTab.add(timeSpinner);
     }
 
     private void updateActiveAuctionsList() {
@@ -367,36 +369,46 @@ public class UserHomePage extends JFrame {
         Date selectedTime = (Date) timeSpinner.getValue();
         endTime = toInstant(selectedDate, selectedTime);
 
-
-        // Create a new Item with the provided details
         Item newItem = new Item(itemName, itemDescription, startPrice, imageUrl, isAuction, category, startPrice, endTime);
 
         User currentUser = userController.getCurrentUser();
         if (currentUser != null) {
-            currentUser.listItem(newItem);  // Add the item to the user's listings
+            currentUser.listItem(newItem);
             showInfo("Item added successfully!");
 
-            // Add the item to the backend (ItemManager)
             itemManager.addItem(newItem);
-
-            // Update the active auctions list in the view (JList)
-            updateActiveAuctionsList();  // This will refresh the JList with the updated list of active auctions
-
-            // Add the item to the "My Auctions" list (assuming you have this method to update that view)
-            addItemToMyAuctions(newItem);  // Add to My Auctions list
-            addItemToBuyTab(newItem); // Add to Buy Tab
-            // Switch to the "My Auctions" tab
+            updateActiveAuctionsList();
+            addItemToMyAuctions(newItem);
+            addItemToBuyTab(newItem);
             switchToMyAuctionsTab();
 
-            // Clear the input fields after adding the item
-            txtItemName.setText("");  // Clear the item name field
-            txtItemDescription.setText("");  // Clear the item description field
-            txtStartPrice.setText("");  // Clear the start price field
-            txtImageUrl.setText("");  // Clear the image URL field
+            // Clear input fields
+            txtItemName.setText("");
+            txtItemDescription.setText("");
+            txtStartPrice.setText("");
+            txtImageUrl.setText("");
         } else {
             showError("No user is currently logged in.");
         }
     }
+
+    private void updateClock() {
+        String currentTime = java.time.LocalTime.now()
+                .format(java.time.format.DateTimeFormatter.ofPattern("hh:mm a"));
+        clockLabel.setText(currentTime);
+    }
+
+
+    private void startClock() {
+        Timer timer = new Timer(1000, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                updateClock();
+            }
+        });
+        timer.start();
+    }
+
 
     private void addItemToBuyTab(Item newItem) {
         DefaultTableModel model = (DefaultTableModel) buyTable.getModel();
@@ -474,8 +486,6 @@ public class UserHomePage extends JFrame {
     public JTextArea getSellerReportArea() {
         return sellerReportArea;
     }
-
-
 
     public JCheckBox getIsAuction() {
         return new JCheckBox();
