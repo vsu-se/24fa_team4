@@ -137,4 +137,8 @@ public class UserController {
             saveUserDatabase();
         }
     }
+
+    public double getSellerPremium(){
+        return sellerCommission;
+    }
 }

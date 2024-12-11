@@ -1,5 +1,7 @@
 package ebay;
 
+import GUI.UserHomePage;
+
 public class Bid {
     private Bidder bidder;
     private double bidAmount;
@@ -17,4 +19,5 @@ public class Bid {
         return bidAmount;
     }
 
-    }
+
+}
