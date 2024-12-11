@@ -1,18 +1,20 @@
 package GUI;
 
 import ebay.*;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import jdatepicker.JDatePicker;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
+import java.time.Clock;
+import java.time.Instant;
+import java.time.ZoneId;
+import java.util.Date;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerDateModel;
+import javax.swing.JSpinner.DateEditor;
 
 
 public class UserHomePage extends JFrame {
@@ -79,8 +81,8 @@ public class UserHomePage extends JFrame {
     private User sellerUser;
     private User buyerUser;
     private DefaultListModel<Item> listModel;
-    private JDatePicker datePicker;
     private JSpinner timeSpinner;
+    private JSpinner dateSpinner;
 
     public UserHomePage(String username, String password, UserController userController, ItemManager itemManager, ItemController itemController) {
         this.username = username;
@@ -115,22 +117,22 @@ public class UserHomePage extends JFrame {
     }
 
     private void customizeComponents() {
+        searchTextField = new JTextField();
         searchTextField.setText("Search for an item?");
+        bidsyTitle = new JLabel();
         bidsyTitle.setText("Bidsy");
 
         txtImageUrl = new JTextField();
         buyerReportBtn = new JButton("Generate Buyer Report");
-//        buyerReportArea = new JTextArea(10, 50);
-//        buyerReportArea.setEditable(false);
 
         bidAmount = new JTextField(10);
         bidButton = new JButton("Place Bid");
-
 
         // Generate categories list
         String[] categories = {"Electronics", "Fashion", "Home & Garden", "Sporting Goods", "Toys & Hobbies", "Other"};
         categoryList = new JList<>(categories);
         categoryList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        listOfCategories = new JScrollPane();
         listOfCategories.setViewportView(categoryList);
 
         // Generate active auctions list from ItemManager
@@ -138,19 +140,29 @@ public class UserHomePage extends JFrame {
         auctionsList = new JList<>(listModel);
         auctionsList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
-        datePicker = new JDatePicker();
-        timeSpinner = new JSpinner(new SpinnerDateModel());
+        Clock clock = Clock.systemDefaultZone();
+        Instant now = clock.instant();
+        Date currentDate = Date.from(now);
+
+        // Initialize the JSpinner for date selection
+        dateSpinner = new JSpinner(new SpinnerDateModel(currentDate, null, null, Calendar.DAY_OF_MONTH));
+        JSpinner.DateEditor dateEditor = new JSpinner.DateEditor(dateSpinner, "yyyy-MM-dd");
+        dateSpinner.setEditor(dateEditor);
+
+        // Initialize the JSpinner for time selection
+        timeSpinner = new JSpinner(new SpinnerDateModel(currentDate, null, null, Calendar.HOUR_OF_DAY));
         JSpinner.DateEditor timeEditor = new JSpinner.DateEditor(timeSpinner, "HH:mm:ss");
         timeSpinner.setEditor(timeEditor);
-        timeSpinner.setValue(new Date());
+        timeSpinner.setValue(currentDate);
 
         // Add date picker and time spinner to the addItemPanel
+        addItemPanel = new JPanel();
         addItemPanel.add(new JLabel("End Date:"));
-        addItemPanel.add((JComponent) datePicker);
+        addItemPanel.add(dateSpinner);
         addItemPanel.add(new JLabel("End Time:"));
         addItemPanel.add(timeSpinner);
 
-        //Initialize the myBidsTable
+        // Initialize the myBidsTable
         myBidsTable = new JTable(new DefaultTableModel(new Object[]{"Item Name", "Description", "Current Bid", "Image URL"}, 0));
         myBidsScrollPane = new JScrollPane(myBidsTable);
         setupTabs();
@@ -233,8 +245,22 @@ public class UserHomePage extends JFrame {
                 String itemDescription = txtItemDescription.getText();
                 double startPrice = Double.parseDouble(txtStartPrice.getText());
                 String imageUrl = txtImageUrl.getText();
-                long endTime = Long.parseLong(txtEndTime.getText());
-                handleAddItem(itemName, itemDescription, startPrice, imageUrl,endTime);
+
+                // Retrieve the selected date and time from the JSpinner components
+                Date selectedDate = (Date) dateSpinner.getValue();
+                Date selectedTime = (Date) timeSpinner.getValue();
+
+                // Combine the date and time into a single Instant object
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTime(selectedDate);
+                Calendar timeCalendar = Calendar.getInstance();
+                timeCalendar.setTime(selectedTime);
+                calendar.set(Calendar.HOUR_OF_DAY, timeCalendar.get(Calendar.HOUR_OF_DAY));
+                calendar.set(Calendar.MINUTE, timeCalendar.get(Calendar.MINUTE));
+                calendar.set(Calendar.SECOND, timeCalendar.get(Calendar.SECOND));
+                Instant endTime = calendar.toInstant();
+
+                handleAddItem(itemName, itemDescription, startPrice, imageUrl, endTime);
             }
         });
 
@@ -327,7 +353,7 @@ public class UserHomePage extends JFrame {
     }
 
 
-    public void handleAddItem(String itemName, String itemDescription, double startPrice, String imageUrl, Date endTime) {
+    public void handleAddItem(String itemName, String itemDescription, double startPrice, String imageUrl, Instant endTime) {
         boolean isAuction = true;
         String category = categoryList.getSelectedValue();
 
@@ -335,16 +361,11 @@ public class UserHomePage extends JFrame {
             showError("Please select an item category.");
             return;
         }
-        Date selectedDate = (Date) datePicker.getModel().getValue();
+
+        Date selectedDate = (Date) dateSpinner.getValue();
         Date selectedTime = (Date) timeSpinner.getValue();
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(selectedDate);
-        Calendar timeCalendar = Calendar.getInstance();
-        timeCalendar.setTime(selectedTime);
-        calendar.set(Calendar.HOUR_OF_DAY, timeCalendar.get(Calendar.HOUR_OF_DAY));
-        calendar.set(Calendar.MINUTE, timeCalendar.get(Calendar.MINUTE));
-        calendar.set(Calendar.SECOND, timeCalendar.get(Calendar.SECOND));
-        long endTime = calendar.getTimeInMillis();
+        endTime = toInstant(selectedDate, selectedTime);
+
 
         // Create a new Item with the provided details
         Item newItem = new Item(itemName, itemDescription, startPrice, imageUrl, isAuction, category, startPrice, endTime);
@@ -375,6 +396,7 @@ public class UserHomePage extends JFrame {
             showError("No user is currently logged in.");
         }
     }
+
     private void addItemToBuyTab(Item newItem) {
         DefaultTableModel model = (DefaultTableModel) buyTable.getModel();
         model.addRow(new Object[]{newItem.getItemName(),newItem.getDescription(),newItem.getStartPrice(),newItem.getImageUrl()});
@@ -545,6 +567,16 @@ public class UserHomePage extends JFrame {
                 bid.getBidAmount(),
                 item.getImageUrl()
         });
+    }
+    private Instant toInstant(Date date, Date time) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        Calendar timeCalendar = Calendar.getInstance();
+        timeCalendar.setTime(time);
+        calendar.set(Calendar.HOUR_OF_DAY, timeCalendar.get(Calendar.HOUR_OF_DAY));
+        calendar.set(Calendar.MINUTE, timeCalendar.get(Calendar.MINUTE));
+        calendar.set(Calendar.SECOND, timeCalendar.get(Calendar.SECOND));
+        return calendar.getTime().toInstant();
     }
 
     public void switchToMyAuctionsTab() {

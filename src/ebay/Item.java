@@ -1,9 +1,10 @@
 package ebay;
 
+import java.time.Clock;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import java.util.Date;
 
 public class Item {
     private UUID itemId;
@@ -14,12 +15,11 @@ public class Item {
     private boolean isAuction;
     private String itemType;
     private double buyItNowPrice;
-    private Date endTime;
+    private Instant endTime;
     private boolean auctionActive;
     private List<Bid> bids;
 
-
-    public Item(String itemName, String description, double startPrice, String imageUrl, boolean isAuction, String itemType, double buyItNowPrice, Date endTime) {
+    public Item(String itemName, String description, double startPrice, String imageUrl, boolean isAuction, String itemType, double buyItNowPrice, Instant endTime) {
         this.itemId = UUID.randomUUID();
         this.itemName = itemName;
         this.description = description;
@@ -57,6 +57,7 @@ public class Item {
     public void setBuyItNowPrice(double buyItNowPrice) {
         this.buyItNowPrice = buyItNowPrice;
     }
+
     public UUID getItemId() {
         return itemId;
     }
@@ -89,11 +90,11 @@ public class Item {
         return buyItNowPrice;
     }
 
-    public Date getEndTime() {
+    public Instant getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(Date endTime) {
+    public void setEndTime(Instant endTime) {
         this.endTime = endTime;
     }
 
@@ -113,12 +114,10 @@ public class Item {
         return bids.add(bid);
     }
 
-
-
-        public void startAuction() {
+    public void startAuction(Clock clock) {
         if (isAuction) {
             this.auctionActive = true;
-            this.endTime = new Date(System.currentTimeMillis() + 86400000); // Default to 1 day
+            this.endTime = clock.instant().plusSeconds(86400); // Default to 1 day
         }
     }
 
@@ -160,7 +159,7 @@ public class Item {
     }
 
     public String toString() {
-        return itemName +", Starting: $" + startPrice;
+        return itemName + ", Starting: $" + startPrice;
     }
 
     public double getBidAmount(double bidAmount) {

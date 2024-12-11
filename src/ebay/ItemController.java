@@ -1,7 +1,8 @@
 package ebay;
 
 import java.util.Comparator;
-import java.util.Date;
+import java.time.Clock;
+import java.time.Instant;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -19,7 +20,7 @@ public class ItemController {
     }
 
     // Add item
-    public void addItem(String itemName, String description, double startPrice, String imageUrl, boolean isAuction, String itemType, double buyItNowPrice, Date endTime) {
+    public void addItem(String itemName, String description, double startPrice, String imageUrl, boolean isAuction, String itemType, double buyItNowPrice, Instant endTime) {
         Item newItem = new Item(itemName, description, startPrice, imageUrl, isAuction, itemType, buyItNowPrice, endTime);
         itemManager.addItem(newItem);
     }
@@ -62,7 +63,7 @@ public class ItemController {
     }
 
     // Start auction
-    public void startAuction(String itemName, Date endTime) {
+    public void startAuction(String itemName, Instant endTime) {
         Item item = itemManager.getItemByName(itemName);
         if (item != null) {
             itemManager.startAuction(item, endTime);

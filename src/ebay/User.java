@@ -1,8 +1,9 @@
 package ebay;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Date;
+import java.time.Clock;
 
 public class User implements Seller, Bidder {
     private String username;
@@ -90,7 +91,7 @@ public class User implements Seller, Bidder {
     public void startAuction(Item item) {
         if (isSeller && item.isAuction()) {
             item.setAuction(true);
-            Date endTime = new Date(System.currentTimeMillis() + 86400000);
+            Instant endTime = Instant.now().plusSeconds(86400); // Default to 1 day
             ItemManager.getInstance().startAuction(item,endTime);
             System.out.println(username + " has started an auction for item: " + item.getItemName() + " (ID: " + item.getItemId() + ")");
         } else {

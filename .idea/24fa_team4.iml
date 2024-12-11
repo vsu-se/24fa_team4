@@ -59,6 +59,14 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="library" name="java" level="project" />
+    <orderEntry type="module-library" exported="">
+      <library>
+        <CLASSES />
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/Downloads/JDatePicker-master/src/main/java" />
+        </SOURCES>
+      </library>
+    </orderEntry>
   </component>
 </module>
