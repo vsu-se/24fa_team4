@@ -20,11 +20,19 @@ import static org.junit.jupiter.api.Assertions.*;
 
         @BeforeEach
         public void setUp() {
+            //Clear any persistent state
+            if (itemManager != null) {
+                itemManager.clearItems();
+            }
+            if (userController != null) {
+                userController.clearUserDatabase();
+            }
+
             userController = new UserController();
-            itemManager = new ItemManager();
+            itemManager = ItemManager.getInstance();
             itemController = new ItemController(itemManager);
             userHomePage = new UserHomePage("testUser", "testPassword", userController, itemManager, itemController);
-            userController.registerUser("testUser1", "testPassword");
+            userController.registerUser("testUser", "testPassword");
             userController.login("testUser", "testPassword");
         }
 

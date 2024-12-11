@@ -117,9 +117,12 @@ public class ItemManager {
     }
 
     public void clearItems() {
-        getAllItems().clear();
+        items.clear();
         activeAuctions.clear();
-        saveItems(); // Save state after clearing items
+        File file = new File("src/ebay/datafiles/auctions_data.txt");
+        if (file.exists()) {
+            file.delete();
+        }
     }
 
     public Item getItemByUUID(UUID itemID) {

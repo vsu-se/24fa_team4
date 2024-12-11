@@ -115,6 +115,13 @@ public class UserController {
             System.err.println("Error saving user database: " + e.getMessage());
         }
     }
+    public void clearUserDatabase() {
+        userDatabase.clear();
+        File file = new File("src/ebay/datafiles/user_data.txt");
+        if (file.exists()) {
+            file.delete();
+        }
+    }
 
     private void loadUserDatabase() {
         File file = new File(USER_DATABASE_FILE);

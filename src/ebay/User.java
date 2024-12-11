@@ -13,7 +13,7 @@ public class User implements Seller, Bidder {
     private boolean isBidder;
     private boolean isAdmin;
     private UserManager userManager;
-    private ItemManager itemManager;
+    private ItemManager itemManager = ItemManager.getInstance();
     private List<Item> soldItems = new ArrayList<>();
     private List<Item> boughtItems = new ArrayList<>();
     private List<Bid> bids;
