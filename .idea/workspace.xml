@@ -7,15 +7,6 @@
     <list default="true" id="e8672801-f06b-40ec-a412-fc704470614c" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/GUI/UserHomePage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/UserHomePage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/UserHomePageTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/UserHomePageTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ebay/Bid.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ebay/Bid.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ebay/Bidder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ebay/Bidder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ebay/Item.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ebay/Item.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ebay/ItemManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ebay/ItemManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ebay/ItemManagerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ebay/ItemManagerTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ebay/Seller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ebay/Seller.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ebay/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ebay/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ebay/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ebay/UserController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ebay/datafiles/auctions_data.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/ebay/datafiles/auctions_data.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -73,7 +64,7 @@
     "UI_DESIGNER_EDITOR_MODE.PaletteManager.SHOW": "true",
     "UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.SHOW": "true",
     "UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.WIDTH": "184",
-    "git-widget-placeholder": "banks",
+    "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "/Users/tjcarter/Documents/GitHub2/src/GUI",
     "node.js.detected.package.eslint": "true",
@@ -95,7 +86,7 @@
       <recent name="$PROJECT_DIR$/src/GUI" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Application.GUI.Main">
     <configuration name="GUI.Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="GUI.Main" />
       <module name="24fa_team4" />
@@ -183,8 +174,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.UserHomePageTest" />
         <item itemvalue="Application.GUI.Main" />
+        <item itemvalue="JUnit.UserHomePageTest" />
         <item itemvalue="JUnit.UserTest" />
         <item itemvalue="JUnit.UserHomePageTest.testHandleAddItem" />
         <item itemvalue="Application.Main" />
@@ -215,7 +206,7 @@
       <workItem from="1733842116376" duration="6167000" />
       <workItem from="1733849590474" duration="3653000" />
       <workItem from="1733874648678" duration="4131000" />
-      <workItem from="1733879473540" duration="5563000" />
+      <workItem from="1733879473540" duration="7992000" />
     </task>
     <servers />
   </component>

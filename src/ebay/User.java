@@ -153,4 +153,8 @@ public class User implements Seller, Bidder {
             System.out.println("Item approved and added: " + item.getItemName());
         }
     }
+
+    public List<Item> getListedItems() {
+        return ItemManager.getInstance();
+    }
 }

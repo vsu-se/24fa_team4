@@ -125,17 +125,19 @@ public class UserHomePage extends JFrame {
 
         txtImageUrl = new JTextField();
         buyerReportBtn = new JButton("Generate Buyer Report");
-        sellerReportArea = new JTextArea();
+        sellerReportArea = new JTextArea("Generate Seller Report");
 
         bidAmount = new JTextField(10);
         bidButton = new JButton("Place Bid");
+
+        addItemPanel = new JPanel();
 
         // Generate categories list
         String[] categories = {"Electronics", "Fashion", "Home & Garden", "Sporting Goods", "Toys & Hobbies", "Other"};
         categoryList = new JList<>(categories);
         categoryList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        listOfCategories = new JScrollPane();
         listOfCategories.setViewportView(categoryList);
+
 
         // Generate active auctions list from ItemManager
         listModel = new DefaultListModel<>();  // Initialize the list model once
@@ -269,7 +271,7 @@ public class UserHomePage extends JFrame {
         buyersReportBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                reportsText.setText("");
+                buyerReportArea.setText("");
                 showBuyerReport(userController.getCurrentUser());
 
 
@@ -278,7 +280,7 @@ public class UserHomePage extends JFrame {
         sellersReportBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                reportsText.setText("");
+                buyerReportArea.setText("");
                 showSellerReport(userController.getCurrentUser());
             }
         });
