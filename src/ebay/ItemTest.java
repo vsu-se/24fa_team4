@@ -3,13 +3,14 @@ package ebay;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
+import java.time.Instant;
 
 public class ItemTest {
     private Item item;
 
     @BeforeEach
     public void setUp() {
-        item = new Item("Vintage Camera", "A vintage camera from the 1950s", 250.00, "https://example.com/vintage-camera.jpg", true, "Electronics", 250.00, 50000);
+        item = new Item("Vintage Camera", "A vintage camera from the 1950s", 250.00, "https://example.com/vintage-camera.jpg", true, "Electronics", 250.00, Instant.now().plusSeconds(86400));
     }
 
     @Test
@@ -124,7 +125,7 @@ public class ItemTest {
 
     @Test
     public void testUniqueItemId() {
-        Item item2 = new Item("Retro Camera", "A retro camera", 300.00, "https://example.com/retro-camera.jpg", true, "Photography", 300.00, 50000);
+        Item item2 = new Item("Retro Camera", "A retro camera", 300.00, "https://example.com/retro-camera.jpg", true, "Photography", 300.00, Instant.now().plusSeconds(86400));
         assertNotEquals(item.getItemId(), item2.getItemId(), "Each item should have a unique UUID.");
     }
 

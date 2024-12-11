@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.time.Instant;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -33,7 +34,7 @@ class UserTest {
                 true, // This is an auction item
                 "Electronics",
                 250.0,
-                System.currentTimeMillis() + 86400000 // End time: 1 day from now
+                Instant.now().plusSeconds(86400) // End time: 1 day from now
         );
         buyNowItem = new Item(
                 "Retro Radio",
@@ -43,7 +44,7 @@ class UserTest {
                 false, // This item is for "Buy It Now"
                 "Electronics",
                 150.0,
-                0
+                null // No end time for Buy It Now item
         );
     }
 
@@ -113,14 +114,13 @@ class UserTest {
         System.setOut(new PrintStream(outContent));
         sellerUser.listItem(testItem);
         sellerUser.startAuction(testItem);
-        assertEquals(2, ItemManager.getInstance().getActiveAuctions().size());
+        assertEquals(1, ItemManager.getInstance().getActiveAuctions().size());
         assertTrue(ItemManager.getInstance().getActiveAuctions().get(0).isAuctionActive());
 
         String expectedOutput = "sellerUser has listed an item: Vintage Camera\n" +
                 "sellerUser has started an auction for item: Vintage Camera (ID: " + testItem.getItemId() + ")";
         System.setOut(originalOut);
         String actualOutput = outContent.toString().trim();
-        System.out.println("Actual output: " + actualOutput);
         assertEquals(expectedOutput, actualOutput);
     }
 

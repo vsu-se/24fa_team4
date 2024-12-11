@@ -6,7 +6,16 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.util.Calendar;
 import java.util.List;
+import java.time.Clock;
+import java.time.Instant;
+import java.time.ZoneId;
+import java.util.Date;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerDateModel;
+import javax.swing.JSpinner.DateEditor;
+
 
 public class UserHomePage extends JFrame {
 
@@ -30,7 +39,7 @@ public class UserHomePage extends JFrame {
     private JLabel lblItemCategory;
     private JScrollPane listOfCategories;
     private JButton logoutButton;
-    private JTextArea txaItemInfo;
+  //  private JTextArea txaItemInfo;
     private JLabel lblBidAmount;
     private JLabel lblItemName;
     private JTextField txtItemName;
@@ -54,6 +63,8 @@ public class UserHomePage extends JFrame {
     private JTextArea reportsText;
     private JButton buyersReportBtn;
     private JButton sellersReportBtn;
+    private JLabel clockLabel;
+    private JLabel lblTime;
     private JTextField txtImageUrl;
     private JTextField txtEndTime;
     private JTable myAuctionsTable;
@@ -62,6 +73,7 @@ public class UserHomePage extends JFrame {
     private JList<Item> auctionsList;
     private JButton buyerReportBtn;
     private JTextArea buyerReportArea;
+    private JTextArea sellerReportArea;
     private ItemController itemController;
     private String username;
     private String password;
@@ -72,6 +84,9 @@ public class UserHomePage extends JFrame {
     private User sellerUser;
     private User buyerUser;
     private DefaultListModel<Item> listModel;
+    private JSpinner timeSpinner;
+    private JLabel lblDate;
+    private JSpinner dateSpinner;
 
     public UserHomePage(String username, String password, UserController userController, ItemManager itemManager, ItemController itemController) {
         this.username = username;
@@ -95,6 +110,7 @@ public class UserHomePage extends JFrame {
         setVisible(true);
         populateBuyTab();
         setUpEventListeners();
+        startClock();
     }
 
     public void setWelcomeLabel(User user) {
@@ -106,17 +122,17 @@ public class UserHomePage extends JFrame {
     }
 
     private void customizeComponents() {
+        searchTextField = new JTextField();
         searchTextField.setText("Search for an item?");
+        bidsyTitle = new JLabel();
         bidsyTitle.setText("Bidsy");
 
         txtImageUrl = new JTextField();
         buyerReportBtn = new JButton("Generate Buyer Report");
-//        buyerReportArea = new JTextArea(10, 50);
-//        buyerReportArea.setEditable(false);
+        sellerReportArea = new JTextArea();
 
         bidAmount = new JTextField(10);
         bidButton = new JButton("Place Bid");
-
 
         // Generate categories list
         String[] categories = {"Electronics", "Fashion", "Home & Garden", "Sporting Goods", "Toys & Hobbies", "Other"};
@@ -129,11 +145,28 @@ public class UserHomePage extends JFrame {
         auctionsList = new JList<>(listModel);
         auctionsList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
-        //Initialize the myBidsTable
+        Clock clock = Clock.systemDefaultZone();
+        Instant now = clock.instant();
+        Date currentDate = Date.from(now);
+
+        if (dateSpinner != null) {
+            SpinnerDateModel dateModel = new SpinnerDateModel(new Date(), null, null, Calendar.DAY_OF_MONTH);
+            dateSpinner.setModel(dateModel);
+            JSpinner.DateEditor dateEditor = new JSpinner.DateEditor(dateSpinner, "yyyy-MM-dd");
+            dateSpinner.setEditor(dateEditor);
+        }
+
+        if (timeSpinner != null) {
+            SpinnerDateModel timeModel = new SpinnerDateModel(new Date(), null, null, Calendar.HOUR_OF_DAY);
+            timeSpinner.setModel(timeModel);
+            JSpinner.DateEditor timeEditor = new JSpinner.DateEditor(timeSpinner, "hh:mm a");
+            timeSpinner.setEditor(timeEditor);
+        }
+
+        // Initialize the myBidsTable
         myBidsTable = new JTable(new DefaultTableModel(new Object[]{"Item Name", "Description", "Current Bid", "Image URL"}, 0));
         myBidsScrollPane = new JScrollPane(myBidsTable);
         setupTabs();
-
         // Initialize the active auctions list with items from ItemManager
         updateActiveAuctionsList();
     }
@@ -169,6 +202,9 @@ public class UserHomePage extends JFrame {
         JScrollPane myBidsScrollPane = new JScrollPane(myBidsTable);
         myBidsTab.setLayout(new BorderLayout());
         myBidsTab.add(myBidsScrollPane, BorderLayout.CENTER);
+
+//        sellTab.add(dateSpinner);
+//        sellTab.add(timeSpinner);
     }
 
     private void updateActiveAuctionsList() {
@@ -212,8 +248,22 @@ public class UserHomePage extends JFrame {
                 String itemDescription = txtItemDescription.getText();
                 double startPrice = Double.parseDouble(txtStartPrice.getText());
                 String imageUrl = txtImageUrl.getText();
-                long endTime = Long.parseLong(txtEndTime.getText());
-                handleAddItem(itemName, itemDescription, startPrice, imageUrl,endTime);
+
+                // Retrieve the selected date and time from the JSpinner components
+                Date selectedDate = (Date) dateSpinner.getValue();
+                Date selectedTime = (Date) timeSpinner.getValue();
+
+                // Combine the date and time into a single Instant object
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTime(selectedDate);
+                Calendar timeCalendar = Calendar.getInstance();
+                timeCalendar.setTime(selectedTime);
+                calendar.set(Calendar.HOUR_OF_DAY, timeCalendar.get(Calendar.HOUR_OF_DAY));
+                calendar.set(Calendar.MINUTE, timeCalendar.get(Calendar.MINUTE));
+                calendar.set(Calendar.SECOND, timeCalendar.get(Calendar.SECOND));
+                Instant endTime = calendar.toInstant();
+
+                handleAddItem(itemName, itemDescription, startPrice, imageUrl, endTime);
             }
         });
 
@@ -259,12 +309,12 @@ public class UserHomePage extends JFrame {
 //        });
     }
 
-    private void handleSearch(String searchQuery) {
+    public void handleSearch(String searchQuery) {
         List<Item> searchResults = itemManager.searchItems(searchQuery);
         showSearchResults(searchResults);
     }
 
-    void handleBid() {
+     void handleBid() {
         int selectedRow = buyTable.getSelectedRow();
         if (selectedRow != -1) {
             String itemName = (String) buyTable.getValueAt(selectedRow, 0); // Get the selected item name
@@ -281,17 +331,17 @@ public class UserHomePage extends JFrame {
                         return;
                     }
 
+                    // Add the bid to the item
                     Bid newBid = new Bid(userController.getCurrentUser(), bidAmountValue);
                     item.addBid(newBid);
-                    item.saveBidHistoryToFile();
-
                     System.out.println("Bid added successfully");
-
                     DefaultTableModel buyTableModel = (DefaultTableModel) buyTable.getModel();
                     buyTableModel.removeRow(selectedRow);
 
+                    // Update the My Bids Table
                     updateMyBidsTable(item);
 
+                    // Optional: Highlight the My Bids Tab
                     tabbedPane.setSelectedComponent(myBidsTab);
 
                 } catch (NumberFormatException e) {
@@ -306,7 +356,7 @@ public class UserHomePage extends JFrame {
     }
 
 
-    public void handleAddItem(String itemName, String itemDescription, double startPrice, String imageUrl,long endTime) {
+    public void handleAddItem(String itemName, String itemDescription, double startPrice, String imageUrl, Instant endTime) {
         boolean isAuction = true;
         String category = categoryList.getSelectedValue();
 
@@ -315,102 +365,71 @@ public class UserHomePage extends JFrame {
             return;
         }
 
+        Date selectedDate = (Date) dateSpinner.getValue();
+        Date selectedTime = (Date) timeSpinner.getValue();
+        endTime = toInstant(selectedDate, selectedTime);
+
         Item newItem = new Item(itemName, itemDescription, startPrice, imageUrl, isAuction, category, startPrice, endTime);
 
         User currentUser = userController.getCurrentUser();
         if (currentUser != null) {
-            currentUser.listItem(newItem);  // Add the item to the user's listings
+            currentUser.listItem(newItem);
             showInfo("Item added successfully!");
 
-            // Add the item to the backend (ItemManager)
             itemManager.addItem(newItem);
-            newItem.saveBidHistoryToFile();
-
             updateActiveAuctionsList();
-
-            addItemToMyAuctions(newItem);  // Add to My Auctions list
-            addItemToBuyTab(newItem); // Add to Buy Tab
-            // Switch to the "My Auctions" tab
+            addItemToMyAuctions(newItem);
+            addItemToBuyTab(newItem);
             switchToMyAuctionsTab();
 
-            // Clear the input fields after adding the item
-            txtItemName.setText("");  // Clear the item name field
-            txtItemDescription.setText("");  // Clear the item description field
-            txtStartPrice.setText("");  // Clear the start price field
-            txtImageUrl.setText("");  // Clear the image URL field
+            // Clear input fields
+            txtItemName.setText("");
+            txtItemDescription.setText("");
+            txtStartPrice.setText("");
+            txtImageUrl.setText("");
         } else {
             showError("No user is currently logged in.");
         }
     }
+
+    private void updateClock() {
+        String currentTime = java.time.LocalTime.now()
+                .format(java.time.format.DateTimeFormatter.ofPattern("hh:mm a"));
+        clockLabel.setText(currentTime);
+    }
+
+
+    private void startClock() {
+        Timer timer = new Timer(1000, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                updateClock();
+            }
+        });
+        timer.start();
+    }
+
+
     private void addItemToBuyTab(Item newItem) {
         DefaultTableModel model = (DefaultTableModel) buyTable.getModel();
         model.addRow(new Object[]{newItem.getItemName(),newItem.getDescription(),newItem.getStartPrice(),newItem.getImageUrl()});
     }
 
     public void showSellerReport(User user) {
-        double totalWinningBids = 0;
-        double totalShippingCosts = 0;
-        double totalSellerCommission = 0;
-
-        JTextArea sellerReportArea = new JTextArea();
-        reportsText.append("Seller's Report for " + user.getUsername() + "\n");
-        reportsText.append("--------------------------------------------------\n");
-        reportsText.append("Item Name | Price | Seller's Commission | Shipping\n");
-        reportsText.append("--------------------------------------------------\n");
-
+        StringBuilder report = new StringBuilder("Seller's Report for " + user.getUsername() + "\n");
         for (Item item : user.getSoldItems()) {
-            if (item != null) {
-                double price = item.getBuyItNowPrice();
-                double sellersCommission = price * 0.20;
-                double shippingCost = 10.0;
-
-                totalWinningBids += price;
-                totalSellerCommission += sellersCommission;
-                totalShippingCosts += shippingCost;
-
-                reportsText.append(String.format("%s | %.2f | %.2f | %.2f%n", item.getItemName(), price, sellersCommission, shippingCost));
-            }
+            report.append(item.getItemName()).append("\n");
         }
-
-        double totalProfits = totalWinningBids - totalSellerCommission - totalShippingCosts;
-
-        reportsText.append("--------------------------------------------------\n");
-        reportsText.append(String.format("Total Winning Bids: %.2f%n", totalWinningBids));
-        reportsText.append(String.format("Total Shipping Costs: %.2f%n", totalShippingCosts));
-        reportsText.append(String.format("Total Seller's Commissions: %.2f%n", totalSellerCommission));
-        reportsText.append(String.format("Total Profits: %.2f%n", totalProfits));
-
-     //   JOptionPane.showMessageDialog(this, new JScrollPane(reportsText), "Seller Report", JOptionPane.INFORMATION_MESSAGE);
+        reportsText.setText(report.toString());
     }
 
-        public void showBuyerReport (User user){
-            double totalSpent = 0;
-            double totalShippingCosts = 0;
-
-            JTextArea buyerReportArea = new JTextArea();
-            reportsText.append("Buyer's Report for " + user.getUsername() + "\n");
-            reportsText.append("--------------------------------------------------\n");
-            reportsText.append("Item Name | Price | Shipping\n");
-            reportsText.append("--------------------------------------------------\n");
-
-            for (Item item : user.getBoughtItems()) {
-                if (item != null) {
-                    double price = item.getBuyItNowPrice();
-                    double shippingCost = 10.0;
-
-                    totalSpent += price;
-                    totalShippingCosts += shippingCost;
-
-                    reportsText.append(String.format("%s | %.2f | %.2f%n", item.getItemName(), price, shippingCost));
-                }
-            }
-
-            reportsText.append("--------------------------------------------------\n");
-            reportsText.append(String.format("Total Spent: %.2f%n", totalSpent));
-            reportsText.append(String.format("Total Shipping Costs: %.2f%n", totalShippingCosts));
-
-           // JOptionPane.showMessageDialog(this, new JScrollPane(reportsText), "Buyer Report", JOptionPane.INFORMATION_MESSAGE);
+    public void showBuyerReport(User user) {
+        StringBuilder report = new StringBuilder("Buyer's Report for " + user.getUsername() + "\n");
+        for (Item item : user.getBoughtItems()) {
+            report.append(item.getItemName()).append("\n");
         }
+        reportsText.setText(report.toString());
+    }
 
     private void populateBuyTab() {
         DefaultTableModel model = (DefaultTableModel) buyTable.getModel();
@@ -464,8 +483,9 @@ public class UserHomePage extends JFrame {
     public JButton getLogoutButton() { return logoutButton; }
     public JButton getBuyerReportBtn() { return buyerReportBtn; }
     public JTextArea getBuyerReportArea() { return buyerReportArea; }
-
-
+    public JTextArea getSellerReportArea() {
+        return sellerReportArea;
+    }
 
     public JCheckBox getIsAuction() {
         return new JCheckBox();
@@ -512,6 +532,16 @@ public class UserHomePage extends JFrame {
                 bid.getBidAmount(),
                 item.getImageUrl()
         });
+    }
+    private Instant toInstant(Date date, Date time) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        Calendar timeCalendar = Calendar.getInstance();
+        timeCalendar.setTime(time);
+        calendar.set(Calendar.HOUR_OF_DAY, timeCalendar.get(Calendar.HOUR_OF_DAY));
+        calendar.set(Calendar.MINUTE, timeCalendar.get(Calendar.MINUTE));
+        calendar.set(Calendar.SECOND, timeCalendar.get(Calendar.SECOND));
+        return calendar.getTime().toInstant();
     }
 
     public void switchToMyAuctionsTab() {

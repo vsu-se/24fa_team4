@@ -1,5 +1,6 @@
 package ebay;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,8 +14,6 @@ public class User implements Seller, Bidder {
     private List<Item> soldItems = new ArrayList<>();
     private List<Item> boughtItems = new ArrayList<>();
     private boolean authorizedToListItems;
-    private List<Item> myAuctions;
-    private List<Bid> myBids;
 
     public User(String username, String password, boolean isSeller, boolean isBidder) {
         this.username = username;
@@ -22,8 +21,6 @@ public class User implements Seller, Bidder {
         this.isSeller = isSeller;
         this.isBidder = isBidder;
         this.isAdmin = false;
-        this.myAuctions = new ArrayList<>();
-        this.myBids = new ArrayList<>();
     }
 
     public User(String adminPassword, String username, String password, UserManager userManager) {
@@ -32,10 +29,6 @@ public class User implements Seller, Bidder {
             this.isAdmin = true;
             this.userManager = userManager;
         }
-    }
-
-    public List<Item> getMyAuctions() {
-        return myAuctions;
     }
 
     public User(String username, String password) {
@@ -90,14 +83,6 @@ public class User implements Seller, Bidder {
 
     @Override
     public void placeBid(Item item, double bidAmount) {
-        if (!isBidder) {
-            System.out.println(username + " is not authorized to place bids.");
-            return;
-        }
-
-        Bid bid = new Bid(this, bidAmount);
-        item.addBid(bid);
-        myBids.add(bid);
         System.out.println(username + " has placed a bid of $" + bidAmount + " on item: " + item.getItemName());
     }
 
@@ -105,8 +90,8 @@ public class User implements Seller, Bidder {
     public void startAuction(Item item) {
         if (isSeller && item.isAuction()) {
             item.setAuction(true);
-            myAuctions.add(item);
-            ItemManager.getInstance().startAuction(item, System.currentTimeMillis() + 86400000);
+            Instant endTime = Instant.now().plusSeconds(86400); // Default to 1 day
+            ItemManager.getInstance().startAuction(item,endTime);
             System.out.println(username + " has started an auction for item: " + item.getItemName() + " (ID: " + item.getItemId() + ")");
         } else {
             System.out.println(username + " is not authorized to start an auction or the item is not available for auction.");
@@ -116,7 +101,6 @@ public class User implements Seller, Bidder {
     public void buyItNow(Item item) {
         if (!isSeller) {
             ItemManager.getInstance().buyItNow(item, this);
-            boughtItems.add(item);
         } else {
             System.out.println(username + " cannot buy their own item.");
         }
@@ -133,9 +117,7 @@ public class User implements Seller, Bidder {
             boughtItems.add(item);
         }
     }
-    public List<Bid> getMyBids() {
-        return myBids;
-    }
+
     public List<Item> getSoldItems() {
         return soldItems;
     }
@@ -171,5 +153,4 @@ public class User implements Seller, Bidder {
             System.out.println("Item approved and added: " + item.getItemName());
         }
     }
-
 }

@@ -1,9 +1,6 @@
 package ebay;
-
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.time.Clock;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -17,12 +14,11 @@ public class Item {
     private boolean isAuction;
     private String itemType;
     private double buyItNowPrice;
-    private long endTime;
+    private Instant endTime;
     private boolean auctionActive;
     private List<Bid> bids;
-    private static final String DATA_FILE_PATH = "src/ebay/datafiles/bid_history_data.txt";
 
-    public Item(String itemName, String description, double startPrice, String imageUrl, boolean isAuction, String itemType, double buyItNowPrice, long endTime) {
+    public Item(String itemName, String description, double startPrice, String imageUrl, boolean isAuction, String itemType, double buyItNowPrice, Instant endTime) {
         this.itemId = UUID.randomUUID();
         this.itemName = itemName;
         this.description = description;
@@ -34,9 +30,9 @@ public class Item {
         this.auctionActive = true;
         this.bids = new ArrayList<>();
         this.endTime = endTime;
-        ensureDataFileExists();
     }
 
+    // Getters and setters...
     public void setItemName(String itemName) {
         this.itemName = itemName;
     }
@@ -60,6 +56,7 @@ public class Item {
     public void setBuyItNowPrice(double buyItNowPrice) {
         this.buyItNowPrice = buyItNowPrice;
     }
+
     public UUID getItemId() {
         return itemId;
     }
@@ -92,11 +89,11 @@ public class Item {
         return buyItNowPrice;
     }
 
-    public long getEndTime() {
+    public Instant getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(long endTime) {
+    public void setEndTime(Instant endTime) {
         this.endTime = endTime;
     }
 
@@ -113,17 +110,13 @@ public class Item {
     }
 
     public boolean addBid(Bid bid) {
-        boolean added = bids.add(bid);
-        if (added) {
-            saveBidToFile(bid);
-        }
-        return added;
+        return bids.add(bid);
     }
 
-    public void startAuction() {
+    public void startAuction(Clock clock) {
         if (isAuction) {
             this.auctionActive = true;
-            this.endTime = System.currentTimeMillis() + 86400000; // Default to 1 day
+            this.endTime = clock.instant().plusSeconds(86400); // Default to 1 day
         }
     }
 
@@ -131,7 +124,6 @@ public class Item {
         if (isAuction && auctionActive && bid.getBidAmount() > startPrice) {
             this.bids.add(bid);
             this.startPrice = bid.getBidAmount();
-            saveBidToFile(bid);
             return true;
         }
         return false;
@@ -166,7 +158,7 @@ public class Item {
     }
 
     public String toString() {
-        return itemName +", Starting: $" + startPrice;
+        return itemName + ", Starting: $" + startPrice;
     }
 
     public double getBidAmount(double bidAmount) {
@@ -180,43 +172,4 @@ public class Item {
     public void setItemId(UUID id) {
         itemId = id;
     }
-
-    public void saveBidHistoryToFile() {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(DATA_FILE_PATH, true))) {
-            writer.write("Item: " + itemName + ")\n");
-            writer.write("Description: " + description + "\n");
-            writer.write("Bids:\n");
-            for (Bid bid : bids) {
-                writer.write(bid.toString() + "\n");
-            }
-            writer.write("------------------------\n");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-    private void saveBidToFile(Bid bid) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(DATA_FILE_PATH, true))) {
-            writer.write("Item: " + itemName + " (ID: " + itemId + ")\n");
-            writer.write("New Bid: " + bid.toString() + "\n");
-            writer.write("------------------------\n");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void ensureDataFileExists() {
-        File dataFile = new File(DATA_FILE_PATH);
-        File parentDir = dataFile.getParentFile();
-        try {
-            if (!parentDir.exists()) {
-                parentDir.mkdirs();
-            }
-            if (!dataFile.exists()) {
-                dataFile.createNewFile();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
 }
