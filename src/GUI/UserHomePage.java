@@ -286,9 +286,8 @@ public class UserHomePage extends JFrame {
                     item.addBid(newBid);
                     System.out.println("Bid added successfully");
 
-                    // Update the Buy Table with the new bid amount
                     DefaultTableModel buyTableModel = (DefaultTableModel) buyTable.getModel();
-                    buyTableModel.setValueAt(bidAmountValue, selectedRow, 2); // Update the "Price" column with the new bid amount
+                    buyTableModel.removeRow(selectedRow);
 
                     // Update the My Bids Table
                     updateMyBidsTable(item);
