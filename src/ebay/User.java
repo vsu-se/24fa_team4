@@ -2,7 +2,9 @@ package ebay;
 
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class User implements Seller, Bidder {
     private String username;
@@ -11,8 +13,10 @@ public class User implements Seller, Bidder {
     private boolean isBidder;
     private boolean isAdmin;
     private UserManager userManager;
+    private ItemManager itemManager;
     private List<Item> soldItems = new ArrayList<>();
     private List<Item> boughtItems = new ArrayList<>();
+    private List<Bid> bids;
     private boolean authorizedToListItems;
 
     public User(String username, String password, boolean isSeller, boolean isBidder) {
@@ -21,6 +25,7 @@ public class User implements Seller, Bidder {
         this.isSeller = isSeller;
         this.isBidder = isBidder;
         this.isAdmin = false;
+        this.bids = new ArrayList<>();
     }
 
     public User(String adminPassword, String username, String password, UserManager userManager) {
@@ -41,6 +46,10 @@ public class User implements Seller, Bidder {
 
     public String getPassword() {
         return password;
+    }
+
+    public List<Bid> getBids() {
+        return bids;
     }
 
     public void setPassword(String password) {
@@ -83,7 +92,9 @@ public class User implements Seller, Bidder {
 
     @Override
     public void placeBid(Item item, double bidAmount) {
+        Bid bid = new Bid(this, bidAmount,item);
         System.out.println(username + " has placed a bid of $" + bidAmount + " on item: " + item.getItemName());
+        item.addBid(bid);
     }
 
     @Override
@@ -154,7 +165,7 @@ public class User implements Seller, Bidder {
         }
     }
 
-    public List<Item> getListedItems() {
-        return ItemManager.getInstance();
+    public List<Item> getActiveAuctions() {
+        return itemManager.getActiveAuctions();
     }
 }

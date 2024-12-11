@@ -1,6 +1,9 @@
 mm,mm
+existingUser,password
 newUser,newPassword
 ld,hunt
 admin,adminPassword
+testUser,testPassword
 validUsername,validPassword
 greg,greg
+testUser1,testPassword

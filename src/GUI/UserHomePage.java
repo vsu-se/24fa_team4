@@ -317,7 +317,7 @@ public class UserHomePage extends JFrame {
         showSearchResults(searchResults);
     }
 
-     void handleBid() {
+     public void handleBid() {
         int selectedRow = buyTable.getSelectedRow();
         if (selectedRow != -1) {
             String itemName = (String) buyTable.getValueAt(selectedRow, 0); // Get the selected item name
@@ -335,7 +335,7 @@ public class UserHomePage extends JFrame {
                     }
 
                     // Add the bid to the item
-                    Bid newBid = new Bid(userController.getCurrentUser(), bidAmountValue);
+                    Bid newBid = new Bid(userController.getCurrentUser(), bidAmountValue,getSelectedItem());
                     item.addBid(newBid);
                     System.out.println("Bid added successfully");
                     DefaultTableModel buyTableModel = (DefaultTableModel) buyTable.getModel();
@@ -563,4 +563,5 @@ public class UserHomePage extends JFrame {
     public JTable getBuyTable() {
         return buyTable;
     }
+
 }

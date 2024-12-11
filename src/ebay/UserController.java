@@ -1,10 +1,7 @@
 package ebay;
 
-import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
 import java.io.*;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class UserController {
@@ -14,9 +11,10 @@ public class UserController {
     private double sellerCommission;
     private static final String DATA_FOLDER = "src/ebay/datafiles";
     private static final String USER_DATABASE_FILE = DATA_FOLDER + File.separator + "user_data.txt";
-
+    private ItemManager itemManager;
 
     public UserController() {
+        this.itemManager = itemManager;
         userDatabase = new HashMap<>();
         // Add some default users for demonstration purposes
         userDatabase.put("validUsername", "validPassword");

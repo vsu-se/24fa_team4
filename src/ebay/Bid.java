@@ -1,13 +1,14 @@
 package ebay;
 
-import GUI.UserHomePage;
 
 public class Bid {
     private Bidder bidder;
     private double bidAmount;
+    private Item item;
 
-    public Bid(Bidder bidder, double bidAmount) {
+    public Bid(Bidder bidder, double bidAmount, Item item) {
         this.bidder = bidder;
+        this.item = item;
         this.bidAmount = bidAmount;
     }
 
@@ -20,4 +21,7 @@ public class Bid {
     }
 
 
+    public Item getItem() {
+        return item;
+    }
 }

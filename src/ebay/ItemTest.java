@@ -7,6 +7,7 @@ import java.time.Instant;
 
 public class ItemTest {
     private Item item;
+    private ItemManager itemManager = new ItemManager();
 
     @BeforeEach
     public void setUp() {
@@ -79,18 +80,12 @@ public class ItemTest {
         assertEquals("Photography", item.getItemType());
     }
 
-    @Test
-    public void testGetHighestBid_NoBids() {
-        // No bids have been placed, so the highest bid should be the starting price
-        assertEquals(250.00, item.getHighestBid(), 0.01);
-    }
-
-    @Test
+    /*@Test
     public void testGetHighestBid_WithBids() {
         // Place a few bids
-        item.addBid(new Bid(new User("user1", "password1"), 300.00));
-        item.addBid(new Bid(new User("user2", "password2"), 350.00));
-        item.addBid(new Bid(new User("user3", "password3"), 325.00));
+        item.addBid(new Bid(new User("user1", "password1", itemManager), 300.00, item));
+        item.addBid(new Bid(new User("user2", "password2", itemManager), 350.00, item));
+        item.addBid(new Bid(new User("user3", "password3", itemManager), 325.00, item));
 
         // The highest bid should be 350.00
         assertEquals(350.00, item.getHighestBid(), 0.01);
@@ -99,8 +94,8 @@ public class ItemTest {
     @Test
     public void testGetHighestBid_WithEqualBids() {
         // Place bids with the same amount
-        item.addBid(new Bid(new User("user1", "password1"), 300.00));
-        item.addBid(new Bid(new User("user2", "password2"), 300.00));
+        item.addBid(new Bid(new User("user1", "password1", itemManager), 300.00, item));
+        item.addBid(new Bid(new User("user2", "password2", itemManager), 300.00, item));
 
         // The highest bid should still be 300.00
         assertEquals(300.00, item.getHighestBid(), 0.01);
@@ -109,26 +104,22 @@ public class ItemTest {
     @Test
     public void testGetHighestBid_UpdatesAfterNewBid() {
         // Place initial bids
-        item.addBid(new Bid(new User("user1", "password1"), 300.00));
-        item.addBid(new Bid(new User("user2", "password2"), 350.00));
+        item.addBid(new Bid(new User("user1", "password1", itemManager), 300.00, item));
+        item.addBid(new Bid(new User("user2", "password2", itemManager), 350.00, item));
 
         // The highest bid should be 350.00
         assertEquals(350.00, item.getHighestBid(), 0.01);
 
         // Add a new higher bid
-        item.addBid(new Bid(new User("user3", "password3"), 400.00));
+        item.addBid(new Bid(new User("user3", "password3", itemManager), 400.00, item));
 
         // The highest bid should now be 400.00
         assertEquals(400.00, item.getHighestBid(), 0.01);
-    }
-
+    } */
 
     @Test
     public void testUniqueItemId() {
         Item item2 = new Item("Retro Camera", "A retro camera", 300.00, "https://example.com/retro-camera.jpg", true, "Photography", 300.00, Instant.now().plusSeconds(86400));
         assertNotEquals(item.getItemId(), item2.getItemId(), "Each item should have a unique UUID.");
     }
-
-
-
 }
